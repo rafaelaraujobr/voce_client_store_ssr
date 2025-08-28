@@ -6,7 +6,7 @@
 
 <script setup>
 useSeoMeta({
-  title: "LAB Vue",
-  description: "LAB Vue",
+  title: "Voce lab",
+  description: "voce lab",
 });
 </script>

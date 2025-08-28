@@ -14,7 +14,7 @@
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
-    <q-page-container class="bg-grey-1">
+    <q-page-container>
       <slot />
     </q-page-container>
   </q-layout>

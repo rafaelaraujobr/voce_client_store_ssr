@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     "nuxt-quasar-ui",
     "@pinia/nuxt",
+    '@vueuse/nuxt',
   ],
   quasar: quasarOptions,
 
