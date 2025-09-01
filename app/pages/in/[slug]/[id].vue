@@ -17,7 +17,7 @@ const route = useRoute();
 const id = computed(() => route.params.id);
 const slug = computed(() => route.params.slug);
 
-// Carrega os dados no servidor para SSR
+
 await useLazyAsyncData('product-data', async () => {
   await getProductById(slug.value as string, id.value as string);
   return { product: product.value, shop: shop.value };
@@ -36,7 +36,7 @@ const currentUrl = computed(() => {
 });
 
 const image = computed(() => {
-  return product?.value?.image || "/favicon.ico";
+  return product?.value?.skus[0].images[0] || "/favicon.ico";
 });
 
 const title = computed(() => product?.value?.name || "Produto");

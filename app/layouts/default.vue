@@ -87,63 +87,30 @@ const currentUrl = computed(() => {
     route.fullPath
   }`;
 });
-useHead(() => ({
-  title: shop?.value?.name || "Carregando...",
-  link: [
-    {
-      rel: "icon",
-      type: "image/x-icon",
-      href: shop?.value?.logotipo || "/favicon.ico",
-    },
-  ],
-  meta: [
-    {
-      name: "description",
-      content: shop?.value?.description || "",
-    },
-    {
-      property: "og:title",
-      content: shop?.value?.name || "",
-    },
-    {
-      property: "og:description",
-      content: shop?.value?.description || "",
-    },
-    {
-      property: "og:image",
-      content: shop?.value?.logotipo || "",
-    },
-    {
-      property: "og:url",
-      content: currentUrl.value,
-    },
-    {
-      property: "og:site_name",
-      content: shop?.value?.name || "",
-    },
-    {
-      property: "og:type",
-      content: "website",
-    },
-    {
-      name: "twitter:card",
-      content: "summary_large_image",
-    },
-    {
-      name: "twitter:title",
-      content: shop?.value?.name || "",
-    },
-    {
-      name: "twitter:description",
-      content: shop?.value?.description || "",
-    },
-    {
-      name: "twitter:image",
-      content: shop?.value?.logotipo || "",
-    },
-  ],
-}));
 
+await useLazyAsyncData("product-data", async () => {
+  await getShopBySlug(slug.value as string);
+  return { shop: shop.value };
+});
+
+const title = computed(() => shop?.value?.name || "Carregando...");
+const description = computed(() => shop?.value?.description || "Carregando...");
+const image = computed(() => shop?.value?.logotipo || "/favicon.ico");
+
+useSeoMeta({
+  title: title,
+  description: description,
+  ogTitle: title,
+  ogDescription: description,
+  ogImage: image,
+  ogUrl: currentUrl,
+  ogSiteName: shop?.value?.name || title,
+  ogType: "website",
+  twitterCard: "summary_large_image",
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: image,
+});
 if (slug.value && shop.value === null)
   await getShopBySlug(slug.value as string);
 </script>
