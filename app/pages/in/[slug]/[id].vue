@@ -20,7 +20,6 @@ const slug = computed(() => route.params.slug);
 
 await useLazyAsyncData('product-data', async () => {
   await getProductById(slug.value as string, id.value as string);
-  return { product: product.value, shop: shop.value };
 });
 
 function myTweak(offset: number): { minHeight: string } {

@@ -90,7 +90,6 @@ const currentUrl = computed(() => {
 
 await useLazyAsyncData("product-data", async () => {
   await getShopBySlug(slug.value as string);
-  return { shop: shop.value };
 });
 
 const title = computed(() => shop?.value?.name || "Carregando...");
@@ -111,8 +110,16 @@ useSeoMeta({
   twitterDescription: description,
   twitterImage: image,
 });
-if (slug.value && shop.value === null)
-  await getShopBySlug(slug.value as string);
+
+useHead(() => ({
+  link: [
+    {
+      rel: "icon",
+      type: "image/x-icon",
+      href: image.value,
+    },
+  ],
+}));
 </script>
 
 <style lang="sass"></style>
