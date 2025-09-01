@@ -1,29 +1,5 @@
 <template>
-  <div v-if="loadingProducts" class="row q-col-gutter-sm full-width">
-    <div v-for="n in 12" :key="n" class="q-pa-sm col-xs-12 col-sm-6 col-md-3">
-      <q-card flat bordered class="product-card">
-        <q-card-section
-          class="row q-pa-none q-ma-none justify-center items-center"
-        >
-          <div class="col-4 col-md-12 bg-default q-py-sm">
-            <q-skeleton height="118px" />
-          </div>
-          <div class="col-8 col-md-12 q-py-md">
-            <q-item>
-              <q-item-section>
-                <q-skeleton type="text" class="q-mb-sm" />
-                <q-skeleton type="text" width="60%" />
-                <q-skeleton type="text" width="40%" class="q-mt-sm" />
-              </q-item-section>
-            </q-item>
-          </div>
-        </q-card-section>
-      </q-card>
-    </div>
-  </div>
-
   <q-table
-    v-else
     ref="refProductsTable"
     :rows="products"
     row-key="id"
@@ -191,10 +167,8 @@ function getDiscountPercent(price: number, priceDiscount: number) {
   return formatDiscount(percent);
 }
 
-// Função para navegar para detalhes do produto
 function navigateToProduct(product: Product) {
-  // Implementar navegação para página do produto
-  console.log("Navegar para produto:", product);
+  navigateTo(`/in/${slug.value}/${product.id}`);
 }
 
 watch(

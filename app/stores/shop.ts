@@ -4,6 +4,7 @@ import type { Shop, Product, ProductQuery, Category } from "~/types/shop.types";
 export const useShopStore = defineStore("shop", () => {
   const shop = ref<Shop | null>(null);
   const products = ref<Product[]>([]);
+  const product = ref<Product | null>(null);
   const productQuery = ref<ProductQuery>({
     search: "",
     take: 12,
@@ -22,6 +23,10 @@ export const useShopStore = defineStore("shop", () => {
 
   function setProducts(payload: Product[]): void {
     products.value = payload;
+  }
+
+  function setProduct(payload: Product): void {
+    product.value = payload;
   }
 
   function setProductQuery(payload: ProductQuery): void {
@@ -45,8 +50,9 @@ export const useShopStore = defineStore("shop", () => {
   }
 
   return {
-    shop,
+    shop, 
     products,
+    product,
     productQuery,
     totalProducts,
     categories,
@@ -56,6 +62,7 @@ export const useShopStore = defineStore("shop", () => {
     setLoadingProducts,
     setShop,
     setProducts,
+    setProduct,
     setProductQuery,
     setTotalProducts,
     setCategories,

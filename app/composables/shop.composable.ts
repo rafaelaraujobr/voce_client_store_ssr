@@ -5,6 +5,7 @@ export const useShop = () => {
   const {
     setShop,
     setProducts,
+    setProduct,
     setTotalProducts,
     setProductQuery,
     setCategories,
@@ -14,13 +15,15 @@ export const useShop = () => {
   const {
     shop,
     products,
+    product,
     totalProducts,
     productQuery,
     categories,
     loading,
     loadingProducts,
   } = storeToRefs(shopStore);
-  const { getShopBySlugService, getProductsService } = useShopService();
+  const { getShopBySlugService, getProductsService, getProductByIdService } =
+    useShopService();
 
   async function getShopBySlug(slug: string): Promise<void> {
     try {
@@ -28,8 +31,8 @@ export const useShop = () => {
       const response = await getShopBySlugService(slug);
       setShop(response);
     } catch (error) {
-      console.error('Erro ao buscar loja:', error);
-      throw error; 
+      console.error("Erro ao buscar loja:", error);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -42,22 +45,38 @@ export const useShop = () => {
       setProducts(response?.records || []);
       setTotalProducts(response?.count || 0);
     } catch (error) {
-      console.error('Erro ao buscar produtos:', error);
-      throw error; 
+      console.error("Erro ao buscar produtos:", error);
+      throw error;
     } finally {
       setLoadingProducts(false);
     }
   }
+
+  async function getProductById(
+    shopSlug: string,
+    productId: string
+  ): Promise<void> {
+    try {
+      const response = await getProductByIdService(shopSlug, productId);
+      setProduct(response);
+    } catch (error) {
+      console.error("Erro ao buscar produto:", error);
+      throw error;
+    }
+  }
+
   return {
-    getShopBySlug,
-    getProducts,
     shop,
     products,
+    product,
     totalProducts,
     productQuery,
     categories,
     loading,
     loadingProducts,
+    getShopBySlug,
+    getProducts,
+    getProductById,
     setProductQuery,
     setCategories,
     setLoading,

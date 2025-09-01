@@ -1,9 +1,15 @@
-import type { Shop, ProductQuery, ProductListResponse } from "~/types/shop.types";
+import type {
+  Shop,
+  ProductQuery,
+  ProductListResponse,
+} from "~/types/shop.types";
 
 export const useShopService = () => {
   const { $api } = useNuxtApp();
 
-  async function getShopBySlugService(slug: string = "flashapp"): Promise<Shop> {
+  async function getShopBySlugService(
+    slug: string = "flashapp"
+  ): Promise<Shop> {
     return $api<Shop>(`/stores/${slug}`);
   }
 
@@ -16,8 +22,16 @@ export const useShopService = () => {
     });
   }
 
+  async function getProductByIdService(
+    shopSlug: string,
+    productId: string
+  ): Promise<any> {
+    return $api<any>(`/products/store/${shopSlug}/${productId}`);
+  }
+
   return {
     getShopBySlugService,
     getProductsService,
+    getProductByIdService,
   };
 };
