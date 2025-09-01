@@ -88,7 +88,7 @@ const currentUrl = computed(() => {
   }`;
 });
 
-await useLazyAsyncData("product-data", async () => {
+await useLazyAsyncData("shop-data", async () => {
   await getShopBySlug(slug.value as string);
 });
 
