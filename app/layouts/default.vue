@@ -144,10 +144,8 @@ useHead(() => ({
   ],
 }));
 
-onMounted(async () => {
-  if (slug.value && shop.value === null)
-    await getShopBySlug(slug.value as string);
-});
+if (slug.value && shop.value === null)
+  await getShopBySlug(slug.value as string);
 </script>
 
 <style lang="sass"></style>
