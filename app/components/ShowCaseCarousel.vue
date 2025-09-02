@@ -62,7 +62,7 @@
             label="Confira!"
             color="primary"
             unelevated
-            padding="md lg"
+            padding="sm md"
             style="width: 200px"
           />
         </q-item-section>
