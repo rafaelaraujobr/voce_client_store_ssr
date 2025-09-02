@@ -17,8 +17,7 @@ const route = useRoute();
 const id = computed(() => route.params.id);
 const slug = computed(() => route.params.slug);
 
-
-await useLazyAsyncData('product-data', async () => {
+await useLazyAsyncData("product-data", async () => {
   await getProductById(slug.value as string, id.value as string);
 });
 
@@ -35,11 +34,15 @@ const currentUrl = computed(() => {
 });
 
 const image = computed(() => {
-  return product?.value?.skus[0].images[0] || "/favicon.ico";
+  const { skus } = product?.value || {};
+  if (skus) return skus[0].images[0];
+  return "/favicon.ico";
 });
 
 const title = computed(() => product?.value?.name || "Produto");
-const description = computed(() => product?.value?.description || "Confira este produto incrível!");
+const description = computed(
+  () => product?.value?.description || "Confira este produto incrível!"
+);
 
 useSeoMeta({
   title: title,

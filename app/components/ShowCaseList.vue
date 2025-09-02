@@ -6,9 +6,10 @@
     grid
     hide-pagination
     :pagination="pagination"
+    card-container-class="q-col-gutter-md"
   >
     <template #item="props">
-      <div class="q-pa-sm col-xs-12 col-sm-6 col-md-3">
+      <div class="col-xs-12 col-sm-6 col-md-3">
         <q-card
           flat
           bordered

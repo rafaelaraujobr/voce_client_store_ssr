@@ -9,7 +9,6 @@ export const quasarOptions: ModuleOptions = {
       QBtn: {
         unelevated: true,
         noCaps: true,
-        padding: "sm lg",
       },
     },
   },

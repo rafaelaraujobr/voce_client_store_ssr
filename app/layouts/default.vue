@@ -15,12 +15,13 @@
         <div class="row items-center q-gutter-x-sm">
           <q-input
             v-model="search"
-            placeholder="Pesquisar..."
+            placeholder="O que você esta buscando?"
             color="primary"
             outlined
             dense
+            style="min-width: 300px"
           >
-            <template #prepend>
+            <template #append>
               <q-icon name="eva-search-outline" color="primary" />
             </template>
           </q-input>
@@ -61,7 +62,6 @@ import { useShop } from "~/composables/shop.composable";
 const search = ref("");
 const { getShopBySlug, shop, setProductQuery, productQuery, getProducts } =
   useShop();
-
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 
