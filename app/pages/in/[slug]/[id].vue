@@ -1,6 +1,6 @@
 <template>
   <q-page :style-fn="myTweak" padding class="wrapper">
-    <q-breadcrumbs class="text-grey" active-color="purple">
+    <q-breadcrumbs class="text-grey q-my-lg text-caption" active-color="purple">
       <template #separator>
         <q-icon size="1.2em" name="mdi-chevron-right" color="purple" />
       </template>
