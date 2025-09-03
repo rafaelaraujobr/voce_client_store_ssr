@@ -187,13 +187,4 @@ onMounted(async () => {
 </script>
 
 <style lang="sass">
-.product-card
-  min-height: 140px
-  height: 100%
-  display: flex
-  flex-direction: column
-  z-index: 1
-
-.product-image
-  mix-blend-mode: multiply
 </style>
