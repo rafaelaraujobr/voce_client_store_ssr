@@ -25,6 +25,10 @@ export const useShopStore = defineStore("shop", () => {
     products.value = payload;
   }
 
+  function appendProducts(payload: Product[]): void {
+    products.value = [...products.value, ...payload];
+  }
+
   function setProduct(payload: Product): void {
     product.value = payload;
   }
@@ -62,6 +66,7 @@ export const useShopStore = defineStore("shop", () => {
     setLoadingProducts,
     setShop,
     setProducts,
+    appendProducts,
     setProduct,
     setProductQuery,
     setTotalProducts,

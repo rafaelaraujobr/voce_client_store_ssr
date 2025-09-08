@@ -11,6 +11,9 @@
               spinner-color="primary"
               spinner-size="82px"
               fit="contain"
+              alt="Logo"
+              class="cursor-pointer"
+              @click="navigateTo(`/in/${slug}`)"
             />
           </q-toolbar-title>
           <div class="row items-center q-gutter-x-sm">
@@ -53,17 +56,34 @@
         </q-toolbar>
       </div>
     </q-header>
+
     <q-page-container>
       <slot />
+      <q-page-scroller
+        v-show="!loadingProducts"
+        position="bottom-right"
+        :scroll-offset="150"
+        :offset="[18, 18]"
+      >
+        <q-btn fab icon="mdi-arrow-up" color="accent" />
+      </q-page-scroller>
+      <Footer />
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup lang="ts">
 import { useShop } from "~/composables/shop.composable";
+import Footer from "~/components/LayoutFooter.vue";
+const {
+  getShopBySlug,
+  shop,
+  setProductQuery,
+  productQuery,
+  getProducts,
+  loadingProducts,
+} = useShop();
 const search = ref("");
-const { getShopBySlug, shop, setProductQuery, productQuery, getProducts } =
-  useShop();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 
@@ -84,14 +104,15 @@ watch(search, async (newVal) => {
 
 const currentUrl = computed(() => {
   if (import.meta.client && window?.location) return window.location.href;
-
   return `${process.env.SITE_URL || "https://seu-dominio.com"}${
     route.fullPath
   }`;
 });
 
 await useLazyAsyncData("shop-data", async () => {
+  if (!slug.value) return null;
   await getShopBySlug(slug.value as string);
+  return shop.value;
 });
 
 const title = computed(() => shop?.value?.name || "Carregando...");

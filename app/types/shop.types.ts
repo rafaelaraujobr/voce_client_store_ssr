@@ -7,6 +7,20 @@ export interface Shop {
   slug: string;
   created_at: string;
   updated_at: string;
+  channels?: Channel[];
+  campaigns?: Campaign[];
+}
+
+export interface Channel {
+  id: string;
+  type: string;
+  link: string;
+}
+
+export interface Campaign {
+  id: string;
+  name: string;
+  logotipo: string;
 }
 
 // Interfaces de Produto
@@ -35,7 +49,7 @@ export interface ProductQuery {
   take: number;
   skip: number;
   orderBy: string;
-  order: 'asc' | 'desc';
+  order: "asc" | "desc";
 }
 
 // Interface para resposta de listagem de produtos
@@ -53,3 +67,4 @@ export interface Category {
   created_at: string;
   updated_at: string;
 }
+

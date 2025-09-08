@@ -13,7 +13,12 @@ export const quasarOptions: ModuleOptions = {
     },
   },
   extras: {
-    fontIcons: ["eva-icons", "mdi-v7", "material-symbols-outlined"],
+    fontIcons: [
+      "eva-icons",
+      "mdi-v7",
+      "material-symbols-outlined",
+      "fontawesome-v6",
+    ],
   },
   config: {
     loading: {

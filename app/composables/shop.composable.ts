@@ -5,6 +5,7 @@ export const useShop = () => {
   const {
     setShop,
     setProducts,
+    appendProducts,
     setProduct,
     setTotalProducts,
     setProductQuery,
@@ -65,6 +66,21 @@ export const useShop = () => {
     }
   }
 
+  async function loadMoreProducts(shopSlug: string): Promise<void> {
+    try {
+      const currentSkip = productQuery.value.skip + productQuery.value.take;
+      const newQuery = { ...productQuery.value, skip: currentSkip };
+      const response = await getProductsService(shopSlug, newQuery);
+      if (response?.records && response.records.length > 0) {
+        appendProducts(response.records);
+        setProductQuery(newQuery);
+      }
+    } catch (error) {
+      console.error("❌ Erro ao carregar mais produtos:", error);
+      throw error;
+    }
+  }
+
   return {
     shop,
     products,
@@ -77,6 +93,7 @@ export const useShop = () => {
     getShopBySlug,
     getProducts,
     getProductById,
+    loadMoreProducts,
     setProductQuery,
     setCategories,
     setLoading,

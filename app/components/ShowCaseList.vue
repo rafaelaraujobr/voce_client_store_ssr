@@ -1,32 +1,33 @@
 <template>
-  <q-table
-    ref="refProductsTable"
-    :rows="products"
-    row-key="id"
-    grid
-    hide-pagination
-    :pagination="pagination"
-    card-container-class="q-col-gutter-md"
+  <q-infinite-scroll
+    ref="scrollTargetRef"
+    :offset="800"
+    debounce="500"
+    @load="onScroll"
   >
-    <template #item="props">
-      <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="row q-col-gutter-md full-width">
+      <div
+        v-for="product in products"
+        :key="product.id"
+        class="col-xs-12 col-sm-6 col-md-3"
+      >
         <q-card
           flat
           bordered
           class="cursor-pointer product-card border-default"
           role="button"
-          :aria-label="`Ver produto ${props.row.name}`"
+          :aria-label="`Ver produto ${product.name}`"
           tabindex="0"
-          @click="navigateToProduct(props.row)"
-          @keydown.enter="navigateToProduct(props.row)"
-          @keydown.space="navigateToProduct(props.row)"
+          @click="navigateToProduct(product)"
+          @keydown.enter="navigateToProduct(product)"
+          @keydown.space="navigateToProduct(product)"
         >
           <q-card-section
             class="row q-pa-none q-ma-none justify-center items-center"
           >
             <div class="col-4 col-md-12 bg-default q-py-sm">
               <q-img
-                :src="props.row.image"
+                :src="product.image"
                 fit="contain"
                 spinner-color="primary"
                 class="product-image"
@@ -48,13 +49,13 @@
               <q-item>
                 <q-item-section>
                   <q-item-label lines="2" class="q-mb-sm text-grey-6">{{
-                    props.row?.name
+                    product?.name
                   }}</q-item-label>
                   <div
                     v-if="
-                      props.row.price &&
-                      props.row.price_discount &&
-                      props.row.price_discount < props.row.price
+                      product.price &&
+                      product.price_discount &&
+                      product.price_discount < product.price
                     "
                   >
                     <q-item-label
@@ -62,25 +63,25 @@
                       class="text-subtitle1 text-negative"
                       style="text-decoration: line-through"
                     >
-                      {{ numberToReal(props.row?.price) }}</q-item-label
+                      {{ numberToReal(product?.price) }}</q-item-label
                     >
                     <div class="row">
                       <q-item-label lines="2" class="text-h5 text-weight-bold">
                         {{
-                          numberToReal(props.row?.price_discount)
+                          numberToReal(product?.price_discount)
                         }}</q-item-label
                       >
                     </div>
                   </div>
                   <div v-else>
                     <q-item-label lines="2" class="text-h5 text-weight-bold">
-                      {{ numberToReal(props.row?.price) }}</q-item-label
+                      {{ numberToReal(product?.price) }}</q-item-label
                     >
                   </div>
                   <div
                     v-if="
-                      props.row?.installments &&
-                      props.row.installments.installment > 2
+                      product?.installments &&
+                      product.installments.installment > 2
                     "
                     class="text-grey-6 text-caption"
                   >
@@ -88,8 +89,8 @@
                     sem juros de
                     <b>{{
                       numberToReal(
-                        (props.row.installments.value /
-                          props.row.installments.installment) *
+                        (product.installments.value /
+                          product.installments.installment) *
                           3
                       )
                     }}</b>
@@ -99,9 +100,9 @@
             </div>
             <q-badge
               v-if="
-                props.row.price &&
-                props.row.price_discount &&
-                props.row.price_discount < props.row.price
+                product.price &&
+                product.price_discount &&
+                product.price_discount < product.price
               "
               :style="{
                 backgroundColor: '#FFC107',
@@ -112,27 +113,32 @@
               class="text-subtitle1 text-weight-bold absolute-top-left"
               >-
               {{
-                getDiscountPercent(props.row.price, props.row.price_discount)
+                getDiscountPercent(product.price, product.price_discount)
               }}%</q-badge
             >
           </q-card-section>
         </q-card>
       </div>
-    </template>
-  </q-table>
+    </div>
+    <div
+      v-if="isLoadingMore"
+      class="row justify-center items-center q-mt-md q-py-md"
+    >
+      <q-spinner-dots color="primary" size="40px" />
+      <span class="q-ml-sm text-grey-6">Carregando mais produtos...</span>
+    </div>
 
-  <div v-if="!loadingProducts" class="row justify-center items-center q-mt-md">
-    <q-pagination
-      v-model="pagination.page"
-      :max="maxPages"
-      :max-pages="6"
-      active-design="unelevated"
-      active-color="primary"
-      color="primary"
-      direction-links
-      gutter="sm"
-    />
-  </div>
+    <div
+      v-else-if="
+        !loadingProducts &&
+        products.length >= totalProducts &&
+        products.length > 0
+      "
+      class="row justify-center items-center q-mt-md q-py-md"
+    >
+      <span class="text-grey-6">Todos os produtos foram carregados</span>
+    </div>
+  </q-infinite-scroll>
 </template>
 
 <script setup lang="ts">
@@ -147,22 +153,17 @@ const {
   productQuery,
   setProductQuery,
   loadingProducts,
+  loadMoreProducts,
 } = useShop();
 
-const refProductsTable = ref<HTMLElement | null>(null);
+const isLoadingMore = ref(false);
 const route = useRoute();
 const slug = computed(() => route.params.slug);
-const pagination = reactive({
-  sort: "desc",
-  descending: false,
-  page: 1,
-  rowsPerPage: 24,
-});
-
-const maxPages = computed(() =>
-  Math.ceil(totalProducts.value / productQuery.value.take)
-);
-function getDiscountPercent(price: number, priceDiscount: number) {
+const scrollTargetRef = ref<any>(null);
+function getDiscountPercent(
+  price: number,
+  priceDiscount: number
+): string | number {
   if (!price || !priceDiscount || priceDiscount >= price) return 0;
   const percent = 100 - (priceDiscount / price) * 100;
   return formatDiscount(percent);
@@ -172,11 +173,29 @@ function navigateToProduct(product: Product) {
   navigateTo(`/in/${slug.value}/${product.id}`);
 }
 
+async function onScroll(_: number, done: () => void) {
+  if (
+    isLoadingMore.value ||
+    loadingProducts.value ||
+    products.value.length >= totalProducts.value
+  ) {
+    done();
+    return;
+  }
+
+  try {
+    isLoadingMore.value = true;
+    await loadMoreProducts(slug.value as string);
+  } finally {
+    isLoadingMore.value = false;
+    done();
+  }
+}
+
 watch(
-  () => pagination.page,
-  async (newPage) => {
-    const skip = (newPage - 1) * productQuery.value.take;
-    setProductQuery({ ...productQuery.value, skip });
+  () => slug.value,
+  async () => {
+    setProductQuery({ ...productQuery.value, skip: 0 });
     await getProducts(slug.value as string);
   }
 );
@@ -186,5 +205,4 @@ onMounted(async () => {
 });
 </script>
 
-<style lang="sass">
-</style>
+<style lang="sass"></style>
