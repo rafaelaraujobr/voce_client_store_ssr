@@ -7,7 +7,7 @@ export const useShopStore = defineStore("shop", () => {
   const product = ref<Product | null>(null);
   const productQuery = ref<ProductQuery>({
     search: "",
-    take: 12,
+    take: 24,
     skip: 0,
     orderBy: "created_at",
     order: "desc",

@@ -1,55 +1,57 @@
 <template>
   <q-layout view="lHh LpR lFf">
     <q-header class="text-dark backdrop-blur bg-white" bordered>
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-img
-            :src="shop?.logotipo"
-            height="40px"
-            width="100px"
-            spinner-color="primary"
-            spinner-size="82px"
-            fit="contain"
-          />
-        </q-toolbar-title>
-        <div class="row items-center q-gutter-x-sm">
-          <q-input
-            v-model="search"
-            placeholder="O que você esta buscando?"
-            color="primary"
-            outlined
-            dense
-            style="min-width: 300px"
-          >
-            <template #append>
-              <q-icon name="eva-search-outline" color="primary" />
-            </template>
-          </q-input>
-          <q-btn
-            color="primary"
-            label="Entrar"
-            icon="mdi-account-outline"
-            flat
-            padding="sm md"
-            class="text-weight-medium"
-          />
-          <q-btn
-            color="primary"
-            label="Criar conta"
-            flat
-            padding="sm md"
-            class="text-weight-medium"
-          />
-          <q-btn
-            color="primary"
-            label="Carrinho"
-            icon="mdi-cart-outline"
-            flat
-            padding="sm md"
-            class="text-weight-medium"
-          />
-        </div>
-      </q-toolbar>
+      <div class="wrapper">
+        <q-toolbar>
+          <q-toolbar-title>
+            <q-img
+              :src="shop?.logotipo"
+              height="40px"
+              width="100px"
+              spinner-color="primary"
+              spinner-size="82px"
+              fit="contain"
+            />
+          </q-toolbar-title>
+          <div class="row items-center q-gutter-x-sm">
+            <q-input
+              v-model="search"
+              placeholder="O que você esta buscando?"
+              color="primary"
+              outlined
+              dense
+              style="min-width: 300px"
+            >
+              <template #append>
+                <q-icon name="eva-search-outline" color="primary" />
+              </template>
+            </q-input>
+            <q-btn
+              color="primary"
+              label="Entrar"
+              icon="mdi-account-outline"
+              flat
+              padding="sm md"
+              class="text-weight-medium"
+            />
+            <q-btn
+              color="primary"
+              label="Criar conta"
+              flat
+              padding="sm md"
+              class="text-weight-medium"
+            />
+            <q-btn
+              color="primary"
+              label="Carrinho"
+              icon="mdi-cart-outline"
+              flat
+              padding="sm md"
+              class="text-weight-medium"
+            />
+          </div>
+        </q-toolbar>
+      </div>
     </q-header>
     <q-page-container>
       <slot />

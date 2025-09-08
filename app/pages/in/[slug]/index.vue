@@ -1,10 +1,14 @@
 <template>
-  <q-page :style-fn="myTweak" padding class="wrapper q-gutter-y-sm">
-    <ShowCaseCategories />
+  <q-page :style-fn="myTweak" padding class="q-gutter-y-sm">
+    <div class="wrapper">
+      <ShowCaseCategories />
+    </div>
     <ShowCaseCarousel />
-    <ShowCaseCampaings />
-    <SkeletonShowCaseList v-show="loadingProducts" />
-    <ShowCaseList v-show="!loadingProducts" />
+    <div class="wrapper">
+      <ShowCaseCampaings />
+      <SkeletonShowCaseList v-show="loadingProducts" />
+      <ShowCaseList v-show="!loadingProducts" />
+    </div>
   </q-page>
 </template>
 
