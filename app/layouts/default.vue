@@ -74,7 +74,7 @@
 
 <script setup lang="ts">
 import { useShop } from "~/composables/shop.composable";
-import { useTenantSlug } from "~/composables/useTenantSlug";
+import { useTenantSlug } from "~/composables/tenentslug.composable";
 import Footer from "~/components/LayoutFooter.vue";
 const {
   getShopBySlug,
