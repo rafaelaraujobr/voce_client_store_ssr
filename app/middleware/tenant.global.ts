@@ -4,13 +4,24 @@ function getSubdomain(
   reserved: string[] = []
 ): string | null {
   const hostname = (host || "").split(":")[0]?.toLowerCase() || "";
-  const cleanBaseDomain = (baseDomain || "").split(":")[0]?.toLowerCase() || "";
+  // Remove porta, barras e espaços do baseDomain
+  const cleanBaseDomain =
+    (baseDomain || "")
+      .split(":")[0]
+      ?.toLowerCase()
+      .replace(/\/+$/, "") // Remove barras no final
+      .trim() || "";
+
   if (!hostname || !cleanBaseDomain) return null;
+
   const suffix = `.${cleanBaseDomain}`;
   if (!hostname.endsWith(suffix)) return null;
+
   const subdomain = hostname.slice(0, -suffix.length);
   if (!subdomain || reserved.includes(subdomain)) return null;
+
   if (!/^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/.test(subdomain)) return null;
+
   return subdomain;
 }
 
