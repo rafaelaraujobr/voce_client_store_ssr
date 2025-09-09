@@ -1,10 +1,16 @@
 export default defineEventHandler((event) => {
-  console.log("redirect-tenent");
-  const slug = (event as any)?.context?.tenantSlug
+  const slug = event.context?.tenantSlug
   const url = getRequestURL(event)
-  console.log("slug", slug);
-  console.log("url", url);
-  if (slug && url.pathname === '/') {
-    return sendRedirect(event, `/in/${slug}`, 307)
+  const base = process.env.BASE_DOMAIN || 'vocelab.com.br'
+  
+  // Redirecionamento de compatibilidade: /in/{slug} -> {slug}.vocelab.com.br
+  if (url.pathname.startsWith('/in/')) {
+    const pathSlug = url.pathname.split('/')[2]
+    if (pathSlug) {
+      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+      const remainingPath = url.pathname.replace(`/in/${pathSlug}`, '') || '/'
+      const targetUrl = `${protocol}://${pathSlug}.${base}${remainingPath}${url.search}`
+      return sendRedirect(event, targetUrl, 301)
+    }
   }
 })

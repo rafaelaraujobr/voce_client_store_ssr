@@ -1,8 +1,13 @@
 export default defineEventHandler((event) => {
-  console.log("tenent");
   const { host } = getRequestURL(event)
-  console.log("host", host);
-  const base = process.env.BASE_DOMAIN || 'dominio.com.br'
+  const base = process.env.BASE_DOMAIN || 'vocelab.com.br'
   const isSub = host.endsWith(base) && host !== base && !host.startsWith('www.')
-  if (isSub) event.context.tenantSlug = host.replace(`.${base}`, '')
+  if (isSub) {
+    const slug = host.replace(`.${base}`, '')
+    // Lista de subdomínios reservados
+    const reserved = ['www', 'app', 'api', 'static', 'assets']
+    if (!reserved.includes(slug)) {
+      event.context.tenantSlug = slug
+    }
+  }
 })
