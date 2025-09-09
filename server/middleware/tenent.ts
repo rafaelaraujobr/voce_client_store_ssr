@@ -3,7 +3,7 @@ export default defineEventHandler((event) => {
   const host = url.host; // ex: "flashapp.dominio.com.br"
   const pathname = url.pathname || "/";
 
-  const baseDomain = process.env.NUXT_BASE_DOMAIN || "dominio.com.br";
+  const baseDomain = process.env.BASE_DOMAIN || "dominio.com.br";
   const isSub =
     host.endsWith(baseDomain) &&
     host !== baseDomain &&
