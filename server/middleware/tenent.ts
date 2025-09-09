@@ -1,9 +1,9 @@
 export default defineEventHandler((event) => {
   const url = getRequestURL(event);
-  const host = url.host; // ex: "flashapp.dominio.com.br"
+  const host = url.hostname; // ex: "flashapp.vocelab.com.br"
   const pathname = url.pathname || "/";
 
-  const baseDomain = process.env.BASE_DOMAIN || "dominio.com.br";
+  const baseDomain = process.env.BASE_DOMAIN || "vocelab.com.br";
   const isSub =
     host.endsWith(baseDomain) &&
     host !== baseDomain &&
