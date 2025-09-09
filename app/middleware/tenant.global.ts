@@ -37,33 +37,19 @@ export default defineNuxtRouteMiddleware((to) => {
   const sub = getSubdomain(host, baseDomain, reservedSubs);
 
   // 3) Disponibilizar globalmente (state reativo)
-  const tenant = useState<{
-    slug: string | null;
-    host: string;
-    baseDomain: string;
-    reservedSubs: string[];
-  }>("tenant", () => ({
-    slug: null,
-    host: "",
-    baseDomain: "",
-    reservedSubs: [],
-  }));
-  tenant.value = {
-    slug: sub,
-    host: host,
-    baseDomain: baseDomain,
-    reservedSubs: reservedSubs,
-  };
+  const tenant = useState<string | null>("tenant", () => null);
+  tenant.value = sub;
+
   // 4) (Opcional) redirecionar rotas legacy /in/{slug} -> {slug}.domínio
-  if (to.path.startsWith("/in/")) {
-    const slug = to.params?.slug || to.path.split("/")[2];
-    console.log("Redirecionando para ", `https://${slug}.${baseDomain}`);
-    if (slug)
-      return navigateTo(`https://${slug}.${baseDomain}`, {
-        external: true,
-        redirectCode: 301,
-      });
-  }
+  // if (to.path.startsWith("/in/")) {
+  //   const slug = to.params?.slug || to.path.split("/")[2];
+  //   console.log("Redirecionando para ", `https://${slug}.${baseDomain}`);
+  //   if (slug)
+  //     return navigateTo(`https://${slug}.${baseDomain}`, {
+  //       external: true,
+  //       redirectCode: 301,
+  //     });
+  // }
 
   // 5) (Opcional) bloquear páginas que exigem tenant
   if (!sub && to.meta?.requiresTenant) {

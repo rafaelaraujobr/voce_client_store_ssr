@@ -7,7 +7,7 @@ export const useShopStore = defineStore("shop", () => {
   const route = useRoute();
   const shop = ref<Shop | null>(null);
   const slug = ref<string | null>(
-    tenant.value?.slug || (route.params?.slug as string)
+    tenant.value || (route.params?.slug as string)
   );
   const products = ref<Product[]>([]);
   const product = ref<Product | null>(null);
