@@ -1,10 +1,14 @@
 import { defineStore } from "pinia";
 import type { Shop, Product, ProductQuery, Category } from "~/types/shop.types";
+import { useTenant } from "~/composables/tenent.composable";
 
 export const useShopStore = defineStore("shop", () => {
+  const tenant = useTenant();
   const route = useRoute();
   const shop = ref<Shop | null>(null);
-  const slug = ref<string | null>(route.params.slug as string);
+  const slug = ref<string | null>(
+    tenant.value?.slug || (route.params?.slug as string)
+  );
   const products = ref<Product[]>([]);
   const product = ref<Product | null>(null);
   const productQuery = ref<ProductQuery>({
