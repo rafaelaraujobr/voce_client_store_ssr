@@ -24,7 +24,6 @@ export default defineNuxtRouteMiddleware((to) => {
 
   // 2) Extrair subdomínio
   const sub = getSubdomain(host, baseDomain, reservedSubs);
-  console.log("sub", sub);
 
   // 3) Disponibilizar globalmente (state reativo)
   const tenant = useState<string | null>("tenant", () => null);
