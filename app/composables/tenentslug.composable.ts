@@ -1,7 +1,7 @@
-export const useTenantSlug = () => {
-  const route = useRoute();
-  const ev = import.meta.server ? useRequestEvent() : null;
-  const fromHost = ev?.context?.tenantSlug;
-  const fromRoute = route.params.slug as string | undefined;
-  return fromHost || fromRoute || null;
-};
+export default defineEventHandler((event) => {
+  const { host } = getRequestURL(event)
+  const base = process.env.BASE_DOMAIN || 'vocelab.com.br'
+  const isSub = host.endsWith(base) && host !== base && !host.startsWith('www.')
+  if (isSub) event.context.tenantSlug = host.replace(`.${base}`, '')
+})
+
