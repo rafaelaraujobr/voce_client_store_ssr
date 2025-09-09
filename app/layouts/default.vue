@@ -15,6 +15,15 @@
               class="cursor-pointer"
               @click="navigateTo(`/in/${slug}`)"
             />
+            <q-chip
+              icon="mdi-flask"
+              label="Lab"
+              floating
+              color="primary"
+              text-color="white"
+              dense
+              style="margin-left: -10px; margin-top: -15px"
+            />
           </q-toolbar-title>
           <div class="row items-center q-gutter-x-sm">
             <q-input
