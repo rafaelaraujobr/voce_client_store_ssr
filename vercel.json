@@ -1,0 +1,14 @@
+{
+    "rewrites": [
+      {
+        "source": "/",
+        "has": [{ "type": "host", "value": "(?<slug>[^.]+)\\.vocelab\\.com\\.br" }],
+        "destination": "/in/:slug"
+      },
+      {
+        "source": "/:path*",
+        "has": [{ "type": "host", "value": "(?<slug>[^.]+)\\.vocelab\\.com\\.br" }],
+        "destination": "/in/:slug/:path*"
+      }
+    ]
+  }

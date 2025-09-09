@@ -14,7 +14,7 @@
               alt="Logo"
               class="cursor-pointer"
               @click="navigateTo(`/in/${slug}`)"
-            />
+            /> - {{ slugSubdomain }}
           </q-toolbar-title>
           <div class="row items-center q-gutter-x-sm">
             <q-input
@@ -74,6 +74,7 @@
 
 <script setup lang="ts">
 import { useShop } from "~/composables/shop.composable";
+import { useTenantSlug } from "~/composables/useTenantSlug";
 import Footer from "~/components/LayoutFooter.vue";
 const {
   getShopBySlug,
@@ -83,6 +84,7 @@ const {
   getProducts,
   loadingProducts,
 } = useShop();
+const slugSubdomain = useTenantSlug();
 const search = ref("");
 const route = useRoute();
 const slug = computed(() => route.params.slug);
