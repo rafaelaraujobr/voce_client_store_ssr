@@ -32,6 +32,7 @@ export default defineNuxtRouteMiddleware((to) => {
   // 4) (Opcional) redirecionar rotas legacy /in/{slug} -> {slug}.domínio
   if (to.path.startsWith("/in/")) {
     const slug = to.params?.slug || to.path.split("/")[2];
+    console.log("Redirecionando para ", `https://${slug}.${baseDomain}`);
     if (slug)
       return navigateTo(`https://${slug}.${baseDomain}`, {
         external: true,
@@ -41,6 +42,7 @@ export default defineNuxtRouteMiddleware((to) => {
 
   // 5) (Opcional) bloquear páginas que exigem tenant
   if (!sub && to.meta?.requiresTenant) {
+    console.log("Tenant não encontrado para a rota ", to.path);
     return abortNavigation({
       statusCode: 404,
       statusMessage: "Tenant não encontrado",
