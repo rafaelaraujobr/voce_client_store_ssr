@@ -2,7 +2,9 @@ import { defineStore } from "pinia";
 import type { Shop, Product, ProductQuery, Category } from "~/types/shop.types";
 
 export const useShopStore = defineStore("shop", () => {
+  const route = useRoute();
   const shop = ref<Shop | null>(null);
+  const slug = ref<string | null>(route.params.slug as string);
   const products = ref<Product[]>([]);
   const product = ref<Product | null>(null);
   const productQuery = ref<ProductQuery>({
@@ -19,6 +21,10 @@ export const useShopStore = defineStore("shop", () => {
 
   function setShop(payload: Shop): void {
     shop.value = payload;
+  }
+
+  function setSlug(payload: string): void {
+    slug.value = payload;
   }
 
   function setProducts(payload: Product[]): void {
@@ -54,7 +60,8 @@ export const useShopStore = defineStore("shop", () => {
   }
 
   return {
-    shop, 
+    shop,
+    slug,
     products,
     product,
     productQuery,
@@ -71,5 +78,6 @@ export const useShopStore = defineStore("shop", () => {
     setProductQuery,
     setTotalProducts,
     setCategories,
+    setSlug,
   };
 });

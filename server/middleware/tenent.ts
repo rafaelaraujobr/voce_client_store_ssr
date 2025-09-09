@@ -1,9 +1,21 @@
-import { extractTenantSlug, isValidTenantSlug } from '../utils/tenant';
-
 /**
  * Middleware que extrai e injeta informações do tenant no contexto da requisição
  */
 export default defineEventHandler((event) => {
+<<<<<<< HEAD
+  const { host } = getRequestURL(event)
+  const base = process.env.BASE_DOMAIN || 'vocelab.com.br'
+  const isSub = host.endsWith(base) && host !== base && !host.startsWith('www.')
+  if (isSub) {
+    const slug = host.replace(`.${base}`, '')
+    // Lista de subdomínios reservados
+    const reserved = ['www', 'app', 'api', 'static', 'assets']
+    if (!reserved.includes(slug)) {
+      event.context.tenantSlug = slug
+    }
+  }
+})
+=======
   const { host } = getRequestURL(event);
   const config = useRuntimeConfig();
   const baseDomain = config.baseDomain;
@@ -32,3 +44,4 @@ export default defineEventHandler((event) => {
     });
   }
 });
+>>>>>>> b7fba83f100f8ad5ac9f5be0b4930972840060cc

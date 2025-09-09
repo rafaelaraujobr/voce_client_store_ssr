@@ -15,16 +15,17 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     "nuxt-quasar-ui",
     "@pinia/nuxt",
-    '@vueuse/nuxt',
+    "@vueuse/nuxt",
   ],
   quasar: quasarOptions,
 
   runtimeConfig: {
     apiSecret: process.env.API_SECRET || "",
-    baseDomain: process.env.BASE_DOMAIN || "vocelab.com.br",
     public: {
+      baseDomain: process.env.NUXT_BASE_DOMAIN || "vocelab.com.br",
+      reservedSubs: (process.env.RESERVED_SUBS || 'www,app,api,static,assets')
+      .split(',').map(s => s.trim()),
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:3000",
-      baseDomain: process.env.BASE_DOMAIN || "vocelab.com.br",
     },
   },
 
@@ -32,18 +33,18 @@ export default defineNuxtConfig({
   ssr: true,
   nitro: {
     prerender: {
-      crawlLinks: true
-    }
+      crawlLinks: true,
+    },
   },
-  
+
   // Meta padrão para todas as páginas
   app: {
     head: {
-      charset: 'utf-8',
-      viewport: 'width=device-width, initial-scale=1',
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
       htmlAttrs: {
-        lang: 'pt-BR'
-      }
-    }
-  }
+        lang: "pt-BR",
+      },
+    },
+  },
 });

@@ -1,9 +1,9 @@
 <script setup>
+import { useShop } from "~/composables/shop.composable";
 definePageMeta({
-  layout: 'empty',
+  layout: "empty",
 });
-
-const slug = useTenantSlug();
+const { slug } = useShop();
 </script>
 <template>
   <div

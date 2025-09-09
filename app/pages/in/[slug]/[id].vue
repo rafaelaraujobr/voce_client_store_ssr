@@ -117,10 +117,9 @@
 <script setup lang="ts">
 import ProductCarousel from "~/components/ProductCarousel.vue";
 import { numberToReal } from "~/utils/functions";
-const { getProductById, product, shop } = useShop();
+const { getProductById, product, shop, slug } = useShop();
 const route = useRoute();
 const id = computed(() => route.params.id);
-const slug = computed(() => route.params.slug);
 const skuSelectedId = ref<string | null>(null);
 
 watch(product, () => {

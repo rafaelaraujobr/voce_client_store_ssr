@@ -154,11 +154,10 @@ const {
   setProductQuery,
   loadingProducts,
   loadMoreProducts,
+  slug,
 } = useShop();
 
 const isLoadingMore = ref(false);
-const route = useRoute();
-const slug = computed(() => route.params.slug);
 const scrollTargetRef = ref<any>(null);
 function getDiscountPercent(
   price: number,

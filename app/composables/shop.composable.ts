@@ -12,9 +12,11 @@ export const useShop = () => {
     setCategories,
     setLoading,
     setLoadingProducts,
+    setSlug,
   } = shopStore;
   const {
     shop,
+    slug,
     products,
     product,
     totalProducts,
@@ -83,6 +85,7 @@ export const useShop = () => {
 
   return {
     shop,
+    slug,
     products,
     product,
     totalProducts,
@@ -98,5 +101,6 @@ export const useShop = () => {
     setCategories,
     setLoading,
     setLoadingProducts,
+    setSlug,
   };
 };
