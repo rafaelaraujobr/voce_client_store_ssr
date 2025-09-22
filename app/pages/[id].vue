@@ -112,15 +112,11 @@
       </q-item-section>
     </q-item>
     <q-separator spaced inset />
-    <RelatedProducts />
   </q-page>
 </template>
 <script setup lang="ts">
 import ProductCarousel from "~/components/ProductCarousel.vue";
-import RelatedProducts from "~/components/RelatedProducts.vue";
 import { numberToReal } from "~/utils/functions";
-import { useShop } from "~/composables/shop.composable";
-const { getRelatedProducts } = useShop();
 const { getProductById, product, shop, slug } = useShop();
 const route = useRoute();
 const id = computed(() => route.params.id);
@@ -153,7 +149,6 @@ const skuSelected = computed(() => {
 
 await useLazyAsyncData("product-data", async () => {
   await getProductById(slug.value as string, id.value as string);
-  await getRelatedProducts(id.value as string);
 });
 function myTweak(offset: number): { minHeight: string } {
   return { minHeight: offset ? `calc(100vh - ${offset}px)` : "100vh" };
@@ -198,7 +193,6 @@ function getDiscountPercent(price: number, priceDiscount: number) {
   const percent = 100 - (priceDiscount / price) * 100;
   return formatDiscount(percent);
 }
-
 
 useSeoMeta({
   title: title,

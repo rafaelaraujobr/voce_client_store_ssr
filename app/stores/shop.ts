@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { Shop, Product, ProductQuery, Category } from "~/types/shop.types";
-import { useTenant } from "~/composables/tenent.composable";
+import { useTenant } from "~/composables/tenant.composable";
 
 export const useShopStore = defineStore("shop", () => {
   const tenant = useTenant();
@@ -9,6 +9,8 @@ export const useShopStore = defineStore("shop", () => {
   const slug = ref<string | null>(
     tenant.value || (route.params?.slug as string)
   );
+
+  const relatedProducts = ref<Product[]>([]);
   const products = ref<Product[]>([]);
   const product = ref<Product | null>(null);
   const productQuery = ref<ProductQuery>({
@@ -42,6 +44,9 @@ export const useShopStore = defineStore("shop", () => {
   function setProduct(payload: Product): void {
     product.value = payload;
   }
+  function setRelatedProducts(payload: any[]): void {
+    relatedProducts.value = payload;
+  }
 
   function setProductQuery(payload: ProductQuery): void {
     productQuery.value = payload;
@@ -73,6 +78,7 @@ export const useShopStore = defineStore("shop", () => {
     categories,
     loading,
     loadingProducts,
+    relatedProducts,
     setLoading,
     setLoadingProducts,
     setShop,
@@ -83,5 +89,6 @@ export const useShopStore = defineStore("shop", () => {
     setTotalProducts,
     setCategories,
     setSlug,
+    setRelatedProducts,
   };
 });

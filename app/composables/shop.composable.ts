@@ -13,10 +13,12 @@ export const useShop = () => {
     setLoading,
     setLoadingProducts,
     setSlug,
+    setRelatedProducts,
   } = shopStore;
   const {
     shop,
     slug,
+    relatedProducts,
     products,
     product,
     totalProducts,
@@ -25,8 +27,12 @@ export const useShop = () => {
     loading,
     loadingProducts,
   } = storeToRefs(shopStore);
-  const { getShopBySlugService, getProductsService, getProductByIdService } =
-    useShopService();
+  const {
+    getShopBySlugService,
+    getProductsService,
+    getProductByIdService,
+    getRelatedProductsService,
+  } = useShopService();
 
   async function getShopBySlug(slug: string): Promise<void> {
     try {
@@ -68,6 +74,17 @@ export const useShop = () => {
     }
   }
 
+  async function getRelatedProducts(productId: string): Promise<void> {
+    try {
+      if (!shop.value?.id) return;
+      const response = await getRelatedProductsService(shop.value?.id, productId);
+      setRelatedProducts(response);
+    } catch (error) {
+      console.error("Erro ao buscar produtos relacionados:", error);
+      throw error;
+    }
+  }
+
   async function loadMoreProducts(shopSlug: string): Promise<void> {
     try {
       const currentSkip = productQuery.value.skip + productQuery.value.take;
@@ -93,6 +110,7 @@ export const useShop = () => {
     categories,
     loading,
     loadingProducts,
+    relatedProducts,
     getShopBySlug,
     getProducts,
     getProductById,
@@ -102,5 +120,6 @@ export const useShop = () => {
     setLoading,
     setLoadingProducts,
     setSlug,
+    getRelatedProducts,
   };
 };

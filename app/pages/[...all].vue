@@ -1,5 +1,5 @@
 <script setup>
-import { useTenant } from "~/composables/tenent.composable";
+import { useTenant } from "~/composables/tenant.composable";
 definePageMeta({
   layout: "empty",
 });

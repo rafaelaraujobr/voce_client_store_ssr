@@ -4,7 +4,7 @@
       <template #separator>
         <q-icon size="1.2em" name="mdi-chevron-right" color="purple" />
       </template>
-      <q-breadcrumbs-el :label="shop?.name" :to="`/in/${slug}`" />
+      <q-breadcrumbs-el :label="shop?.name" :to="`/`" />
       <q-breadcrumbs-el :label="category" />
       <q-breadcrumbs-el
         :label="product?.name"
@@ -112,16 +112,89 @@
       </q-item-section>
     </q-item>
     <q-separator spaced inset />
+    <div class="q-gutter-y-md q-pt-md">
+      <q-list class="rounded-borders">
+        <q-expansion-item default-opened expand-separator>
+          <template #header>
+            <q-item-section side>
+              <q-icon name="mdi-text" color="primary" />
+            </q-item-section>
+            <q-item-section> Descrição do produto </q-item-section>
+          </template>
+          <q-card>
+            <q-card-section>
+              {{ product?.description }}
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
+        <q-expansion-item expand-separator>
+          <template #header>
+            <q-item-section side>
+              <q-icon name="mdi-information-outline" color="primary" />
+            </q-item-section>
+            <q-item-section> Caracteristicas </q-item-section>
+          </template>
+          <q-card>
+            <q-card-section> caracteristicas </q-card-section>
+          </q-card>
+        </q-expansion-item>
+        <q-expansion-item expand-separator>
+          <template #header>
+            <q-item-section side>
+              <q-icon name="mdi-ruler-square" color="primary" />
+            </q-item-section>
+            <q-item-section> Dimensões </q-item-section>
+          </template>
+          <q-card>
+            <q-card-section> dimensões </q-card-section>
+          </q-card>
+        </q-expansion-item>
+      </q-list>
+      <q-list class="rounded-borders">
+        <q-expansion-item expand-separator>
+          <template #header>
+            <q-item-section side>
+              <q-icon name="mdi-check-decagram-outline" color="primary" />
+            </q-item-section>
+            <q-item-section> Compra segura </q-item-section>
+          </template>
+          <q-card>
+            <q-card-section>compra segura </q-card-section>
+          </q-card>
+        </q-expansion-item>
+        <q-expansion-item expand-separator>
+          <template #header>
+            <q-item-section side>
+              <q-icon name="mdi-lock-check-outline" color="primary" />
+            </q-item-section>
+            <q-item-section> Pagamento segura </q-item-section>
+          </template>
+          <q-card>
+            <q-card-section> Pagamento seguro </q-card-section>
+          </q-card>
+        </q-expansion-item>
+        <q-expansion-item expand-separator>
+          <template #header>
+            <q-item-section side>
+              <q-icon name="mdi-lock-check-outline" color="primary" />
+            </q-item-section>
+            <q-item-section> Politica de troca e devolução </q-item-section>
+          </template>
+          <q-card>
+            <q-card-section> Politica de troca e devolução </q-card-section>
+          </q-card>
+        </q-expansion-item>
+      </q-list>
+    </div>
+    <q-separator spaced inset />
     <RelatedProducts />
   </q-page>
 </template>
 <script setup lang="ts">
 import ProductCarousel from "~/components/ProductCarousel.vue";
 import RelatedProducts from "~/components/RelatedProducts.vue";
-import { numberToReal } from "~/utils/functions";
-import { useShop } from "~/composables/shop.composable";
-const { getRelatedProducts } = useShop();
-const { getProductById, product, shop, slug } = useShop();
+import { numberToReal, formatDiscount } from "~/utils/functions";
+const { getProductById, getRelatedProducts, product, shop, slug } = useShop();
 const route = useRoute();
 const id = computed(() => route.params.id);
 const skuSelectedId = ref<string | null>(null);
@@ -151,10 +224,16 @@ const skuSelected = computed(() => {
   return null;
 });
 
-await useLazyAsyncData("product-data", async () => {
+const { refresh } = await useLazyAsyncData(`product-${id.value}`, async () => {
   await getProductById(slug.value as string, id.value as string);
   await getRelatedProducts(id.value as string);
 });
+
+watch(id, async (newId, oldId) => {
+  console.log(newId, oldId);
+  if (newId && newId !== oldId) await refresh();
+});
+
 function myTweak(offset: number): { minHeight: string } {
   return { minHeight: offset ? `calc(100vh - ${offset}px)` : "100vh" };
 }
@@ -198,7 +277,6 @@ function getDiscountPercent(price: number, priceDiscount: number) {
   const percent = 100 - (priceDiscount / price) * 100;
   return formatDiscount(percent);
 }
-
 
 useSeoMeta({
   title: title,

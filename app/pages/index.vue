@@ -14,11 +14,11 @@
 
 <script setup lang="ts">
 import { useShop } from "~/composables/shop.composable";
-import SkeletonShowCaseList from "~/components/SkeletonShowCaseList.vue";
-import ShowCaseList from "~/components/ShowCaseList.vue";
-import ShowCaseCarousel from "~/components/ShowCaseCarousel.vue";
-import ShowCaseCampaings from "~/components/ShowCaseCampaings.vue";
-import ShowCaseCategories from "~/components/ShowCaseCategories.vue";
+import SkeletonShowCaseList from "~/components/showcase/ShowCaseSkeletonList.vue";
+import ShowCaseList from "~/components/showcase/ShowCaseList.vue";
+import ShowCaseCarousel from "~/components/showcase/ShowCaseCarousel.vue";
+import ShowCaseCampaings from "~/components/showcase/ShowCaseCampaings.vue";
+import ShowCaseCategories from "~/components/showcase/ShowCaseCategories.vue";
 const { loadingProducts } = useShop();
 
 function myTweak(offset: number): { minHeight: string } {

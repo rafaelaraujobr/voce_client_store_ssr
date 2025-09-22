@@ -39,6 +39,11 @@ export interface Product {
   installments?: ProductInstallment;
   category_id?: string;
   shop_id: string;
+  company?: {
+    id: string;
+    name: string;
+    logotipo: string;
+  };
   created_at: string;
   updated_at: string;
 }

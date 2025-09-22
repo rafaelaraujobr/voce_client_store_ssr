@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh LpR lFf">
-    <q-header class="text-dark backdrop-blur bg-white" bordered>
+    <q-header class="text-dark backdrop-blur bg-white" >
       <div class="wrapper">
         <q-toolbar>
           <q-toolbar-title>
@@ -13,7 +13,7 @@
               fit="contain"
               alt="Logo"
               class="cursor-pointer"
-              @click="navigateTo(`/in/${slug}`)"
+              @click="navigateTo(`/`)"
             />
             <q-chip
               icon="mdi-flask"

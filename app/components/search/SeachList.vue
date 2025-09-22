@@ -9,7 +9,7 @@
       <div
         v-for="product in products"
         :key="product.id"
-        class="col-xs-12 col-sm-6 col-md-3"
+        class="col-xs-12 col-sm-6 col-md-4"
       >
         <q-card
           flat
@@ -116,6 +116,17 @@
                 getDiscountPercent(product.price, product.price_discount)
               }}%</q-badge
             >
+            <q-btn
+              color="primary"
+              icon="mdi-cart-plus"
+              class="absolute-top-right"
+              flat
+              dense
+              :style="{
+                top: '8px',
+                right: '8px'
+              }"
+            />
           </q-card-section>
         </q-card>
       </div>
@@ -169,7 +180,7 @@ function getDiscountPercent(
 }
 
 function navigateToProduct(product: Product) {
-  navigateTo(`/in/${slug.value}/${product.id}`);
+  navigateTo(`/product/${product.id}`);
 }
 
 async function onScroll(_: number, done: () => void) {

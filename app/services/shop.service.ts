@@ -29,9 +29,14 @@ export const useShopService = () => {
     return $api<any>(`/products/store/${shopSlug}/${productId}`);
   }
 
+  async function getRelatedProductsService(shopId: string, productId: string): Promise<any[]> {
+    return $api<any[]>(`products/related/${shopId}/${productId}`);
+  }
+
   return {
     getShopBySlugService,
     getProductsService,
     getProductByIdService,
+    getRelatedProductsService,
   };
 };
