@@ -13,3 +13,17 @@ export const formatDiscount = (discount: number): string => {
   if (discount >= 1) return Math.floor(discount).toString();
   else return discount.toFixed(1).replace(".", ",");
 };
+
+export function cleanQuery<T extends Record<string, any>>(
+  query: T
+): Record<string, any> {
+  return Object.fromEntries(
+    Object.entries(query).filter(
+      ([_, value]) =>
+        value !== undefined &&
+        value !== "" &&
+        value !== "undefined" &&
+        value !== null
+    )
+  );
+}

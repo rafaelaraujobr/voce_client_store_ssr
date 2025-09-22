@@ -1,4 +1,5 @@
 import { useShopService } from "~/services/shop.service";
+import { cleanQuery } from "~/utils/functions";
 
 export const useShop = () => {
   const shopStore = useShopStore();
@@ -14,6 +15,7 @@ export const useShop = () => {
     setLoadingProducts,
     setSlug,
     setRelatedProducts,
+    setProductFilters,
   } = shopStore;
   const {
     shop,
@@ -26,6 +28,7 @@ export const useShop = () => {
     categories,
     loading,
     loadingProducts,
+    producFilters,  
   } = storeToRefs(shopStore);
   const {
     getShopBySlugService,
@@ -50,7 +53,7 @@ export const useShop = () => {
   async function getProducts(shopSlug: string): Promise<void> {
     try {
       setLoadingProducts(true);
-      const response = await getProductsService(shopSlug, productQuery.value);
+      const response = await getProductsService(shopSlug, { ...productQuery.value, ...cleanQuery(producFilters.value) });
       setProducts(response?.records || []);
       setTotalProducts(response?.count || 0);
     } catch (error) {
@@ -111,6 +114,7 @@ export const useShop = () => {
     loading,
     loadingProducts,
     relatedProducts,
+    producFilters,
     getShopBySlug,
     getProducts,
     getProductById,
@@ -121,5 +125,6 @@ export const useShop = () => {
     setLoadingProducts,
     setSlug,
     getRelatedProducts,
+    setProductFilters,
   };
 };

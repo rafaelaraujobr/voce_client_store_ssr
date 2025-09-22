@@ -13,6 +13,9 @@ export const useShopStore = defineStore("shop", () => {
   const relatedProducts = ref<Product[]>([]);
   const products = ref<Product[]>([]);
   const product = ref<Product | null>(null);
+  const producFilters = ref({
+    categories: "undefined",
+  });
   const productQuery = ref<ProductQuery>({
     search: "",
     take: 24,
@@ -44,6 +47,11 @@ export const useShopStore = defineStore("shop", () => {
   function setProduct(payload: Product): void {
     product.value = payload;
   }
+
+  function setProductFilters(payload: any): void {
+    producFilters.value = payload;
+  }
+
   function setRelatedProducts(payload: any[]): void {
     relatedProducts.value = payload;
   }
@@ -79,6 +87,7 @@ export const useShopStore = defineStore("shop", () => {
     loading,
     loadingProducts,
     relatedProducts,
+    producFilters,
     setLoading,
     setLoadingProducts,
     setShop,
@@ -90,5 +99,6 @@ export const useShopStore = defineStore("shop", () => {
     setCategories,
     setSlug,
     setRelatedProducts,
+    setProductFilters,
   };
 });
