@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { useShop } from "~/composables/shop.composable";
 import SkeletonShowCaseList from "~/components/showcase/ShowCaseSkeletonList.vue";
-import ShowCaseList from "~/components/ShowCaseList.vue";
+import ShowCaseList from "~/components/showcase/ShowCaseList.vue";
 import ShowCaseCarousel from "~/components/showcase/ShowCaseCarousel.vue";
 import ShowCaseCampaings from "~/components/showcase/ShowCaseCampaings.vue";
 import ShowCaseCategories from "~/components/showcase/ShowCaseCategories.vue";
