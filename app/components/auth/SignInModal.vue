@@ -44,6 +44,7 @@
           </q-input>
           <q-btn
             label="Entrar"
+            loading="loading"
             color="primary"
             type="submit"
             padding="sm md"
@@ -88,6 +89,7 @@ const modalSignIn = computed<boolean>(() => route.query.modal === "signin");
 const email = ref<string>("");
 const password = ref<string>("");
 const showPassword = ref<boolean>(false);
+const loading = ref<boolean>(false);
 async function closeModal() {
   const currentQuery = { ...route.query };
   delete currentQuery.modal;
@@ -97,8 +99,10 @@ async function closeModal() {
   });
 }
 function handleSubmit() {
-  console.log(email.value, password.value);
-  alert("Login realizado com sucesso");
+  loading.value = true;
+  setTimeout(() => {
+    loading.value = false;
+  }, 2000);
 }
 function togglePassword() {
   showPassword.value = !showPassword.value;
