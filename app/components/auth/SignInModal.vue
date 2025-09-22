@@ -44,7 +44,7 @@
           </q-input>
           <q-btn
             label="Entrar"
-            loading="loading"
+            :loading="loading"
             color="primary"
             type="submit"
             padding="sm md"

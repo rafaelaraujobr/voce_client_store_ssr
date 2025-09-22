@@ -1,10 +1,6 @@
 <template>
-  <q-infinite-scroll
-    ref="scrollTargetRef"
-    :offset="800"
-    debounce="500"
-    @load="onScroll"
-  >
+  <q-infinite-scroll ref="scrollTargetRef" :offset="800" debounce="500">
+    <!-- @load="onScroll" -->
     <div class="row q-col-gutter-md full-width">
       <div
         v-for="product in products"
@@ -124,12 +120,23 @@
               dense
               :style="{
                 top: '8px',
-                right: '8px'
+                right: '8px',
               }"
             />
           </q-card-section>
         </q-card>
       </div>
+    </div>
+    <div class="row justify-center items-center q-mt-md q-py-md">
+      <q-btn
+        v-if="!loadingProducts && products.length < totalProducts"
+        :loading="loadingProducts"
+        color="primary"
+        label="Carregar mais produtos"
+        class="q-mt-md"
+        padding="sm md"
+        @click="loadMoreProducts(slug as string)"
+      />
     </div>
     <div
       v-if="isLoadingMore"
@@ -183,24 +190,24 @@ function navigateToProduct(product: Product) {
   navigateTo(`/product/${product.id}`);
 }
 
-async function onScroll(_: number, done: () => void) {
-  if (
-    isLoadingMore.value ||
-    loadingProducts.value ||
-    products.value.length >= totalProducts.value
-  ) {
-    done();
-    return;
-  }
+// async function onScroll(_: number, done: () => void) {
+//   if (
+//     isLoadingMore.value ||
+//     loadingProducts.value ||
+//     products.value.length >= totalProducts.value
+//   ) {
+//     done();
+//     return;
+//   }
 
-  try {
-    isLoadingMore.value = true;
-    await loadMoreProducts(slug.value as string);
-  } finally {
-    isLoadingMore.value = false;
-    done();
-  }
-}
+//   try {
+//     isLoadingMore.value = true;
+//     await loadMoreProducts(slug.value as string);
+//   } finally {
+//     isLoadingMore.value = false;
+//     done();
+//   }
+// }
 
 watch(
   () => slug.value,
