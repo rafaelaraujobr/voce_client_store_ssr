@@ -83,6 +83,8 @@
 
 <script setup lang="ts">
 import GoogleIcon from "@/assets/images/google-icon.svg";
+import { useShop } from "~/composables/shop.composable";
+const { shop } = useShop();
 const route = useRoute();
 const router = useRouter();
 const modalSignIn = computed<boolean>(() => route.query.modal === "signin");
@@ -107,4 +109,29 @@ function handleSubmit() {
 function togglePassword() {
   showPassword.value = !showPassword.value;
 }
+
+const currentUrl = computed(() => {
+  if (import.meta.client && window?.location) return window.location.href;
+  return `${process.env.SITE_URL || "https://seu-dominio.com"}${
+    route.fullPath
+  }`;
+});
+
+const image = computed(() => shop?.value?.logotipo || "/favicon.ico");
+
+useSeoMeta({
+  title: `${shop?.value?.name} - Acessar conta`,
+  description: "Acesse sua conta para continuar com sua compra",
+  ogTitle: `${shop?.value?.name} - Acessar conta`,
+  ogDescription: "Acesse sua conta para continuar com sua compra",
+  ogImage: image,
+  ogUrl: currentUrl,
+  ogSiteName: shop?.value?.name,
+  ogType: "website",
+  twitterCard: "summary_large_image",
+  twitterTitle: `${shop?.value?.name} - Acessar conta`,
+  twitterImage: image,
+});
+
+
 </script>
