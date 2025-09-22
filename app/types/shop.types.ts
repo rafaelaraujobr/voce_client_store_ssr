@@ -9,6 +9,7 @@ export interface Shop {
   updated_at: string;
   channels?: Channel[];
   campaigns?: Campaign[];
+  categories?: Category[];
 }
 
 export interface Channel {

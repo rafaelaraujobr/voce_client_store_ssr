@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh LpR lFf">
-    <q-header class="text-dark backdrop-blur bg-white" >
+    <q-header class="text-dark backdrop-blur bg-white">
       <div class="wrapper">
         <q-toolbar>
           <q-toolbar-title>
@@ -45,6 +45,7 @@
               flat
               padding="sm md"
               class="text-weight-medium"
+              @click="navigateTo(`${route.path}?modal=signin`)"
             />
             <q-btn
               color="primary"
@@ -65,7 +66,6 @@
         </q-toolbar>
       </div>
     </q-header>
-
     <q-page-container>
       <slot />
       <q-page-scroller
@@ -78,12 +78,15 @@
       </q-page-scroller>
       <Footer />
     </q-page-container>
+    <SignInModal />
   </q-layout>
 </template>
 
 <script setup lang="ts">
 import Footer from "~/components/LayoutFooter.vue";
+import SignInModal from "~/components/auth/SignInModal.vue";
 import { useShop } from "~/composables/shop.composable";
+const route = useRoute();
 const {
   getShopBySlug,
   shop,
@@ -94,8 +97,6 @@ const {
   slug,
 } = useShop();
 const search = ref("");
-const route = useRoute();
-
 watch(slug, async (newVal) => {
   if (newVal && shop.value === null) await getShopBySlug(newVal as string);
 });
