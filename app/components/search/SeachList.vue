@@ -1,5 +1,35 @@
 <template>
+  <div class="row items-center q-mb-md justify-between">
+    <div class="col-auto">
+      <q-item>
+        <q-item-section>
+          <q-item-label class="text-h6 text-weight-medium"
+            >Resultados</q-item-label
+          >
+          <q-item-label class="text-grey-6 text-caption row items-center"
+            ><div class="text-weight-bold text-h6 q-mr-sm text-dark">
+              {{ totalProducts }}
+            </div>
+            produtos encontrados</q-item-label
+          >
+        </q-item-section>
+      </q-item>
+    </div>
+    <div class="col-auto text-right">
+      <q-select
+        v-model="orderBySelected"
+        :options="orderByOptions"
+        label="Ordenar por"
+        map-options
+        emit-value
+        dense
+        outlined
+        style="min-width: 200px"
+      />
+    </div>
+  </div>
   <q-infinite-scroll
+    v-if="products.length > 0"
     ref="scrollTargetRef"
     :offset="800"
     debounce="500"
@@ -124,7 +154,7 @@
               dense
               :style="{
                 top: '8px',
-                right: '8px'
+                right: '8px',
               }"
             />
           </q-card-section>
@@ -150,6 +180,9 @@
       <span class="text-grey-6">Todos os produtos foram carregados</span>
     </div>
   </q-infinite-scroll>
+  <div v-else class="row justify-center items-center q-mt-md q-py-md">
+    <span class="text-grey-6">Nenhum produto encontrado</span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -170,6 +203,13 @@ const {
 
 const isLoadingMore = ref(false);
 const scrollTargetRef = ref<any>(null);
+const orderBySelected = ref<string>("created_at|desc");
+const orderByOptions = ref([
+  { label: "Mais recentes", value: "created_at|desc" },
+  { label: "Mais antigos", value: "created_at|asc" },
+  { label: "Menor preço", value: "price|asc" },
+  { label: "Maior preço", value: "price|desc" },
+]);
 function getDiscountPercent(
   price: number,
   priceDiscount: number
@@ -178,6 +218,18 @@ function getDiscountPercent(
   const percent = 100 - (priceDiscount / price) * 100;
   return formatDiscount(percent);
 }
+
+watch(orderBySelected, () => {
+  if (!orderBySelected.value) return;
+  const [orderBy, order] = orderBySelected.value.split("|");
+  setProductQuery({
+    ...productQuery.value,
+    orderBy: orderBy || "created_at",
+    order: order as "asc" | "desc",
+    skip: 0,
+  });
+  getProducts(slug.value as string);
+});
 
 function navigateToProduct(product: Product) {
   navigateTo(`/product/${product.id}`);
@@ -210,7 +262,24 @@ watch(
   }
 );
 
+// Watch para mudanças na busca
+watch(
+  () => productQuery.value.search,
+  async (newSearch, oldSearch) => {
+    if (newSearch !== oldSearch) {
+      setProductQuery({ ...productQuery.value, skip: 0 });
+      await getProducts(slug.value as string);
+    }
+  }
+);
+
 onMounted(async () => {
+  if (!productQuery.value.search) return;
+  setProductQuery({
+    ...productQuery.value,
+    skip: 0,
+    search: productQuery.value.search,
+  });
   await getProducts(slug.value as string);
 });
 </script>

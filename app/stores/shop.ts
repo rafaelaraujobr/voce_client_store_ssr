@@ -9,7 +9,7 @@ export const useShopStore = defineStore("shop", () => {
   const slug = ref<string | null>(
     tenant.value || (route.params?.slug as string)
   );
-
+  const search = ref<string | null>(route.query.search as string || "");
   const relatedProducts = ref<Product[]>([]);
   const products = ref<Product[]>([]);
   const product = ref<Product | null>(null);
@@ -30,6 +30,10 @@ export const useShopStore = defineStore("shop", () => {
 
   function setShop(payload: Shop): void {
     shop.value = payload;
+  }
+
+  function setSearch(payload: string): void {
+    search.value = payload;
   }
 
   function setSlug(payload: string): void {
@@ -88,6 +92,8 @@ export const useShopStore = defineStore("shop", () => {
     loadingProducts,
     relatedProducts,
     producFilters,
+    search,
+    setSearch,
     setLoading,
     setLoadingProducts,
     setShop,

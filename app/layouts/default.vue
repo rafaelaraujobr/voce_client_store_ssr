@@ -1,10 +1,11 @@
 <template>
   <q-layout view="lHh LpR lFf">
-    <q-header class="text-dark backdrop-blur bg-white">
+    <q-header class="text-dark backdrop-blur bg-white" bordered>
       <div class="wrapper">
         <q-toolbar>
           <q-toolbar-title>
             <q-img
+              v-if="shop?.logotipo"
               :src="shop?.logotipo"
               height="40px"
               width="100px"
@@ -13,29 +14,33 @@
               fit="contain"
               alt="Logo"
               class="cursor-pointer"
-              @click="navigateTo(`/`)"
+              @click="navigateToHome"
             />
-            <q-chip
-              icon="mdi-flask"
-              label="Lab"
-              floating
-              color="primary"
-              text-color="white"
-              dense
-              style="margin-left: -10px; margin-top: -15px"
-            />
+            <div
+              v-else
+              class="link-decoration-none text-weight-bold text-dark cursor-pointer"
+              @click="navigateToHome"
+            >
+              {{ shop?.name }}
+            </div>
           </q-toolbar-title>
           <div class="row items-center q-gutter-x-sm">
             <q-input
-              v-model="search"
+              v-model="currentSearch"
               placeholder="O que você esta buscando?"
               color="primary"
               outlined
               dense
               style="min-width: 300px"
+              @keyup.enter="navigateToSearch(currentSearch as string)"
             >
               <template #append>
-                <q-icon name="eva-search-outline" color="primary" />
+                <q-icon
+                  name="eva-search-outline"
+                  class="cursor-pointer"
+                  color="primary"
+                  @click="navigateToSearch(currentSearch as string)"
+                />
               </template>
             </q-input>
             <q-btn
@@ -92,25 +97,45 @@ const {
   shop,
   setProductQuery,
   productQuery,
-  getProducts,
   loadingProducts,
   slug,
+  search,
+  setSearch,
 } = useShop();
-const search = ref("");
+
 watch(slug, async (newVal) => {
   if (newVal && shop.value === null) await getShopBySlug(newVal as string);
 });
 
-watch(search, async (newVal) => {
-  if (newVal) {
-    setProductQuery({
-      ...productQuery.value,
-      search: newVal,
-    });
-    await getProducts(slug.value as string);
-    navigateTo(`/in/${slug.value}?search=${newVal}`);
-  }
+const currentSearch = ref<string | null>(search.value);
+
+watch(search, (newVal) => {
+  currentSearch.value = newVal;
 });
+
+watch(
+  () => route.query.search,
+  (newVal) => {
+    if (newVal && newVal !== search.value) {
+      setSearch(newVal as string);
+      currentSearch.value = newVal as string;
+    }
+  }
+);
+
+async function navigateToSearch(value: string) {
+  setSearch(value);
+  setProductQuery({ ...productQuery.value, search: value, skip: 0 });
+  if (value) navigateTo(`/search?search=${value}`);
+  else navigateTo("/search");
+}
+
+function navigateToHome() {
+  setSearch("");
+  setProductQuery({ ...productQuery.value, search: "", skip: 0 });
+  currentSearch.value = "";
+  navigateTo("/");
+}
 
 const currentUrl = computed(() => {
   if (import.meta.client && window?.location) return window.location.href;

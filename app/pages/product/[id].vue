@@ -230,7 +230,6 @@ const { refresh } = await useLazyAsyncData(`product-${id.value}`, async () => {
 });
 
 watch(id, async (newId, oldId) => {
-  console.log(newId, oldId);
   if (newId && newId !== oldId) await refresh();
 });
 

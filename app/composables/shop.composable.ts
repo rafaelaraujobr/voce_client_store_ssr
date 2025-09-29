@@ -16,6 +16,7 @@ export const useShop = () => {
     setSlug,
     setRelatedProducts,
     setProductFilters,
+    setSearch,
   } = shopStore;
   const {
     shop,
@@ -29,6 +30,7 @@ export const useShop = () => {
     loading,
     loadingProducts,
     producFilters,  
+    search,
   } = storeToRefs(shopStore);
   const {
     getShopBySlugService,
@@ -115,6 +117,7 @@ export const useShop = () => {
     loadingProducts,
     relatedProducts,
     producFilters,
+    search,
     getShopBySlug,
     getProducts,
     getProductById,
@@ -126,5 +129,6 @@ export const useShop = () => {
     setSlug,
     getRelatedProducts,
     setProductFilters,
+    setSearch,
   };
 };

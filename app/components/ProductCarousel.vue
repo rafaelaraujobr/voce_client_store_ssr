@@ -1,7 +1,11 @@
 <template>
-  <q-splitter v-model="splitterModel" style="height: 250px" class="">
+  <q-splitter
+    v-if="images.length > 1"
+    v-model="splitterModel"
+    style="height: 250px"
+  >
     <template #before>
-      <q-tabs v-model="slide" vertical>
+      <q-tabs v-if="images.length > 1" v-model="slide" vertical>
         <q-tab
           v-for="(image, index) in images"
           :key="index"
@@ -13,7 +17,15 @@
             fit="contain"
             class="cursor-pointer"
             :class="slide === index + 1 ? 'product-image' : ''"
-          />
+          >
+            <template #error>
+              <div
+                class="absolute-full flex flex-center bg-secondary text-white text-center"
+                style="max-width: 300px; margin: 0 auto">
+                Imagem indisponível
+              </div>
+            </template>
+          </q-img>
         </q-tab>
       </q-tabs>
     </template>
@@ -44,6 +56,26 @@
       </q-tab-panels>
     </template>
   </q-splitter>
+
+  <q-img
+    v-else
+    :src="images[0] ?? '/favicon.ico	'"
+    fit="contain"
+    class="cursor-pointer"
+    style="height: 220px"
+    placeholder-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZSIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiNhYWEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW08L3RleHQ+Cjwvc3ZnPg=="
+    spinner-size="82px"
+    @click="handleImageClick()"
+  >
+    <template #error>
+      <div
+        class="absolute-full flex flex-center bg-secondary text-white text-center"
+        style="max-width: 300px; margin: 0 auto"
+      >
+        Imagem indisponível
+      </div>
+    </template>
+  </q-img>
   <q-dialog v-model="dialog">
     <q-card style="width: 800px">
       <q-toolbar>

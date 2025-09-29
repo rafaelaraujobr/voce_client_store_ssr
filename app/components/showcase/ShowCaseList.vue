@@ -34,7 +34,8 @@
               >
                 <template #error>
                   <div
-                    class="absolute-full flex flex-center bg-secondary text-white"
+                    class="absolute-full flex flex-center bg-secondary text-white text-center"
+                    style="max-width: 150px; margin: 0 auto"
                   >
                     Imagem indisponível
                   </div>
