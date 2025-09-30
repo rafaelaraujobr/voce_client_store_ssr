@@ -20,6 +20,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { useShop } from "~/composables/shop.composable";
+const { setProductQuery, productQuery, getProducts, slug } = useShop();
 const priceSelected = ref<{ min: number; max: number }[]>([]);
 const optionsPrices = ref([
   {
@@ -54,8 +56,23 @@ const optionsPrices = ref([
     label: "Mais de R$ 501",
     value: {
       min: 501,
-      max: 1000000000,
+      max: 999999999,
     },
   },
 ]);
+
+function parsePriceFilter(value: { min: number; max: number }[]) {
+  const min = value.map((v) => v.min).sort((a, b) => a - b)[0];
+  const max = value.map((v) => v.max).sort((a, b) => b - a)[0];
+  return { minPrice: min, maxPrice: max };
+}
+
+watch(priceSelected, () => {
+  setProductQuery({
+    ...productQuery.value,
+    ...parsePriceFilter(priceSelected.value),
+    skip: 0,
+  });
+  getProducts(slug.value as string);
+});
 </script>
