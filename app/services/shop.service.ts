@@ -33,6 +33,7 @@ export const useShopService = () => {
     return $api<any[]>(`products/related/${shopId}/${productId}`);
   }
 
+
   return {
     getShopBySlugService,
     getProductsService,

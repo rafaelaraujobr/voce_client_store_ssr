@@ -4,6 +4,46 @@
       <q-card flat>
         <q-card-section>
           <q-item-label class="text-weight-bold">Filtros</q-item-label>
+          <div class="q-gutter-x-sm">
+            <q-chip
+              v-for="price in priceApplied"
+              :key="price.value.min"
+              :label="price.label"
+              color="primary-light"
+              text-color="white"
+              removable
+              dense
+              class="q-px-sm"
+              @remove="removePrice(price.value.min, price.value.max)"
+            />
+            <q-chip
+              v-for="category in categoriesApplied"
+              :key="category.id"
+              :label="category.name"
+              color="primary-light"
+              text-color="white"
+              removable
+              dense
+              class="q-px-sm"
+              @remove="removeCategory(category.id)"
+            />
+          </div>
+        </q-card-section>
+        <q-card-section>
+          <q-item-label class="text-weight-bold q-mb-sm"
+            >Categorias</q-item-label
+          >
+          <div class="scroll" style="max-height: 300px">
+            <q-option-group
+              v-model="categoriesSelected"
+              :options="categoriesOptions"
+              option-value="id"
+              option-label="name"
+              color="primary"
+              type="checkbox"
+              keep-color
+            />
+          </div>
         </q-card-section>
         <q-card-section>
           <q-item-label class="text-weight-bold q-mb-sm">Preço</q-item-label>
@@ -21,7 +61,7 @@
 </template>
 <script setup lang="ts">
 import { useShop } from "~/composables/shop.composable";
-const { setProductQuery, productQuery, getProducts, slug } = useShop();
+const { setProductQuery, productQuery, getProducts, slug, shop } = useShop();
 const priceSelected = ref<{ min: number; max: number }[]>([]);
 const optionsPrices = ref([
   {
@@ -35,7 +75,7 @@ const optionsPrices = ref([
     label: "De R$ 51 a R$ 150",
     value: {
       min: 51,
-      max: 100,
+      max: 150,
     },
   },
   {
@@ -67,10 +107,47 @@ function parsePriceFilter(value: { min: number; max: number }[]) {
   return { minPrice: min, maxPrice: max };
 }
 
-watch(priceSelected, () => {
+const categoriesSelected = ref<string[]>([]);
+const categoriesOptions = computed(() => shop.value?.categories || []);
+
+const categoriesApplied = computed(() => {
+  return categoriesOptions.value.filter((category) =>
+    categoriesSelected.value.includes(category.id)
+  );
+});
+
+const priceApplied = computed(() => {
+  return optionsPrices.value.filter((price) =>
+    priceSelected.value.includes(price.value)
+  );
+});
+
+function removeCategory(categoryId: string) {
+  categoriesSelected.value = categoriesSelected.value.filter(
+    (category) => category !== categoryId
+  );
+}
+
+function removePrice(min: number, max: number) {
+  priceSelected.value = priceSelected.value.filter(
+    (price) => price.min !== min || price.max !== max
+  );
+}
+
+watch(priceSelected, (value) => {
   setProductQuery({
     ...productQuery.value,
-    ...parsePriceFilter(priceSelected.value),
+    ...parsePriceFilter(value),
+    skip: 0,
+  });
+  getProducts(slug.value as string);
+});
+
+watch(categoriesSelected, (value) => {
+  if (value.length === 0) return;
+  setProductQuery({
+    ...productQuery.value,
+    categories: value,
     skip: 0,
   });
   getProducts(slug.value as string);

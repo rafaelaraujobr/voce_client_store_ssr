@@ -56,6 +56,9 @@ export interface ProductQuery {
   skip: number;
   orderBy: string;
   order: "asc" | "desc";
+  minPrice?: number;
+  maxPrice?: number;
+  categories?: string[] | string;
 }
 
 // Interface para resposta de listagem de produtos
@@ -73,4 +76,3 @@ export interface Category {
   created_at: string;
   updated_at: string;
 }
-

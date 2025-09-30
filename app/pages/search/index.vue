@@ -1,9 +1,5 @@
 <template>
   <q-page :style-fn="myTweak" padding class="q-gutter-y-sm">
-    <div class="wrapper">
-      <ShowCaseCategories />
-    </div>
-    <q-separator spaced />
     <div class="wrapper row">
       <div v-if="currentSearchTerm" class="col-12">
         <div class="row items-center q-mb-md">
@@ -28,7 +24,6 @@
 <script setup lang="ts">
 import SeachList from "~/components/search/SeachList.vue";
 import FilterList from "~/components/search/FilterList.vue";
-import ShowCaseCategories from "~/components/showcase/ShowCaseCategories.vue";
 import { useShop } from "~/composables/shop.composable";
 
 const route = useRoute();
