@@ -1,5 +1,5 @@
 <template>
-  <q-card v-if="relatedProducts && relatedProducts.length > 0" flat class="related-products">
+  <q-card v-if="relatedProducts && relatedProducts?.length > 0" flat class="related-products">
     <q-card-section>
       <div class="text-h5 text-weight-bold text-center">
         Produtos relacionados

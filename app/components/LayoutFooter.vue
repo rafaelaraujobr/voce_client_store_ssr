@@ -19,12 +19,12 @@
               </div>
               <div class="text-subtitle2 flex gap-1">
                 <router-link
-                  to="/politica-de-privacidade"
+                  to="/privacy-policy"
                   class="link-decoration-none"
                 >
                   Política de privacidade
                 </router-link>
-                <router-link to="/termos-de-uso" class="link-decoration-none">
+                <router-link to="/terms-of-use" class="link-decoration-none">
                   Termos de uso
                 </router-link>
               </div>
@@ -39,21 +39,21 @@
               </div>
               <div class="text-subtitle2 flex gap-1">
                 <router-link
-                  to="/politica-de-privacidade"
+                  to="/privacy-policy"
                   class="link-decoration-none"
                 >
                   Troca e devolução
                 </router-link>
-                <router-link to="/termos-de-uso" class="link-decoration-none">
+                <router-link to="/terms-of-use" class="link-decoration-none">
                   Black Friday
                 </router-link>
-                <router-link to="/termos-de-uso" class="link-decoration-none">
+                <router-link to="/terms-of-use" class="link-decoration-none">
                   Sobre a entrega
                 </router-link>
-                <router-link to="/termos-de-uso" class="link-decoration-none">
+                <router-link to="/terms-of-use" class="link-decoration-none">
                   Quantidade de installments
                 </router-link>
-                <router-link to="/termos-de-uso" class="link-decoration-none">
+                <router-link to="/terms-of-use" class="link-decoration-none">
                   Como fazer uma compra
                 </router-link>
               </div>

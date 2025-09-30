@@ -94,7 +94,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-const images = computed(() => props.product?.skus[0].images);
+const images = computed(() => props.product?.skus[0].images ?? []);
 const slide = ref<number>(1);
 const imageSelected = computed(() => images.value[(slide.value - 1) as number]);
 const props = defineProps<{
