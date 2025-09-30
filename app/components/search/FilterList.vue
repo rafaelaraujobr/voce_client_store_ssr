@@ -144,10 +144,9 @@ watch(priceSelected, (value) => {
 });
 
 watch(categoriesSelected, (value) => {
-  if (value.length === 0) return;
   setProductQuery({
     ...productQuery.value,
-    categories: value,
+    categories: value.length > 0 ? value : undefined,
     skip: 0,
   });
   getProducts(slug.value as string);
