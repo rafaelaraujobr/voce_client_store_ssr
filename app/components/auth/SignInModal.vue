@@ -52,13 +52,13 @@
           />
           <div class="row items-center q-my-md">
             <div class="col-5">
-                <q-separator  />
+              <q-separator />
             </div>
             <div class="col-2">
-               <div class="text-weight-medium text-center">ou</div>
+              <div class="text-weight-medium text-center">ou</div>
             </div>
             <div class="col-5">
-              <q-separator  />
+              <q-separator />
             </div>
           </div>
           <q-btn
@@ -73,7 +73,9 @@
           />
           <div class="text-weight-medium text-center q-mt-md">
             Ainda não tem uma conta?
-            <router-link to="/signup" class="link-decoration-none">Criar conta</router-link>
+            <router-link to="/signup" class="link-decoration-none"
+              >Criar conta</router-link
+            >
           </div>
         </q-form>
       </q-card-section>
@@ -83,8 +85,6 @@
 
 <script setup lang="ts">
 import GoogleIcon from "@/assets/images/google-icon.svg";
-import { useShop } from "~/composables/shop.composable";
-const { shop } = useShop();
 const route = useRoute();
 const router = useRouter();
 const modalSignIn = computed<boolean>(() => route.query.modal === "signin");
@@ -109,29 +109,4 @@ function handleSubmit() {
 function togglePassword() {
   showPassword.value = !showPassword.value;
 }
-
-const currentUrl = computed(() => {
-  if (import.meta.client && window?.location) return window.location.href;
-  return `${process.env.SITE_URL || "https://seu-dominio.com"}${
-    route.fullPath
-  }`;
-});
-
-const image = computed(() => shop?.value?.logotipo || "/favicon.ico");
-
-useSeoMeta({
-  title: `${shop?.value?.name} - Acessar conta`,
-  description: "Acesse sua conta para continuar com sua compra",
-  ogTitle: `${shop?.value?.name} - Acessar conta`,
-  ogDescription: "Acesse sua conta para continuar com sua compra",
-  ogImage: image,
-  ogUrl: currentUrl,
-  ogSiteName: shop?.value?.name,
-  ogType: "website",
-  twitterCard: "summary_large_image",
-  twitterTitle: `${shop?.value?.name} - Acessar conta`,
-  twitterImage: image,
-});
-
-
 </script>

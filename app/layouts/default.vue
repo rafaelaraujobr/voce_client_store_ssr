@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh LpR lFf">
+  <q-layout view="lHr LpR lFf">
     <q-header class="text-dark backdrop-blur bg-white" bordered>
       <div class="wrapper">
         <q-toolbar>
@@ -66,11 +66,41 @@
               flat
               padding="sm md"
               class="text-weight-medium"
-            />
+              :class="{ 'text-weight-bold bg-default': qtdProductsInCart > 0 }"
+              @click="leftDrawerOpen = !leftDrawerOpen"
+            >
+              <q-badge
+                v-if="qtdProductsInCart > 0"
+                class="absolute-top-right"
+                :label="qtdProductsInCart"
+                color="primary"
+              />
+            </q-btn>
           </div>
         </q-toolbar>
       </div>
     </q-header>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      side="right"
+      overlay
+      behavior="desktop"
+      bordered
+      :width="500"
+      class="bg-white"
+    >
+      <q-toolbar class="q-pa-md">
+        <q-toolbar-title> Seu carrinho </q-toolbar-title>
+        <q-btn
+          flat
+          round
+          dense
+          icon="mdi-close"
+          @click="leftDrawerOpen = false"
+        />
+      </q-toolbar>
+      <ShoppingCart />
+    </q-drawer>
     <q-page-container>
       <slot />
       <q-page-scroller
@@ -89,9 +119,12 @@
 
 <script setup lang="ts">
 import Footer from "~/components/LayoutFooter.vue";
+import ShoppingCart from "~/components/ShoppingCart.vue";
 import SignInModal from "~/components/auth/SignInModal.vue";
 import { useShop } from "~/composables/shop.composable";
+import { useCart } from "~/composables/cart.composable";
 const route = useRoute();
+const { getTotalQuantity } = useCart();
 const {
   getShopBySlug,
   shop,
@@ -107,8 +140,12 @@ watch(slug, async (newVal) => {
   if (newVal && shop.value === null) await getShopBySlug(newVal as string);
 });
 
-const currentSearch = ref<string | null>(search.value);
+const qtdProductsInCart = computed(() => {
+  return getTotalQuantity() || 0;
+});
 
+const currentSearch = ref<string | null>(search.value);
+const leftDrawerOpen = ref<boolean>(false);
 watch(search, (newVal) => {
   currentSearch.value = newVal;
 });

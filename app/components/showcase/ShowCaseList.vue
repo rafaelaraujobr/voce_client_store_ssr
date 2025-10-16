@@ -114,6 +114,7 @@
               }}%</q-badge
             >
             <q-btn
+              v-if="!productsInCart.find((p) => p.id === product.id)"
               color="primary"
               icon="mdi-cart-plus"
               class="absolute-top-right"
@@ -123,6 +124,20 @@
                 top: '8px',
                 right: '8px',
               }"
+              @click.stop="addProductToCart(product)"
+            />
+            <q-btn
+              v-else
+              color="negative"
+              icon="mdi-cart-remove"
+              class="absolute-top-right"
+              flat
+              dense
+              :style="{
+                top: '8px',
+                right: '8px',
+              }"
+              @click.stop="removeProductFromCart(product)"
             />
           </q-card-section>
         </q-card>
@@ -164,7 +179,8 @@
 import type { Product } from "~/types/shop.types";
 import { useShop } from "~/composables/shop.composable";
 import { formatDiscount, numberToReal } from "~/utils/functions";
-
+import { useCart } from "~/composables/cart.composable";
+const { addProductToCart, productsInCart, removeProductFromCart } = useCart();
 const {
   products,
   getProducts,
