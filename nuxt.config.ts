@@ -5,6 +5,16 @@ export default defineNuxtConfig({
   css: ["@/assets/styles/quasar-custom.sass"],
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        sass: {
+          quietDeps: true, // Silencia avisos de dependências (como Quasar)
+          silenceDeprecations: ["import"], // Silencia especificamente avisos de @import
+        },
+      },
+    },
+  },
 
   modules: [
     "@nuxt/eslint",
@@ -15,6 +25,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     "nuxt-quasar-ui",
     "@pinia/nuxt",
+    "pinia-plugin-persistedstate/nuxt",
     "@vueuse/nuxt",
   ],
   quasar: quasarOptions,
@@ -23,8 +34,9 @@ export default defineNuxtConfig({
     apiSecret: process.env.API_SECRET || "",
     public: {
       baseDomain: process.env.NUXT_BASE_DOMAIN || "vocelab.com.br",
-      reservedSubs: (process.env.RESERVED_SUBS || 'www,app,api,static,assets')
-      .split(',').map(s => s.trim()),
+      reservedSubs: (process.env.RESERVED_SUBS || "www,app,api,static,assets")
+        .split(",")
+        .map((s) => s.trim()),
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:3000",
     },
   },

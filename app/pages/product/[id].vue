@@ -96,6 +96,7 @@
             text-color="dark"
             class="bg-default"
             icon="mdi-cart-plus"
+            @click="addProductToCart(skuSelected)"
           />
         </q-item-label>
         <q-item-label
@@ -195,6 +196,7 @@ import ProductCarousel from "~/components/ProductCarousel.vue";
 import RelatedProducts from "~/components/RelatedProducts.vue";
 import { numberToReal, formatDiscount } from "~/utils/functions";
 const { getProductById, getRelatedProducts, product, shop, slug } = useShop();
+const { addProductToCart } = useCart();
 const route = useRoute();
 const id = computed(() => route.params.id);
 const skuSelectedId = ref<string | null>(null);
