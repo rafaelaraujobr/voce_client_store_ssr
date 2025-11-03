@@ -38,13 +38,13 @@
           </div>
 
           <!-- Mobile: Apenas ícones essenciais -->
-          <div class="row items-center q-gutter-x-xs gt-md">
+          <!-- <div class="row items-center q-gutter-x-xs gt-md">
             <q-btn flat dense round icon="eva-search-outline" color="primary" @click="showSearchDialog = true" />
             <q-btn flat dense round icon="mdi-cart-outline" color="primary" @click="cartDrawerOpen = !cartDrawerOpen">
               <q-badge v-if="qtdProductsInCart > 0" class="absolute-top-right" :label="qtdProductsInCart"
                 color="primary" floating />
             </q-btn>
-          </div>
+          </div> -->
         </q-toolbar>
       </div>
     </q-header>
