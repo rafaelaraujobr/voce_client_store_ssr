@@ -124,7 +124,7 @@
         <q-btn
           color="primary"
           :label="step === 2 ? 'Finalizar compra' : 'Avançar'"
-          @click="stepper?.next()"
+          @click="handleNextStep()"
         />
         <q-btn
           v-if="step > 1"
@@ -141,7 +141,10 @@
 
 <script setup lang="ts">
 import type { QStepper } from "quasar";
-
+import { useCart } from "~/composables/cart.composable";
+import { useShop } from "~/composables/shop.composable";
+const { shop } = useShop();
+const { productsInCart, getFreight, freight } = useCart();
 const step = ref(1);
 const stepper = ref<InstanceType<typeof QStepper> | null>(null);
 const user = ref({
@@ -159,4 +162,31 @@ const address = ref({
   city: "",
   state: "",
 });
+
+async function handleNextStep(): Promise<void> {
+  if (step.value === 1) {
+    const campaigns = shop.value?.campaigns;
+    const productsCampaigns = productsInCart.value.map(
+      (product) => product.company_id
+    );
+    const selectedCampaigns = campaigns?.filter((campaign) =>
+      productsCampaigns.includes(campaign.id)
+    );
+
+    const payloadFreight = {
+      skus: productsInCart.value.map((product) => {
+        return {
+          sku: product.sku_id,
+          quantity: product.quantity,
+        };
+      }),
+      accountName: selectedCampaigns?.[0]?.name,
+      zipcode: address.value.zipcode, 
+    };
+    await getFreight(payloadFreight);
+    console.log(freight.value);
+  }
+
+  // stepper.value?.next();
+}
 </script>

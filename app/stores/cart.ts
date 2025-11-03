@@ -5,9 +5,16 @@ export const useCartStore = defineStore(
   "cart",
   () => {
     const productsInCart = ref<any[]>([]);
-
+    const freight = ref<any>(null);
+    const loadingFreight = ref<boolean>(false);
+    function setLoadingFreight(loading: boolean): void {
+      loadingFreight.value = loading;
+    }
     function setProductsInCart(products: any[]): void {
       productsInCart.value = products;
+    }
+    function setFreight(freight: any): void {
+      freight.value = freight;
     }
     function addProductToCart(product: any): void {
       if (productsInCart.value.find((p) => p.id === product.id)) {
@@ -50,6 +57,8 @@ export const useCartStore = defineStore(
 
     return {
       productsInCart,
+      freight,
+      loadingFreight,
       setProductsInCart,
       addProductToCart,
       removeProductFromCart,
@@ -59,6 +68,8 @@ export const useCartStore = defineStore(
       getTotalQuantity,
       incrementProductQuantity,
       decrementProductQuantity,
+      setFreight,
+      setLoadingFreight,
     };
   },
   {

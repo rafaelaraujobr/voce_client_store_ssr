@@ -38,6 +38,7 @@ export default defineNuxtConfig({
         .split(",")
         .map((s) => s.trim()),
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:3000",
+      apiGatewayBase: process.env.NUXT_PUBLIC_API_GATEWAY_BASE || "http://localhost:3000",
     },
   },
 

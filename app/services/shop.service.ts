@@ -5,7 +5,7 @@ import type {
 } from "~/types/shop.types";
 
 export const useShopService = () => {
-  const { $api } = useNuxtApp();
+  const { $api, $apiGateway } = useNuxtApp();
 
   async function getShopBySlugService(
     slug: string = "flashapp"
@@ -29,15 +29,30 @@ export const useShopService = () => {
     return $api<any>(`/products/store/${shopSlug}/${productId}`);
   }
 
-  async function getRelatedProductsService(shopId: string, productId: string): Promise<any[]> {
+  async function getRelatedProductsService(
+    shopId: string,
+    productId: string
+  ): Promise<any[]> {
     return $api<any[]>(`products/related/${shopId}/${productId}`);
   }
 
+  async function getFreightService(payload: any): Promise<any> {
+    try {
+      return await $apiGateway<any>(`marketplace/products/delivery`, {
+        method: "POST",
+        body: payload,
+      });
+    } catch (error) {
+      console.error("Erro no getFreightService:", error);
+      throw error;
+    }
+  }
 
   return {
     getShopBySlugService,
     getProductsService,
     getProductByIdService,
     getRelatedProductsService,
+    getFreightService,
   };
 };
