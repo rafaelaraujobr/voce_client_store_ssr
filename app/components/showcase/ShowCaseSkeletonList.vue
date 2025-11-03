@@ -1,10 +1,8 @@
 <template>
   <div class="row q-col-gutter-sm full-width">
-    <div v-for="n in 12" :key="n" class="q-pa-sm col-xs-12 col-sm-6 col-md-3">
+    <div v-for="n in 12" :key="n" class="q-pa-sm col-xs-12 col-sm-6 col-md-4">
       <q-card flat bordered class="product-card">
-        <q-card-section
-          class="row q-pa-none q-ma-none justify-center items-center"
-        >
+        <q-card-section class="row q-pa-none q-ma-none justify-center items-center">
           <div class="col-4 col-md-12 bg-default">
             <q-skeleton height="118px" square />
           </div>

@@ -6,16 +6,16 @@
       </template>
       <q-breadcrumbs-el :label="shop?.name" :to="`/`" />
       <q-breadcrumbs-el :label="category" />
-      <q-breadcrumbs-el
-        :label="product?.name"
-        class="ellipsis"
-        style="max-width: 200px"
-      />
+      <q-breadcrumbs-el :label="product?.name" class="ellipsis" style="max-width: 200px" />
     </q-breadcrumbs>
     <q-item>
       <q-item-section>
         <ProductCarousel :product="product" />
       </q-item-section>
+    </q-item>
+
+    <!-- Informações do produto -->
+    <q-item class="q-mt-md">
       <q-item-section class="q-gutter-y-sm">
         <q-item-label class="row items-center q-gutter-x-sm">
           <q-icon name="mdi-star" color="primary" size="1.2em" />
@@ -45,42 +45,25 @@
             :label="i.model"
           />
         </q-item-label>
-        <q-item-label
-          v-if="skuSelected?.price_discount"
-          class="text-caption text-negative q-pt-sm"
-        >
+        <q-item-label v-if="skuSelected?.price_discount" class="text-caption text-negative q-pt-sm">
           {{ numberToReal(skuSelected.price_discount) }}
         </q-item-label>
-        <q-item-label
-          v-if="skuSelected?.price"
-          class="text-h5 text-weight-bold"
-        >
+        <q-item-label v-if="skuSelected?.price" class="text-h5 text-weight-bold">
           {{ numberToReal(skuSelected.price) }}
           <q-badge
-            v-if="
-              skuSelected.price &&
-              skuSelected.price_discount &&
-              skuSelected.price_discount < skuSelected.price
-            "
+            v-if="skuSelected.price && skuSelected.price_discount && skuSelected.price_discount < skuSelected.price"
             :style="{
               backgroundColor: '#FFC107',
               top: '10px',
             }"
             text-color="black"
             class="text-subtitle1 text-weight-bold"
-            >-
-            {{
-              getDiscountPercent(skuSelected.price, skuSelected.price_discount)
-            }}%</q-badge
-          >
+          >- {{ getDiscountPercent(skuSelected.price, skuSelected.price_discount) }}%</q-badge>
         </q-item-label>
         <q-item-label class="text-caption row items-center no-wrap q-mb-md">
           até {{ installments?.installment }}x de
-          {{ numberToReal(installments?.value) }}</q-item-label
-        >
-        <q-item-label
-          class="text-caption row items-center no-wrap q-gutter-x-md q-pa-none"
-        >
+          {{ numberToReal(installments?.value) }}</q-item-label>
+        <q-item-label class="text-caption row items-center no-wrap q-gutter-x-md q-pa-none">
           <q-btn
             label="Comprar agora"
             color="dark"
@@ -99,16 +82,9 @@
             @click="addProductToCart(skuSelected)"
           />
         </q-item-label>
-        <q-item-label
-          class="text-caption row items-center no-wrap q-gutter-x-sm"
-        >
+        <q-item-label class="text-caption row items-center no-wrap q-gutter-x-sm">
           Vendido por:
-          <q-img
-            :src="product?.company?.logotipo"
-            fit="contain"
-            height="50px"
-            width="80px"
-          />
+          <q-img :src="product?.company?.logotipo" fit="contain" height="50px" width="80px" />
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -242,9 +218,8 @@ function myTweak(offset: number): { minHeight: string } {
 const currentUrl = computed(() => {
   if (import.meta.client && window?.location) return window.location.href;
 
-  return `${process.env.SITE_URL || "https://seu-dominio.com"}${
-    route.fullPath
-  }`;
+  return `${process.env.SITE_URL || "https://seu-dominio.com"}${route.fullPath
+    }`;
 });
 const image = computed(() => {
   const skus = (product.value as any)?.skus;
