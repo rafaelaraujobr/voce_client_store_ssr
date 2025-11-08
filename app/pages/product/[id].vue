@@ -89,7 +89,7 @@
             color="dark"
             unelevated
             padding="sm md"
-            :no-caps="false"
+            @click="buyNow"
           />
           <q-btn
             v-if="!productsInCart.find((p) => p.id === skuSelected.id)"
@@ -108,7 +108,6 @@
             color="negative"
             unelevated
             padding="sm md"
-            :no-caps="false"
             @click="removeProductFromCart(skuSelected)"
           />
         </q-item-label>
@@ -247,6 +246,12 @@ const { refresh } = await useLazyAsyncData(`product-${id.value}`, async () => {
   await getProductById(slug.value as string, id.value as string);
   await getRelatedProducts(id.value as string);
 });
+
+async function buyNow() {
+  await refresh();
+  addProductToCart(skuSelected.value);
+  navigateTo("/checkout");
+}
 
 watch(id, async (newId, oldId) => {
   if (newId && newId !== oldId) await refresh();
