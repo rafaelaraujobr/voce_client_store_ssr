@@ -211,10 +211,85 @@
     </q-step>
 
     <q-step :name="3" title="Pagamento" icon="mdi-comment-plus">
-      Try out different ad text to see what brings in the most customers, and
-      learn how to enhance your ads using features like ad extensions. If you
-      run into any problems with your ads, find out how to tell if they're
-      running and how to resolve approval issues.
+      <div class="text-weight-bold text-subtitle1 q-mb-md">
+        Forma de pagamento
+      </div>
+      <q-card flat bordered>
+        <q-expansion-item
+          expand-separator
+          icon="mdi-credit-card"
+          label="Cartão de crédito"
+        >
+          <q-card flat>
+            <q-form @submit="handleSubmitCreditCard()">
+              <div class="row q-col-gutter-x-sm q-pa-sm">
+                <div class="col-12">
+                  <q-input
+                    v-model="creditCard.number"
+                    :rules="[
+                      (val) => !!val || 'Número do cartão é obrigatório',
+                    ]"
+                    label="Número do cartão"
+                    mask="#### #### #### ####"
+                    type="tel"
+                    outlined
+                    dense
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input
+                    v-model="creditCard.expirationDate"
+                    :rules="[
+                      (val) => !!val || 'Data de expiração é obrigatória',
+                    ]"
+                    label="Data de expiração"
+                    mask="##/##"
+                    type="tel"
+                    outlined
+                    dense
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input
+                    v-model="creditCard.cvv"
+                    :rules="[(val) => !!val || 'CVV é obrigatório']"
+                    label="CVV"
+                    mask="###"
+                    type="tel"
+                    outlined
+                    dense
+                  />
+                </div>
+                <div class="col-12">
+                  <q-input
+                    v-model="creditCard.name"
+                    :rules="[(val) => !!val || 'Nome do titular é obrigatório']"
+                    label="Nome do titular"
+                    type="text"
+                    outlined
+                    dense
+                  />
+                </div>
+                <div class="col-12">
+                  <q-select
+                    v-model="creditCard.installments"
+                    :options="installmentsOptions"
+                    :rules="[(val) => !!val || 'Parcelas é obrigatório']"
+                    label="Parcelas"
+                    type="number"
+                    outlined
+                    dense
+                    min="1"
+                    max="12"
+                    emit-value
+                    map-options
+                  />
+                </div>
+              </div>
+            </q-form>
+          </q-card>
+        </q-expansion-item>
+      </q-card>
       <div class="row q-mt-md items-center justify-between full-width">
         <q-btn
           color="primary"
@@ -247,7 +322,7 @@ import { useShopService } from "~/services/shop.service";
 const { getAddressByZipcodeService } = useShopService();
 const { shop } = useShop();
 const { productsInCart, getFreight, freight, getTotalPrice } = useCart();
-const step = ref(1);
+const step = ref<number>(1);
 const stepper = ref<InstanceType<typeof QStepper> | null>(null);
 const user = ref({
   name: "",
@@ -266,6 +341,14 @@ const address = ref({
   city: "" as string,
   state: "" as string,
 });
+
+const creditCard = ref({
+  number: "" as string,
+  name: "" as string,
+  expirationDate: "" as string,
+  cvv: "" as string,
+  installments: 1 as number,
+});
 const selectedFreight = ref("economico");
 async function getAddressByZipcode(zipcode: string): Promise<void> {
   const response = await getAddressByZipcodeService(zipcode);
@@ -278,6 +361,41 @@ async function getAddressByZipcode(zipcode: string): Promise<void> {
   address.value.state = response.uf;
   numberRef.value?.focus();
 }
+
+const installmentsOptions = computed(() => {
+  if (productsInCart.value.length === 0) return [];
+
+  const productInstallments = productsInCart.value.map(
+    (product) => product.installments || []
+  );
+
+  if (productInstallments.some((inst) => inst.length === 0)) return [];
+
+  const installmentNumbersByProduct = productInstallments.map((installments) =>
+    installments
+      .filter((inst: any) => inst?.installment >= 1)
+      .map((inst: any) => inst.installment)
+  );
+
+  const commonNumbers =
+    installmentNumbersByProduct.length === 1
+      ? installmentNumbersByProduct[0]
+      : installmentNumbersByProduct.reduce((acc: number[], curr: number[]) =>
+          acc.filter((num: number) => curr.includes(num))
+        );
+
+  const cartTotal = productsInCart.value.reduce((total: number, product: any) => {
+    const productTotal = product.installments?.[0]?.total || 0;
+    return total + productTotal * (product.quantity || 1);
+  }, 0);
+
+  return commonNumbers
+    .map((num: number) => ({
+      value: num,
+      label: `${num}x de ${numberToReal(cartTotal / num)}`,
+    }))
+    .sort((a: { value: number }, b: { value: number }) => a.value - b.value);
+});
 
 async function verifyFormData(): Promise<void> {
   const campaigns = shop.value?.campaigns;
@@ -319,5 +437,9 @@ async function verifyFormData(): Promise<void> {
       timeout: 3000,
     });
   }
+}
+
+async function handleSubmitCreditCard(): Promise<void> {
+  console.log(creditCard.value);
 }
 </script>

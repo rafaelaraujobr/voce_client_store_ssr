@@ -232,6 +232,7 @@ const installments = computed(() => {
 });
 
 const skuSelected = computed(() => {
+  if (!product.value) return null;
   const { skus, ...rest } = product.value as any;
   if (Array.isArray(skus))
     return {
