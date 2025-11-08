@@ -14,7 +14,7 @@
     </q-breadcrumbs>
     <q-item>
       <q-item-section>
-        <ProductCarousel :product="product" />
+        <ProductCarousel :images="skuSelected?.sku?.images" />
       </q-item-section>
       <q-item-section class="q-gutter-y-sm">
         <q-item-label class="row items-center q-gutter-x-sm">
@@ -46,21 +46,21 @@
           />
         </q-item-label>
         <q-item-label
-          v-if="skuSelected?.price_discount"
+          v-if="skuSelected?.sku?.price_discount < skuSelected?.sku?.price"
           class="text-caption text-negative q-pt-sm"
         >
-          {{ numberToReal(skuSelected.price_discount) }}
+          {{ numberToReal(skuSelected.sku?.price_discount) }}
         </q-item-label>
         <q-item-label
-          v-if="skuSelected?.price"
+          v-if="skuSelected?.sku?.price"
           class="text-h5 text-weight-bold"
         >
-          {{ numberToReal(skuSelected.price) }}
+          {{ numberToReal(skuSelected.sku?.price) }}
           <q-badge
             v-if="
-              skuSelected.price &&
-              skuSelected.price_discount &&
-              skuSelected.price_discount < skuSelected.price
+              skuSelected.sku?.price &&
+              skuSelected.sku?.price_discount &&
+              skuSelected.sku?.price_discount < skuSelected.sku?.price
             "
             :style="{
               backgroundColor: '#FFC107',
@@ -70,7 +70,10 @@
             class="text-subtitle1 text-weight-bold"
             >-
             {{
-              getDiscountPercent(skuSelected.price, skuSelected.price_discount)
+              getDiscountPercent(
+                skuSelected.sku?.price,
+                skuSelected.sku?.price_discount
+              )
             }}%</q-badge
           >
         </q-item-label>
@@ -89,6 +92,7 @@
             :no-caps="false"
           />
           <q-btn
+            v-if="!productsInCart.find((p) => p.id === skuSelected.id)"
             label="Adicionar ao carrinho"
             color="default"
             unelevated
@@ -97,6 +101,15 @@
             class="bg-default"
             icon="mdi-cart-plus"
             @click="addProductToCart(skuSelected)"
+          />
+          <q-btn
+            v-else
+            label="Remover do carrinho"
+            color="negative"
+            unelevated
+            padding="sm md"
+            :no-caps="false"
+            @click="removeProductFromCart(skuSelected)"
           />
         </q-item-label>
         <q-item-label
@@ -196,7 +209,7 @@ import ProductCarousel from "~/components/ProductCarousel.vue";
 import RelatedProducts from "~/components/RelatedProducts.vue";
 import { numberToReal, formatDiscount } from "~/utils/functions";
 const { getProductById, getRelatedProducts, product, shop, slug } = useShop();
-const { addProductToCart } = useCart();
+const { addProductToCart, removeProductFromCart, productsInCart } = useCart();
 const route = useRoute();
 const id = computed(() => route.params.id);
 const skuSelectedId = ref<string | null>(null);
@@ -219,11 +232,14 @@ const installments = computed(() => {
 });
 
 const skuSelected = computed(() => {
-  const skus = (product.value as any)?.skus;
+  const { skus, ...rest } = product.value as any;
   if (Array.isArray(skus))
-    return skus.find((sku: any) => sku.id === skuSelectedId.value);
+    return {
+      sku: skus.find((sku: any) => sku.id === skuSelectedId.value),
+      ...rest,
+    };
 
-  return null;
+  return { ...rest, sku: { ...skus[0], images: skus[0].images ?? [] } };
 });
 
 const { refresh } = await useLazyAsyncData(`product-${id.value}`, async () => {

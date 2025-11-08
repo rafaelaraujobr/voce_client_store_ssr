@@ -5,8 +5,6 @@ export const useCart = () => {
   const cartStore = useCartStore();
   const { productsInCart, loadingFreight, freight } = storeToRefs(cartStore);
 
-  const { getFreightService } = useShopService();
-
   const {
     setProductsInCart,
     addProductToCart,
@@ -15,21 +13,26 @@ export const useCart = () => {
     clearCart,
     getTotalPrice,
     getTotalQuantity,
+    getTotalDiscount,
     incrementProductQuantity,
     decrementProductQuantity,
     setLoadingFreight,
     setFreight,
   } = cartStore;
 
+  const { getFreightService } = useShopService();
+
   async function getFreight(payload: any): Promise<any> {
+    setLoadingFreight(true);
     try {
-      setLoadingFreight(true);
       const response = await getFreightService({
         ...payload,
       });
       setFreight(response);
-    } catch (error) {
+      return response;
+    } catch (error: any) {
       console.error("Erro ao buscar frete:", error);
+      throw error;
     } finally {
       setLoadingFreight(false);
     }
@@ -48,5 +51,6 @@ export const useCart = () => {
     incrementProductQuantity,
     decrementProductQuantity,
     getFreight,
+    getTotalDiscount,
   };
 };

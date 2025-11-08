@@ -13,8 +13,8 @@ export const useCartStore = defineStore(
     function setProductsInCart(products: any[]): void {
       productsInCart.value = products;
     }
-    function setFreight(freight: any): void {
-      freight.value = freight;
+    function setFreight(freightData: any): void {
+      freight.value = freightData;
     }
     function addProductToCart(product: any): void {
       if (productsInCart.value.find((p) => p.id === product.id)) {
@@ -35,12 +35,25 @@ export const useCartStore = defineStore(
       productsInCart.value = [];
     }
     function getTotalPrice(): number {
+      const total = productsInCart.value.reduce(
+        (acc, product) =>
+          acc +
+          (product.sku?.price_discount || product.sku?.price) *
+            product.quantity,
+        0
+      );
+      return total || 0;
+    }
+
+    function getTotalDiscount(): number {
       return productsInCart.value.reduce(
         (acc, product) =>
-          acc + (product.price_discount || product.price) * product.quantity,
+          acc +
+          (product.sku?.price - product.sku?.price_discount) * product.quantity,
         0
       );
     }
+
     function getTotalQuantity(): number {
       return productsInCart.value.reduce(
         (acc, product) => acc + product.quantity,
@@ -70,10 +83,12 @@ export const useCartStore = defineStore(
       decrementProductQuantity,
       setFreight,
       setLoadingFreight,
+      getTotalDiscount,
     };
   },
   {
     persist: {
+      pick: ["productsInCart"],
       storage: {
         getItem: (key: string) => {
           if (!import.meta.client) return null;

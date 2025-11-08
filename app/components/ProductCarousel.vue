@@ -1,6 +1,6 @@
 <template>
   <q-splitter
-    v-if="images.length > 1"
+    v-if="images && images.length > 1"
     v-model="splitterModel"
     style="height: 250px"
   >
@@ -56,10 +56,10 @@
       </q-tab-panels>
     </template>
   </q-splitter>
-
+  
   <q-img
     v-else
-    :src="images[0] ?? '/favicon.ico	'"
+    :src="images?.[0] ?? '/favicon.ico	'"
     fit="contain"
     class="cursor-pointer"
     style="height: 220px"
@@ -94,11 +94,10 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-const images = computed(() => props.product?.skus[0].images ?? []);
 const slide = ref<number>(1);
-const imageSelected = computed(() => images.value[(slide.value - 1) as number]);
+const imageSelected = computed(() => props.images?.[(slide.value - 1) as number]);
 const props = defineProps<{
-  product: any;
+  images: string[] | undefined;
 }>();
 const dialog = ref(false);
 const splitterModel = ref(12);

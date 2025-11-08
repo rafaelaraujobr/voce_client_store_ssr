@@ -39,11 +39,20 @@ export const useShopService = () => {
   async function getFreightService(payload: any): Promise<any> {
     try {
       return await $apiGateway<any>(`marketplace/products/delivery`, {
-        method: "POST",
+        method: "post",
         body: payload,
       });
     } catch (error) {
       console.error("Erro no getFreightService:", error);
+      throw error;
+    }
+  }
+
+  async function getAddressByZipcodeService(zipcode: string): Promise<any> {
+    try {
+      return await $fetch(`https://viacep.com.br/ws/${zipcode}/json/`);
+    } catch (error) {
+      console.error("Erro no getAddressByZipcodeService:", error);
       throw error;
     }
   }
@@ -54,5 +63,6 @@ export const useShopService = () => {
     getProductByIdService,
     getRelatedProductsService,
     getFreightService,
+    getAddressByZipcodeService,
   };
 };

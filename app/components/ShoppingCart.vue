@@ -8,7 +8,7 @@
       <q-item v-for="product in productsInCart" :key="product.id">
         <q-item-section avatar>
           <q-img
-            :src="product.image || product.images[0]"
+            :src="product.sku?.image || product.sku?.images[0]"
             fit="contain"
             spinner-color="primary"
             class="product-image"
@@ -34,19 +34,19 @@
           <q-item-label>
             <div
               v-if="
-                product.price_discount && product.price_discount < product.price
+                product.sku?.price_discount && product.sku?.price_discount < product.sku?.price
               "
               class="no-wrap row items-center q-gutter-x-sm"
             >
               <div class="text-grey-7" style="text-decoration: line-through">
-                {{ numberToReal(product.price) }}
+                {{ numberToReal(product.sku?.price) }}
               </div>
               <div class="text-weight-bold">
-                {{ numberToReal(product.price_discount) }}
+                {{ numberToReal(product.sku?.price_discount) }}
               </div>
             </div>
             <div v-else class="text-weight-bold">
-              {{ numberToReal(product.price) }}
+              {{ numberToReal(product.sku?.price) }}
             </div>
           </q-item-label>
         </q-item-section>
@@ -71,7 +71,7 @@
               @click="removeProductFromCart(product)"
             />
             <div class="text-weight-medium text-center q-px-sm">
-              {{ product.quantity }}
+              {{ product?.quantity }}
             </div>
             <q-btn
               icon="mdi-plus"

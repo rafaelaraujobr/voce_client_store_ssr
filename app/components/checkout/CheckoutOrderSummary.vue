@@ -1,10 +1,10 @@
 <template>
   <q-card class="bg-default" flat>
-    <q-card-section>
+    <q-card-section v-if="productsInCart.length > 0">
       <q-item v-for="product in productsInCart" :key="product.id">
         <q-item-section avatar>
           <q-img
-            :src="product.image || product.images[0]"
+            :src="product?.sku?.image || product?.sku?.images[0]"
             fit="contain"
             spinner-color="primary"
             class="product-image"
@@ -27,11 +27,11 @@
           <q-item-label
             class="ellipsis cursor-pointer text-weight-medium"
             style="max-width: 200px"
-            >{{ product.name }}
+            >{{ product?.name }}
             <q-tooltip>{{ product.name }}</q-tooltip>
           </q-item-label>
           <q-item-label class="text-weight-medium text-grey-6"
-            >Quantidade: {{ product.quantity }}</q-item-label
+            >Quantidade: {{ product?.quantity }}</q-item-label
           >
         </q-item-section>
         <q-item-section side>
@@ -39,10 +39,20 @@
             <div class="text-weight-bold text-dark">
               {{
                 numberToReal(
-                  product.price_discount * product.quantity ||
-                    product.price * product.quantity
+                  product.sku?.price_discount * product?.quantity ||
+                    product.sku?.price * product?.quantity
                 )
               }}
+              <div
+                v-if="
+                  product.sku?.price_discount &&
+                  product.sku?.price_discount < product.sku?.price
+                "
+                class="text-grey-7"
+                style="text-decoration: line-through"
+              >
+                {{ numberToReal(product.sku?.price * product?.quantity) }}
+              </div>
             </div>
             <q-btn
               icon="mdi-delete-outline"
@@ -62,18 +72,28 @@
           <q-item-label class="text-weight-medium">Subtotal</q-item-label>
         </q-item-section>
         <q-item-section avatar>
-          <q-item-label class="text-weight-medium">{{
+          <q-item-label class="text-weight-bold">{{
             numberToReal(getTotalPrice())
           }}</q-item-label>
         </q-item-section>
       </q-item>
-      <q-item dense>
+      <q-item v-if="getTotalDiscount() > 0" dense>
+        <q-item-section>
+          <q-item-label class="text-weight-medium">Desconto</q-item-label>
+        </q-item-section>
+        <q-item-section avatar>
+          <q-item-label class="text-weight-bold"
+            >-{{ numberToReal(getTotalDiscount()) }}</q-item-label
+          >
+        </q-item-section>
+      </q-item>
+      <q-item v-if="freight?.total && productsInCart.length > 0" dense>
         <q-item-section>
           <q-item-label class="text-weight-medium">Frete</q-item-label>
         </q-item-section>
         <q-item-section avatar>
-          <q-item-label class="text-weight-medium">{{
-            numberToReal(shipping)
+          <q-item-label class="text-weight-bold">{{
+            numberToReal(freight?.total || 0)
           }}</q-item-label>
         </q-item-section>
       </q-item>
@@ -86,7 +106,7 @@
         </q-item-section>
         <q-item-section avatar>
           <q-item-label class="text-weight-bold">{{
-            numberToReal(getTotalPrice() + shipping)
+            numberToReal(getTotalPrice() + (freight?.total || 0))
           }}</q-item-label>
         </q-item-section>
       </q-item>
@@ -95,6 +115,11 @@
 </template>
 <script setup lang="ts">
 import { useCart } from "~/composables/cart.composable";
-const { productsInCart, removeProductFromCart, getTotalPrice } = useCart();
-const shipping = ref(10);
+const {
+  productsInCart,
+  removeProductFromCart,
+  getTotalPrice,
+  freight,
+  getTotalDiscount,
+} = useCart();
 </script>
