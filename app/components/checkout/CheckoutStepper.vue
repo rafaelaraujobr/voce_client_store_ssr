@@ -37,6 +37,7 @@
               v-model="user.phone"
               label="Telefone"
               type="tel"
+              mask="(##) #####-####"
               outlined
               dense
             />
