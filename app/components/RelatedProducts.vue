@@ -1,5 +1,9 @@
 <template>
-  <q-card v-if="relatedProducts && relatedProducts?.length > 0" flat class="related-products">
+  <q-card
+    v-if="relatedProducts && relatedProducts?.length > 0"
+    flat
+    class="related-products"
+  >
     <q-card-section>
       <div class="text-h5 text-weight-bold text-center">
         Produtos relacionados
@@ -123,17 +127,6 @@
                       getDiscountPercent(product.price, product.price_discount)
                     }}%</q-badge
                   >
-                  <q-btn
-                    color="primary"
-                    icon="mdi-cart-plus"
-                    class="absolute-top-right"
-                    flat
-                    dense
-                    :style="{
-                      top: '8px',
-                      right: '8px',
-                    }"
-                  />
                 </q-card-section>
               </q-card>
             </div>
@@ -170,7 +163,8 @@ import { numberToReal, formatDiscount } from "~/utils/functions";
 const { relatedProducts } = useShop();
 const currentGroup = ref<number>(0);
 const productRelatedGroup = computed(() => {
-  if (!relatedProducts.value || !Array.isArray(relatedProducts.value)) return [];
+  if (!relatedProducts.value || !Array.isArray(relatedProducts.value))
+    return [];
   const products = relatedProducts.value;
   const groups = [];
   for (let i = 0; i < products.length; i += 4) {

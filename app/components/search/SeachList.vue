@@ -145,17 +145,6 @@
                 getDiscountPercent(product.price, product.price_discount)
               }}%</q-badge
             >
-            <q-btn
-              color="primary"
-              icon="mdi-cart-plus"
-              class="absolute-top-right"
-              flat
-              dense
-              :style="{
-                top: '8px',
-                right: '8px',
-              }"
-            />
           </q-card-section>
         </q-card>
       </div>
