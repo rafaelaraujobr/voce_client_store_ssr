@@ -77,8 +77,8 @@
             dense
             bg-color="white"
             class="full-width"
+            clear-icon="mdi-close"
             clearable
-            placeholder="Digite o código do cupom de desconto"
             @clear="couponCode = ''"
             @keyup.enter="dialogCoupon"
           />
