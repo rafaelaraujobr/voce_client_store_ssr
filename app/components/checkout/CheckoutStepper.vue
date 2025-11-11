@@ -356,7 +356,6 @@ async function getAddressByZipcode(zipcode: string): Promise<void> {
   if (response.erro) return;
   address.value.street = response.logradouro;
   address.value.number = response.numero;
-  address.value.complement = response.complemento;
   address.value.neighborhood = response.bairro;
   address.value.city = response.localidade;
   address.value.state = response.uf;
@@ -385,10 +384,13 @@ const installmentsOptions = computed(() => {
           acc.filter((num: number) => curr.includes(num))
         );
 
-  const cartTotal = productsInCart.value.reduce((total: number, product: any) => {
-    const productTotal = product.installments?.[0]?.total || 0;
-    return total + productTotal * (product.quantity || 1);
-  }, 0);
+  const cartTotal = productsInCart.value.reduce(
+    (total: number, product: any) => {
+      const productTotal = product.installments?.[0]?.total || 0;
+      return total + productTotal * (product.quantity || 1);
+    },
+    0
+  );
 
   return commonNumbers
     .map((num: number) => ({
