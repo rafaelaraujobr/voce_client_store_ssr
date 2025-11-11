@@ -66,6 +66,37 @@
       </q-item>
     </q-card-section>
     <q-separator />
+    <q-card-section v-if="productsInCart.length > 0">
+      <div class="row items-center q-gutter-x-sm no-wrap">
+        <div class="col-12 col-md-9">
+          <q-input
+            v-model="couponCode"
+            type="text"
+            label="Cupom de desconto"
+            outlined
+            dense
+            bg-color="white"
+            class="full-width"
+            clearable
+            placeholder="Digite o código do cupom de desconto"
+            @clear="couponCode = ''"
+            @keyup.enter="dialogCoupon"
+          />
+        </div>
+        <div class="col-12 col-md-3">
+          <q-btn
+            label="Aplicar"
+            color="primary"
+            dense
+            padding="sm lg"
+            :loading="loadingCoupon"
+            :disable="couponCode.length === 0 || loadingCoupon"
+            @click="dialogCoupon"
+          />
+        </div>
+      </div>
+    </q-card-section>
+    <q-separator />
     <q-card-section>
       <q-item dense>
         <q-item-section>
@@ -122,4 +153,20 @@ const {
   freight,
   getTotalDiscount,
 } = useCart();
+const couponCode = ref<string>("");
+const loadingCoupon = ref<boolean>(false);
+function dialogCoupon() {
+  loadingCoupon.value = true;
+  setTimeout(() => {
+    loadingCoupon.value = false;
+    Dialog.create({
+      title: "<span class='text-dark text-weight-bold'>Cupom inválido ou expirado</span>",
+      html: true,
+      message: `<span class="text-dark">O cupom de desconto <span class="text-negative text-weight-bold">${couponCode.value}</span> não é válido. Por favor, tente novamente.</span>`,
+      ok: true,
+      cancel: false,
+      persistent: true,
+    });
+  }, 1000);
+}
 </script>
