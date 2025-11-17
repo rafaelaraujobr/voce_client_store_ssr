@@ -244,7 +244,21 @@
                     type="tel"
                     outlined
                     dense
-                  />
+                  >
+                    <template #prepend>
+                      <q-img
+                        v-if="cardBrandImage"
+                        :src="cardBrandImage"
+                        width="30px"
+                        height="30px"
+                        fit="contain"
+                        spinner-size="30px"
+                        spinner-color="primary"
+                        loading="lazy"
+                        placeholder-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZSIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiNhYWEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW08L3RleHQ+Cjwvc3ZnPg=="
+                      />
+                    </template>
+                  </q-input>
                 </div>
                 <div class="col-12 col-md-6">
                   <q-input
@@ -329,10 +343,17 @@ import type { QStepper } from "quasar";
 import { useCart } from "~/composables/cart.composable";
 import { useShop } from "~/composables/shop.composable";
 import { useShopService } from "~/services/shop.service";
+
+import visaImage from "@/assets/images/cardbrand/visa.svg";
+import mastercardImage from "@/assets/images/cardbrand/mastercard.svg";
+import amexImage from "@/assets/images/cardbrand/amex.svg";
+import eloImage from "@/assets/images/cardbrand/elo.svg";
+import discoverImage from "@/assets/images/cardbrand/discover.svg";
+
 const { getAddressByZipcodeService } = useShopService();
 const { shop } = useShop();
 const { productsInCart, getFreight, freight, getTotalPrice } = useCart();
-const step = ref<number>(1);
+const step = ref<number>(3);
 const stepper = ref<InstanceType<typeof QStepper> | null>(null);
 const user = ref({
   name: "",
@@ -449,6 +470,44 @@ async function verifyFormData(): Promise<void> {
       timeout: 3000,
     });
   }
+}
+
+const cardBrand = computed(() => {
+  return getCardBrand(creditCard.value.number);
+});
+
+const cardBrandImage = computed(() => {
+  const brand = cardBrand.value;
+  const brandImages: Record<string, string> = {
+    visa: visaImage,
+    mastercard: mastercardImage,
+    amex: amexImage,
+    elo: eloImage,
+    discover: discoverImage,
+  };
+  return brandImages[brand] || "";
+});
+
+function getCardBrand(cardNumber: string): string {
+  const number = cardNumber.replace(/\D/g, "");
+  if (/^4/.test(number)) return "visa";
+
+  if (/^(5[1-5]|22[2-9]|2[3-7][0-9])/.test(number)) return "mastercard";
+
+  if (/^3[47]/.test(number)) return "amex";
+
+  if (
+    /^(401178|401179|431274|438935|451416|457393|457631|457632|504175|5067|506699|509|627780|636297|636368)/.test(
+      number
+    )
+  )
+    return "elo";
+
+  if (/^(606282|3841)/.test(number)) return "hipercard";
+
+  if (/^6(011|5)/.test(number)) return "discover";
+
+  return "desconhecida";
 }
 
 async function handleSubmitCreditCard(): Promise<void> {
