@@ -65,6 +65,8 @@
               :rules="[(val) => !!val || 'CEP é obrigatório']"
               label="CEP"
               outlined
+              type="tel"
+              mask="#####-###"
               dense
               @blur="getAddressByZipcode(address.zipcode)"
               @keyup.enter="getAddressByZipcode(address.zipcode)"
@@ -97,7 +99,9 @@
               outlined
               dense
               label="Complemento"
+              maxlength="50"
               type="text"
+              max-length="50"
             />
           </div>
           <div class="col-12 col-md-4">
@@ -144,7 +148,12 @@
       </q-form>
     </q-step>
 
-    <q-step :name="2" title="Sua entrega" icon="mdi-map-marker">
+    <q-step
+      :name="2"
+      title="Sua entrega"
+      icon="mdi-map-marker"
+      :done="step > 2"
+    >
       <div class="text-weight-bold text-subtitle1 q-mb-md">
         Selecione a entrega / retirada
       </div>

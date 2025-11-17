@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <q-page :style-fn="myTweak" padding class="wrapper">
     <q-breadcrumbs class="text-grey q-my-lg text-caption" active-color="purple">
@@ -85,6 +86,15 @@
           class="text-caption row items-center no-wrap q-gutter-x-md q-pa-none"
         >
           <q-btn
+            v-if="productsInCart.find((p) => p.id === skuSelected.id)"
+            label="Finalizar compra"
+            color="primary"
+            unelevated
+            padding="sm md"
+            @click="finishPurchase"
+          />
+          <q-btn
+            v-else
             label="Comprar agora"
             color="dark"
             unelevated
@@ -136,7 +146,15 @@
           </template>
           <q-card>
             <q-card-section>
-              {{ product?.description }}
+              <div
+                v-if="product?.description"
+                class="q-pa-none"
+                style="white-space: pre-line; word-break: break-word"
+                aria-label="Descrição do produto"
+                role="region"
+                v-html="product?.description"
+              />
+              <div v-else class="text-grey">Nenhuma descrição disponível.</div>
             </q-card-section>
           </q-card>
         </q-expansion-item>
@@ -250,6 +268,11 @@ const { refresh } = await useLazyAsyncData(`product-${id.value}`, async () => {
 async function buyNow() {
   await refresh();
   addProductToCart(skuSelected.value);
+  navigateTo("/checkout");
+}
+
+async function finishPurchase() {
+  await refresh();
   navigateTo("/checkout");
 }
 

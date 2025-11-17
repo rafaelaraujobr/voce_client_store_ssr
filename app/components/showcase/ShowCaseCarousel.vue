@@ -65,6 +65,7 @@
               unelevated
               padding="sm md"
               style="width: 200px"
+              @click="navigateToProduct(product.id)"
             />
           </q-item-section>
         </q-item>
@@ -83,6 +84,11 @@ watch(products, async () => {
   await nextTick();
   slide.value = 1;
 });
+
+
+async function navigateToProduct(productId: string) {
+  await navigateTo(`/product/${productId}`);
+}
 </script>
 
 <style lang="sass">
