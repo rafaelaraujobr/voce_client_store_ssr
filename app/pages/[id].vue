@@ -49,18 +49,18 @@
           v-if="skuSelected?.price_discount"
           class="text-caption text-negative q-pt-sm"
         >
-          {{ numberToReal(skuSelected.price_discount) }}
+          {{ numberToReal(skuSelected?.price_discount) }}
         </q-item-label>
         <q-item-label
           v-if="skuSelected?.price"
           class="text-h5 text-weight-bold"
         >
-          {{ numberToReal(skuSelected.price) }}
+          {{ numberToReal(skuSelected?.price) }}
           <q-badge
             v-if="
-              skuSelected.price &&
-              skuSelected.price_discount &&
-              skuSelected.price_discount < skuSelected.price
+              skuSelected?.price &&
+              skuSelected?.price_discount &&
+              skuSelected?.price_discount < skuSelected?.price
             "
             :style="{
               backgroundColor: '#FFC107',
@@ -70,7 +70,7 @@
             class="text-subtitle1 text-weight-bold"
             >-
             {{
-              getDiscountPercent(skuSelected.price, skuSelected.price_discount)
+              getDiscountPercent(skuSelected?.price, skuSelected?.price_discount)
             }}%</q-badge
           >
         </q-item-label>
