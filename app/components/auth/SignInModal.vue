@@ -1,16 +1,9 @@
 <template>
-  <q-dialog v-model="modalSignIn" @@before-hide="closeModal">
+  <q-dialog :model-value="modalSignIn" @@before-hide="closeModal" @update:model-value="handleDialogUpdate">
     <q-card style="width: 420px" class="q-pa-sm">
       <q-toolbar>
         <q-space />
-        <q-btn
-          flat
-          round
-          dense
-          icon="mdi-close"
-          class="q-mr-xs"
-          @click="closeModal"
-        />
+        <q-btn flat round dense icon="mdi-close" class="q-mr-xs" @click="closeModal" />
       </q-toolbar>
 
       <q-card-section>
@@ -21,35 +14,14 @@
       </q-card-section>
       <q-card-section>
         <q-form @submit="handleSubmit">
-          <q-input
-            v-model="email"
-            label="E-mail"
-            color="primary"
-            type="email"
-          />
-          <q-input
-            v-model="password"
-            label="Password"
-            color="primary"
-            :type="showPassword ? 'text' : 'password'"
-          >
+          <q-input v-model="email" label="E-mail" color="primary" type="email" />
+          <q-input v-model="password" label="Password" color="primary" :type="showPassword ? 'text' : 'password'">
             <template #append>
-              <q-icon
-                :name="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
-                color="primary"
-                class="cursor-pointer"
-                @click="togglePassword"
-              />
+              <q-icon :name="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" color="primary"
+                class="cursor-pointer" @click="togglePassword" />
             </template>
           </q-input>
-          <q-btn
-            label="Entrar"
-            :loading="loading"
-            color="primary"
-            type="submit"
-            padding="sm md"
-            class="full-width"
-          />
+          <q-btn label="Entrar" :loading="loading" color="primary" type="submit" padding="sm md" class="full-width" />
           <div class="row items-center q-my-md">
             <div class="col-5">
               <q-separator />
@@ -61,21 +33,11 @@
               <q-separator />
             </div>
           </div>
-          <q-btn
-            label="Entrar com Google"
-            color="white"
-            text-color="dark"
-            type="submit"
-            padding="sm md"
-            unelevated
-            :icon="`img:${GoogleIcon}`"
-            class="full-width border-primary bg-white border-1"
-          />
+          <q-btn label="Entrar com Google" color="white" text-color="dark" type="submit" padding="sm md" unelevated
+            :icon="`img:${GoogleIcon}`" class="full-width border-primary bg-white border-1" />
           <div class="text-weight-medium text-center q-mt-md">
             Ainda não tem uma conta?
-            <router-link to="/signup" class="link-decoration-none"
-              >Criar conta</router-link
-            >
+            <router-link to="/signup" class="link-decoration-none">Criar conta</router-link>
           </div>
         </q-form>
       </q-card-section>
@@ -92,6 +54,13 @@ const email = ref<string>("");
 const password = ref<string>("");
 const showPassword = ref<boolean>(false);
 const loading = ref<boolean>(false);
+
+function handleDialogUpdate(value: boolean) {
+  if (!value) {
+    closeModal();
+  }
+}
+
 async function closeModal() {
   const currentQuery = { ...route.query };
   delete currentQuery.modal;

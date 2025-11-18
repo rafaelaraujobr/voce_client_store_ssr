@@ -7,11 +7,7 @@
       </template>
       <q-breadcrumbs-el :label="shop?.name" :to="`/`" />
       <q-breadcrumbs-el :label="category" />
-      <q-breadcrumbs-el
-        :label="product?.name"
-        class="ellipsis"
-        style="max-width: 200px"
-      />
+      <q-breadcrumbs-el :label="product?.name" class="ellipsis" style="max-width: 200px" />
     </q-breadcrumbs>
     <q-item>
       <q-item-section>
@@ -22,115 +18,53 @@
           <q-icon name="mdi-star" color="primary" size="1.2em" />
           <div class="text-primary">4.8</div>
           <div class="text-grey">(120 avaliações)</div>
-          <q-btn
-            label="Copiar link"
-            color="positive"
-            unelevated
-            padding="sm md"
-            flat
-            dense
-            icon="mdi-content-copy"
-            size="xs"
-            @click="copyLink"
-          />
+          <q-btn label="Copiar link" color="positive" unelevated padding="sm md" flat dense icon="mdi-content-copy"
+            size="xs" @click="copyLink" />
         </q-item-label>
         <q-item-label>
           {{ product?.name }}
         </q-item-label>
         <q-item-label v-if="(product as any)?.skus?.length > 1">
-          <q-radio
-            v-for="(i, index) in (product as any)?.skus"
-            :key="index"
-            v-model="skuSelectedId"
-            :val="i.id"
-            :label="i.model"
-          />
+          <q-radio v-for="(i, index) in (product as any)?.skus" :key="index" v-model="skuSelectedId" :val="i.id"
+            :label="i.model" />
         </q-item-label>
-        <q-item-label
-          v-if="skuSelected?.sku?.price_discount < skuSelected?.sku?.price"
-          class="text-caption text-negative q-pt-sm"
-        >
+        <q-item-label v-if="skuSelected?.sku?.price_discount < skuSelected?.sku?.price"
+          class="text-caption text-negative q-pt-sm">
           {{ numberToReal(skuSelected.sku?.price_discount) }}
         </q-item-label>
-        <q-item-label
-          v-if="skuSelected?.sku?.price"
-          class="text-h5 text-weight-bold"
-        >
+        <q-item-label v-if="skuSelected?.sku?.price" class="text-h5 text-weight-bold">
           {{ numberToReal(skuSelected.sku?.price) }}
-          <q-badge
-            v-if="
-              skuSelected.sku?.price &&
-              skuSelected.sku?.price_discount &&
-              skuSelected.sku?.price_discount < skuSelected.sku?.price
-            "
-            :style="{
+          <q-badge v-if="
+            skuSelected.sku?.price &&
+            skuSelected.sku?.price_discount &&
+            skuSelected.sku?.price_discount < skuSelected.sku?.price
+          " :style="{
               backgroundColor: '#FFC107',
               top: '10px',
-            }"
-            text-color="black"
-            class="text-subtitle1 text-weight-bold"
-            >-
+            }" text-color="black" class="text-subtitle1 text-weight-bold">-
             {{
               getDiscountPercent(
                 skuSelected.sku?.price,
                 skuSelected.sku?.price_discount
               )
-            }}%</q-badge
-          >
+            }}%</q-badge>
         </q-item-label>
         <q-item-label class="text-caption row items-center no-wrap q-mb-md">
           até {{ installments?.installment }}x de
-          {{ numberToReal(installments?.value) }}</q-item-label
-        >
-        <q-item-label
-          class="text-caption row items-center no-wrap q-gutter-x-md q-pa-none"
-        >
-          <q-btn
-            v-if="productsInCart.find((p) => p.id === skuSelected.id)"
-            label="Finalizar compra"
-            color="primary"
-            unelevated
-            padding="sm md"
-            @click="finishPurchase"
-          />
-          <q-btn
-            v-else
-            label="Comprar agora"
-            color="dark"
-            unelevated
-            padding="sm md"
-            @click="buyNow"
-          />
-          <q-btn
-            v-if="!productsInCart.find((p) => p.id === skuSelected.id)"
-            label="Adicionar ao carrinho"
-            color="default"
-            unelevated
-            padding="sm md"
-            text-color="dark"
-            class="bg-default"
-            icon="mdi-cart-plus"
-            @click="addProductToCart(skuSelected)"
-          />
-          <q-btn
-            v-else
-            label="Remover do carrinho"
-            color="negative"
-            unelevated
-            padding="sm md"
-            @click="removeProductFromCart(skuSelected)"
-          />
+          {{ numberToReal(installments?.value) }}</q-item-label>
+        <q-item-label class="text-caption row items-center no-wrap q-gutter-x-md q-pa-none">
+          <q-btn v-if="skuSelected && productsInCart.find((p) => p.id === skuSelected.id)" label="Finalizar compra"
+            color="primary" unelevated padding="sm md" @click="finishPurchase" />
+          <q-btn v-else label="Comprar agora" color="dark" unelevated padding="sm md" @click="buyNow" />
+          <q-btn v-if="skuSelected && !productsInCart.find((p) => p.id === skuSelected.id)"
+            label="Adicionar ao carrinho" color="default" unelevated padding="sm md" text-color="dark"
+            class="bg-default" icon="mdi-cart-plus" @click="addProductToCart(skuSelected)" />
+          <q-btn v-else-if="skuSelected" label="Remover do carrinho" color="negative" unelevated padding="sm md"
+            @click="removeProductFromCart(skuSelected)" />
         </q-item-label>
-        <q-item-label
-          class="text-caption row items-center no-wrap q-gutter-x-sm"
-        >
+        <q-item-label class="text-caption row items-center no-wrap q-gutter-x-sm">
           Vendido por:
-          <q-img
-            :src="product?.company?.logotipo"
-            fit="contain"
-            height="50px"
-            width="80px"
-          />
+          <q-img :src="product?.company?.logotipo" fit="contain" height="50px" width="80px" />
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -146,14 +80,8 @@
           </template>
           <q-card>
             <q-card-section>
-              <div
-                v-if="product?.description"
-                class="q-pa-none"
-                style="white-space: pre-line; word-break: break-word"
-                aria-label="Descrição do produto"
-                role="region"
-                v-html="product?.description"
-              />
+              <div v-if="product?.description" class="q-pa-none" style="white-space: pre-line; word-break: break-word"
+                aria-label="Descrição do produto" role="region" v-html="product?.description" />
               <div v-else class="text-grey">Nenhuma descrição disponível.</div>
             </q-card-section>
           </q-card>
@@ -287,9 +215,8 @@ function myTweak(offset: number): { minHeight: string } {
 const currentUrl = computed(() => {
   if (import.meta.client && window?.location) return window.location.href;
 
-  return `${process.env.SITE_URL || "https://seu-dominio.com"}${
-    route.fullPath
-  }`;
+  return `${process.env.SITE_URL || "https://seu-dominio.com"}${route.fullPath
+    }`;
 });
 const image = computed(() => {
   const skus = (product.value as any)?.skus;

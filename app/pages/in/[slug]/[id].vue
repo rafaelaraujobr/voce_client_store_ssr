@@ -6,108 +6,55 @@
       </template>
       <q-breadcrumbs-el :label="shop?.name" :to="`/in/${slug}`" />
       <q-breadcrumbs-el :label="category" />
-      <q-breadcrumbs-el
-        :label="product?.name"
-        class="ellipsis"
-        style="max-width: 200px"
-      />
+      <q-breadcrumbs-el :label="product?.name" class="ellipsis" style="max-width: 200px" />
     </q-breadcrumbs>
     <q-item>
       <q-item-section>
-        <ProductCarousel :product="product" />
+        <ProductCarousel :images="skuSelected?.sku?.images || []" />
       </q-item-section>
       <q-item-section class="q-gutter-y-sm">
         <q-item-label class="row items-center q-gutter-x-sm">
           <q-icon name="mdi-star" color="primary" size="1.2em" />
           <div class="text-primary">4.8</div>
           <div class="text-grey">(120 avaliações)</div>
-          <q-btn
-            label="Copiar link"
-            color="positive"
-            unelevated
-            padding="sm md"
-            flat
-            dense
-            icon="mdi-content-copy"
-            size="xs"
-            @click="copyLink"
-          />
+          <q-btn label="Copiar link" color="positive" unelevated padding="sm md" flat dense icon="mdi-content-copy"
+            size="xs" @click="copyLink" />
         </q-item-label>
         <q-item-label>
           {{ product?.name }}
         </q-item-label>
         <q-item-label v-if="(product as any)?.skus?.length > 1">
-          <q-radio
-            v-for="(i, index) in (product as any)?.skus"
-            :key="index"
-            v-model="skuSelectedId"
-            :val="i.id"
-            :label="i.model"
-          />
+          <q-radio v-for="(i, index) in (product as any)?.skus" :key="index" v-model="skuSelectedId" :val="i.id"
+            :label="i.model" />
         </q-item-label>
-        <q-item-label
-          v-if="skuSelected?.price_discount"
-          class="text-caption text-negative q-pt-sm"
-        >
+        <q-item-label v-if="skuSelected?.price_discount" class="text-caption text-negative q-pt-sm">
           {{ numberToReal(skuSelected.price_discount) }}
         </q-item-label>
-        <q-item-label
-          v-if="skuSelected?.price"
-          class="text-h5 text-weight-bold"
-        >
+        <q-item-label v-if="skuSelected?.price" class="text-h5 text-weight-bold">
           {{ numberToReal(skuSelected.price) }}
-          <q-badge
-            v-if="
-              skuSelected.price &&
-              skuSelected.price_discount &&
-              skuSelected.price_discount < skuSelected.price
-            "
-            :style="{
+          <q-badge v-if="
+            skuSelected.price &&
+            skuSelected.price_discount &&
+            skuSelected.price_discount < skuSelected.price
+          " :style="{
               backgroundColor: '#FFC107',
               top: '10px',
-            }"
-            text-color="black"
-            class="text-subtitle1 text-weight-bold"
-            >-
+            }" text-color="black" class="text-subtitle1 text-weight-bold">-
             {{
               getDiscountPercent(skuSelected.price, skuSelected.price_discount)
-            }}%</q-badge
-          >
+            }}%</q-badge>
         </q-item-label>
         <q-item-label class="text-caption row items-center no-wrap q-mb-md">
           até {{ installments?.installment }}x de
-          {{ numberToReal(installments?.value) }}</q-item-label
-        >
-        <q-item-label
-          class="text-caption row items-center no-wrap q-gutter-x-md q-pa-none"
-        >
-          <q-btn
-            label="Comprar agora"
-            color="dark"
-            unelevated
-            padding="sm md"
-            :no-caps="false"
-          />
-          <q-btn
-            label="Adicionar ao carrinho"
-            color="default"
-            unelevated
-            padding="sm md"
-            text-color="dark"
-            class="bg-default"
-            icon="mdi-cart-plus"
-          />
+          {{ numberToReal(installments?.value) }}</q-item-label>
+        <q-item-label class="text-caption row items-center no-wrap q-gutter-x-md q-pa-none">
+          <q-btn label="Comprar agora" color="dark" unelevated padding="sm md" :no-caps="false" />
+          <q-btn label="Adicionar ao carrinho" color="default" unelevated padding="sm md" text-color="dark"
+            class="bg-default" icon="mdi-cart-plus" />
         </q-item-label>
-        <q-item-label
-          class="text-caption row items-center no-wrap q-gutter-x-sm"
-        >
+        <q-item-label class="text-caption row items-center no-wrap q-gutter-x-sm">
           Vendido por:
-          <q-img
-            :src="product?.company?.logotipo"
-            fit="contain"
-            height="50px"
-            width="80px"
-          />
+          <q-img :src="product?.company?.logotipo" fit="contain" height="50px" width="80px" />
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -162,9 +109,8 @@ function myTweak(offset: number): { minHeight: string } {
 const currentUrl = computed(() => {
   if (import.meta.client && window?.location) return window.location.href;
 
-  return `${process.env.SITE_URL || "https://seu-dominio.com"}${
-    route.fullPath
-  }`;
+  return `${process.env.SITE_URL || "https://seu-dominio.com"}${route.fullPath
+    }`;
 });
 const image = computed(() => {
   const skus = (product.value as any)?.skus;

@@ -1,8 +1,8 @@
 <template>
   <div class="bg-dark text-white q-py-md">
     <div class="wrapper">
-      <div class="row">
-        <div class="col-3">
+      <div class="row q-col-gutter-md">
+        <div class="col-12 col-sm-6 col-md-3">
           <q-card flat class="bg-transparent">
             <q-card-section>
               <div class="text-subtitle1 text-weight-bold q-mb-sm">Contato</div>
@@ -17,100 +17,73 @@
               <div class="text-subtitle1 text-weight-bold q-mb-sm">
                 Termos de uso
               </div>
-              <div class="text-subtitle2 flex gap-1">
-                <router-link
-                  to="/privacy-policy"
-                  class="link-decoration-none"
-                >
+              <div class="text-subtitle2 column q-gutter-xs">
+                <router-link to="/privacy-policy" class="link-decoration-none text-white">
                   Política de privacidade
                 </router-link>
-                <router-link to="/terms-of-use" class="link-decoration-none">
+                <router-link to="/terms-of-use" class="link-decoration-none text-white">
                   Termos de uso
                 </router-link>
               </div>
             </q-card-section>
           </q-card>
         </div>
-        <div class="col-3">
+        <div class="col-12 col-sm-6 col-md-3">
           <q-card flat class="bg-transparent">
             <q-card-section>
               <div class="text-subtitle1 text-weight-bold q-mb-sm">
                 Principais dúvidas
               </div>
-              <div class="text-subtitle2 flex gap-1">
-                <router-link
-                  to="/privacy-policy"
-                  class="link-decoration-none"
-                >
+              <div class="text-subtitle2 column q-gutter-xs">
+                <router-link to="/privacy-policy" class="link-decoration-none text-white">
                   Troca e devolução
                 </router-link>
-                <router-link to="/terms-of-use" class="link-decoration-none">
+                <router-link to="/terms-of-use" class="link-decoration-none text-white">
                   Black Friday
                 </router-link>
-                <router-link to="/terms-of-use" class="link-decoration-none">
+                <router-link to="/terms-of-use" class="link-decoration-none text-white">
                   Sobre a entrega
                 </router-link>
-                <router-link to="/terms-of-use" class="link-decoration-none">
-                  Quantidade de installments
+                <router-link to="/terms-of-use" class="link-decoration-none text-white">
+                  Quantidade de parcelas
                 </router-link>
-                <router-link to="/terms-of-use" class="link-decoration-none">
+                <router-link to="/terms-of-use" class="link-decoration-none text-white">
                   Como fazer uma compra
                 </router-link>
               </div>
             </q-card-section>
           </q-card>
         </div>
-        <div class="col-3">
+        <div class="col-12 col-sm-6 col-md-3">
           <q-card flat class="bg-transparent">
             <q-card-section>
               <div class="text-subtitle1 text-weight-bold q-mb-sm">
                 Redes sociais
               </div>
-              <div class="text-subtitle2">
-                <router-link
-                  v-for="(social, index) in channels"
-                  :key="index"
-                  :to="social?.link"
-                  target="_blank"
-                  class="link-decoration-none"
-                >
+              <div class="text-subtitle2 row q-gutter-sm">
+                <a v-for="(social, index) in channels" :key="index" :href="social?.link" target="_blank"
+                  class="link-decoration-none text-white">
                   <q-icon :name="getSocialIcon(social.type)" size="24px" />
-                </router-link>
+                </a>
               </div>
             </q-card-section>
           </q-card>
         </div>
       </div>
-      <q-separator dark />
+      <q-separator dark class="q-my-md" />
       <div class="row">
-        <div class="col-4">
+        <div class="col-12 col-md-6">
           <q-card flat class="bg-transparent">
             <q-card-section>
-              <div class="text-subtitle1 text-weight-bold q-mb-sm">
+              <div class="text-body2 text-weight-medium q-mb-sm">
                 Vendido e entregue por:
               </div>
-              <q-tabs
-                v-model="tab"
-                inline-label
-                active-color="transparent"
-                dense
-                justify="left"
-              >
-                <q-tab
-                  v-for="campaign in campaigns"
-                  :key="campaign.id"
-                  :name="campaign.name"
-                  dense
-                  class="q-py-none"
-                >
-                  <q-img
-                    :src="campaign?.logotipo"
-                    fit="contain"
-                    width="80px"
-                    class="img-campaign-footer"
-                  />
-                </q-tab>
-              </q-tabs>
+              <div class="row q-gutter-sm items-center">
+                <div v-for="campaign in campaigns" :key="campaign.id">
+                  <q-img :src="campaign?.logotipo" fit="contain" :width="$q.screen.lt.md ? '80px' : '100px'"
+                    :height="$q.screen.lt.md ? '40px' : '50px'" class="img-campaign-footer" />
+                </div>
+              </div>
             </q-card-section>
           </q-card>
         </div>
@@ -132,7 +105,6 @@ const campaigns = computed<Campaign[]>(() => {
     return shop?.value?.campaigns as Campaign[];
   return [] as Campaign[];
 });
-const tab = ref<string>("mails");
 
 function getSocialIcon(social: string) {
   switch (social) {
