@@ -353,7 +353,7 @@ import discoverImage from "@/assets/images/cardbrand/discover.svg";
 const { getAddressByZipcodeService } = useShopService();
 const { shop } = useShop();
 const { productsInCart, getFreight, freight, getTotalPrice } = useCart();
-const step = ref<number>(3);
+const step = ref<number>(1);
 const stepper = ref<InstanceType<typeof QStepper> | null>(null);
 const user = ref({
   name: "",
