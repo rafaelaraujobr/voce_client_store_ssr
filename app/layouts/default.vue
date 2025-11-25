@@ -27,7 +27,7 @@
           <div class="row items-center q-gutter-x-sm">
             <q-input
               v-model="currentSearch"
-              placeholder="O que você esta buscando?"
+              :placeholder="$t('searchPlaceholder')"
               color="primary"
               outlined
               dense
@@ -45,7 +45,7 @@
             </q-input>
             <q-btn
               color="primary"
-              label="Entrar"
+              :label="$t('login')"
               icon="mdi-account-outline"
               flat
               padding="sm md"
@@ -54,14 +54,14 @@
             />
             <q-btn
               color="primary"
-              label="Criar conta"
+              :label="$t('createAccount')"
               flat
               padding="sm md"
               class="text-weight-medium"
             />
             <q-btn
               color="primary"
-              label="Carrinho"
+              :label="$t('cart')"
               icon="mdi-cart-outline"
               flat
               padding="sm md"
@@ -76,6 +76,7 @@
                 color="primary"
               />
             </q-btn>
+            <LanguageSwitcher />
           </div>
         </q-toolbar>
       </div>
@@ -90,7 +91,7 @@
       class="bg-white"
     >
       <q-toolbar class="q-pa-md">
-        <q-toolbar-title> Seu carrinho </q-toolbar-title>
+        <q-toolbar-title> {{ $t("yourCart") }} </q-toolbar-title>
         <q-btn
           flat
           round
@@ -118,6 +119,7 @@
 </template>
 
 <script setup lang="ts">
+import LanguageSwitcher from "~/components/shared/LanguageSwitcher.vue";
 import Footer from "~/components/LayoutFooter.vue";
 import ShoppingCart from "~/components/ShoppingCart.vue";
 import SignInModal from "~/components/auth/SignInModal.vue";

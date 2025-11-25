@@ -21,9 +21,9 @@
         <q-item-label class="row items-center q-gutter-x-sm">
           <q-icon name="mdi-star" color="primary" size="1.2em" />
           <div class="text-primary">4.8</div>
-          <div class="text-grey">(120 avaliações)</div>
+          <div class="text-grey">({{ $t("reviews") }} 120)</div>
           <q-btn
-            label="Copiar link"
+            :label="$t('copyLink')"
             color="positive"
             unelevated
             padding="sm md"
@@ -38,13 +38,26 @@
           {{ product?.name }}
         </q-item-label>
         <q-item-label v-if="(product as any)?.skus?.length > 1">
-          <q-radio
+          <!-- <q-radio
             v-for="(i, index) in (product as any)?.skus"
             :key="index"
             v-model="skuSelectedId"
             :val="i.id"
             :label="i.model"
-          />
+          /> -->
+          <div class="q-gutter-x-sm q-my-sm">
+            <q-btn
+              v-for="(i, index) in (product as any)?.skus"
+              :key="index"
+              :color="skuSelectedId === i.id ? 'primary' : 'default'"
+              :text-color="skuSelectedId === i.id ? 'white' : 'dark'"
+              padding="sm md"
+              dense
+              unelevated
+              :label="i.model"
+              @click="skuSelectedId = i.id"
+            />
+          </div>
         </q-item-label>
         <q-item-label
           v-if="skuSelected?.sku?.price_discount < skuSelected?.sku?.price"
@@ -79,7 +92,7 @@
           >
         </q-item-label>
         <q-item-label class="text-caption row items-center no-wrap q-mb-md">
-          até {{ installments?.installment }}x de
+          {{ $t("until") }} {{ installments?.installment }}x {{ $t("of") }}
           {{ numberToReal(installments?.value) }}</q-item-label
         >
         <q-item-label
@@ -87,7 +100,7 @@
         >
           <q-btn
             v-if="productsInCart.find((p) => p.id === skuSelected.id)"
-            label="Finalizar compra"
+            :label="$t('finishPurchase')"
             color="primary"
             unelevated
             padding="sm md"
@@ -95,7 +108,7 @@
           />
           <q-btn
             v-else
-            label="Comprar agora"
+            :label="$t('buyNow')"
             color="dark"
             unelevated
             padding="sm md"
@@ -103,7 +116,7 @@
           />
           <q-btn
             v-if="!productsInCart.find((p) => p.id === skuSelected.id)"
-            label="Adicionar ao carrinho"
+            :label="$t('addCart')"
             color="default"
             unelevated
             padding="sm md"
@@ -114,7 +127,7 @@
           />
           <q-btn
             v-else
-            label="Remover do carrinho"
+            :label="$t('removeCart')"
             color="negative"
             unelevated
             padding="sm md"
@@ -124,7 +137,7 @@
         <q-item-label
           class="text-caption row items-center no-wrap q-gutter-x-sm"
         >
-          Vendido por:
+          {{ $t("soldBy") }}:
           <q-img
             :src="product?.company?.logotipo"
             fit="contain"
@@ -142,7 +155,7 @@
             <q-item-section side>
               <q-icon name="mdi-text" color="primary" />
             </q-item-section>
-            <q-item-section> Descrição do produto </q-item-section>
+            <q-item-section> {{ $t("productDescription") }} </q-item-section>
           </template>
           <q-card>
             <q-card-section>
@@ -154,7 +167,9 @@
                 role="region"
                 v-html="product?.description"
               />
-              <div v-else class="text-grey">Nenhuma descrição disponível.</div>
+              <div v-else class="text-grey">
+                {{ $t("noDescriptionAvailable") }}
+              </div>
             </q-card-section>
           </q-card>
         </q-expansion-item>
@@ -163,10 +178,10 @@
             <q-item-section side>
               <q-icon name="mdi-information-outline" color="primary" />
             </q-item-section>
-            <q-item-section> Caracteristicas </q-item-section>
+            <q-item-section> {{ $t("productFeatures") }} </q-item-section>
           </template>
           <q-card>
-            <q-card-section> caracteristicas </q-card-section>
+            <q-card-section> {{ $t("productFeatures") }} </q-card-section>
           </q-card>
         </q-expansion-item>
         <q-expansion-item expand-separator>
@@ -174,10 +189,10 @@
             <q-item-section side>
               <q-icon name="mdi-ruler-square" color="primary" />
             </q-item-section>
-            <q-item-section> Dimensões </q-item-section>
+            <q-item-section> {{ $t("dimensions") }} </q-item-section>
           </template>
           <q-card>
-            <q-card-section> dimensões </q-card-section>
+            <q-card-section> {{ $t("dimensions") }} </q-card-section>
           </q-card>
         </q-expansion-item>
       </q-list>
@@ -187,10 +202,10 @@
             <q-item-section side>
               <q-icon name="mdi-check-decagram-outline" color="primary" />
             </q-item-section>
-            <q-item-section> Compra segura </q-item-section>
+            <q-item-section> {{ $t("securePurchase") }} </q-item-section>
           </template>
           <q-card>
-            <q-card-section>compra segura </q-card-section>
+            <q-card-section> {{ $t("securePurchase") }} </q-card-section>
           </q-card>
         </q-expansion-item>
         <q-expansion-item expand-separator>
@@ -198,10 +213,10 @@
             <q-item-section side>
               <q-icon name="mdi-lock-check-outline" color="primary" />
             </q-item-section>
-            <q-item-section> Pagamento segura </q-item-section>
+            <q-item-section> {{ $t("securePayment") }} </q-item-section>
           </template>
           <q-card>
-            <q-card-section> Pagamento seguro </q-card-section>
+            <q-card-section> {{ $t("securePayment") }} </q-card-section>
           </q-card>
         </q-expansion-item>
         <q-expansion-item expand-separator>
@@ -209,10 +224,10 @@
             <q-item-section side>
               <q-icon name="mdi-lock-check-outline" color="primary" />
             </q-item-section>
-            <q-item-section> Politica de troca e devolução </q-item-section>
+            <q-item-section> {{ $t("returnPolicy") }} </q-item-section>
           </template>
           <q-card>
-            <q-card-section> Politica de troca e devolução </q-card-section>
+            <q-card-section> {{ $t("returnPolicy") }} </q-card-section>
           </q-card>
         </q-expansion-item>
       </q-list>

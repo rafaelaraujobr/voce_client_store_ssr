@@ -2,7 +2,6 @@ import type { ModuleOptions } from "nuxt-quasar-ui";
 export const quasarOptions: ModuleOptions = {
   sassVariables: "@/assets/styles/quasar-variable.sass",
   plugins: ["BottomSheet", "Dialog", "Loading", "LoadingBar", "Notify", "Dark"],
-  lang: "pt-BR",
   iconSet: "eva-icons",
   components: {
     defaults: {

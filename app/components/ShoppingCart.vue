@@ -22,7 +22,7 @@
                 class="absolute-full flex flex-center bg-secondary text-white text-center"
                 style="max-width: 150px; margin: 0 auto"
               >
-                Imagem indisponível
+                {{ $t("imageUnavailable") }}
               </div>
             </template>
           </q-img>
@@ -34,7 +34,8 @@
           <q-item-label>
             <div
               v-if="
-                product.sku?.price_discount && product.sku?.price_discount < product.sku?.price
+                product.sku?.price_discount &&
+                product.sku?.price_discount < product.sku?.price
               "
               class="no-wrap row items-center q-gutter-x-sm"
             >

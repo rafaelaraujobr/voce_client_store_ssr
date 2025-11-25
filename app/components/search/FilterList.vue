@@ -3,7 +3,7 @@
     <div class="col-12">
       <q-card flat>
         <q-card-section>
-          <q-item-label class="text-weight-bold">Filtros</q-item-label>
+          <q-item-label class="text-weight-bold">{{ $t("filters") }}</q-item-label>
           <div class="q-gutter-x-sm">
             <q-chip
               v-for="price in priceApplied"
@@ -31,7 +31,7 @@
         </q-card-section>
         <q-card-section>
           <q-item-label class="text-weight-bold q-mb-sm"
-            >Categorias</q-item-label
+            >{{ $t("categories") }}</q-item-label
           >
           <div class="scroll" style="max-height: 300px">
             <q-option-group
@@ -46,7 +46,7 @@
           </div>
         </q-card-section>
         <q-card-section>
-          <q-item-label class="text-weight-bold q-mb-sm">Preço</q-item-label>
+          <q-item-label class="text-weight-bold q-mb-sm">{{ $t("price") }}</q-item-label>
           <q-option-group
             v-model="priceSelected"
             :options="optionsPrices"

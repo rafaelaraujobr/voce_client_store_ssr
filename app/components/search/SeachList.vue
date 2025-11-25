@@ -3,14 +3,14 @@
     <div class="col-auto">
       <q-item>
         <q-item-section>
-          <q-item-label class="text-h6 text-weight-medium"
-            >Resultados</q-item-label
-          >
+          <q-item-label class="text-h6 text-weight-medium">{{
+            $t("results")
+          }}</q-item-label>
           <q-item-label class="text-grey-6 text-caption row items-center"
             ><div class="text-weight-bold text-h6 q-mr-sm text-dark">
               {{ totalProducts }}
             </div>
-            produtos encontrados</q-item-label
+            {{ $t("productsFound") }}</q-item-label
           >
         </q-item-section>
       </q-item>
@@ -19,7 +19,7 @@
       <q-select
         v-model="orderBySelected"
         :options="orderByOptions"
-        label="Ordenar por"
+        :label="$t('orderBy')"
         map-options
         emit-value
         dense
@@ -69,7 +69,7 @@
                   <div
                     class="absolute-full flex flex-center bg-secondary text-white"
                   >
-                    Imagem indisponível
+                    {{ $t("imageUnavailable") }}
                   </div>
                 </template>
               </q-img>
@@ -115,7 +115,7 @@
                     class="text-grey-6 text-caption"
                   >
                     <b>3x</b>
-                    sem juros de
+                    {{ $t("withoutInterest") }}
                     <b>{{
                       numberToReal(
                         (product.installments.value /
@@ -165,7 +165,7 @@
       class="row justify-center items-center q-mt-md q-py-md"
     >
       <q-spinner-dots color="primary" size="40px" />
-      <span class="q-ml-sm text-grey-6">Carregando mais produtos...</span>
+      <span class="q-ml-sm text-grey-6">{{ $t("loadingMoreProducts") }}</span>
     </div>
 
     <div
@@ -176,11 +176,11 @@
       "
       class="row justify-center items-center q-mt-md q-py-md"
     >
-      <span class="text-grey-6">Todos os produtos foram carregados</span>
+      <span class="text-grey-6">{{ $t("allProductsLoaded") }}</span>
     </div>
   </q-infinite-scroll>
   <div v-else class="row justify-center items-center q-mt-md q-py-md">
-    <span class="text-grey-6">Nenhum produto encontrado</span>
+    <span class="text-grey-6">{{ $t("noProductsFound") }}</span>
   </div>
 </template>
 
@@ -204,10 +204,10 @@ const isLoadingMore = ref(false);
 const scrollTargetRef = ref<any>(null);
 const orderBySelected = ref<string>("created_at|desc");
 const orderByOptions = ref([
-  { label: "Mais recentes", value: "created_at|desc" },
-  { label: "Mais antigos", value: "created_at|asc" },
-  { label: "Menor preço", value: "price|asc" },
-  { label: "Maior preço", value: "price|desc" },
+  { label: $t("mostRecent"), value: "created_at|desc" },
+  { label: $t("oldest"), value: "created_at|asc" },
+  { label: $t("lowestPrice"), value: "price|asc" },
+  { label: $t("highestPrice"), value: "price|desc" },
 ]);
 function getDiscountPercent(
   price: number,

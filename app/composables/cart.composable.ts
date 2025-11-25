@@ -37,12 +37,25 @@ export const useCart = () => {
       setLoadingFreight(false);
     }
   }
+
+  function removeProductCart(product: any): void {
+    Notify.create({
+      message: "Produto removido do carrinho",
+      color: "positive",
+      icon: "mdi-check",
+    });
+    if (productsInCart.value.length === 1) {
+      clearCart();
+      navigateTo("/");
+    } else removeProductFromCart(product);
+  }
   return {
     productsInCart,
     loadingFreight,
     freight,
     setProductsInCart,
     addProductToCart,
+    removeProductCart,
     removeProductFromCart,
     updateProductQuantity,
     clearCart,

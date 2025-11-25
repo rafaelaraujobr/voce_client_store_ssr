@@ -6,7 +6,7 @@
   >
     <q-card-section>
       <div class="text-h5 text-weight-bold text-center">
-        Produtos relacionados
+        {{ $t("relatedProducts") }}
       </div>
     </q-card-section>
     <q-card-section class="q-pa-none">

@@ -22,7 +22,7 @@
               <div
                 class="absolute-full flex flex-center bg-secondary text-white text-center"
                 style="max-width: 300px; margin: 0 auto">
-                Imagem indisponível
+                {{ $t("imageUnavailable") }}
               </div>
             </template>
           </q-img>
@@ -72,7 +72,7 @@
         class="absolute-full flex flex-center bg-secondary text-white text-center"
         style="max-width: 300px; margin: 0 auto"
       >
-        Imagem indisponível
+        {{ $t("imageUnavailable") }}
       </div>
     </template>
   </q-img>
@@ -80,7 +80,7 @@
     <q-card style="width: 800px">
       <q-toolbar>
         <q-toolbar-title class="text-subtitle1">
-          Visualizar imagem
+          {{ $t("viewImage") }}
         </q-toolbar-title>
         <q-btn v-close-popup flat round dense icon="mdi-close" />
       </q-toolbar>

@@ -9,7 +9,7 @@
   >
     <q-tab name="all">
       <q-item-section>
-        <q-item-label>Todos os produtos</q-item-label>
+        <q-item-label>{{ $t("allProducts") }}</q-item-label>
       </q-item-section>
     </q-tab>
     <q-tab

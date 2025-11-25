@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { quasarOptions } from "./quasar-options";
+import { i18nOptions } from "./i18n-options";
 
 export default defineNuxtConfig({
   css: ["@/assets/styles/quasar-custom.sass"],
@@ -27,8 +28,10 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "pinia-plugin-persistedstate/nuxt",
     "@vueuse/nuxt",
+    "@nuxtjs/i18n",
   ],
   quasar: quasarOptions,
+  i18n: i18nOptions,
 
   runtimeConfig: {
     apiSecret: process.env.API_SECRET || "",
@@ -38,7 +41,8 @@ export default defineNuxtConfig({
         .split(",")
         .map((s) => s.trim()),
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:3000",
-      apiGatewayBase: process.env.NUXT_PUBLIC_API_GATEWAY_BASE || "http://localhost:3000",
+      apiGatewayBase:
+        process.env.NUXT_PUBLIC_API_GATEWAY_BASE || "http://localhost:3000",
     },
   },
 

@@ -4,7 +4,7 @@
       <div v-if="currentSearchTerm" class="col-12">
         <div class="row items-center q-mb-md">
           <div class="text-h6 text-weight-medium row items-center">
-            Resultados da busca:
+            {{ $t("resultsOfSearch") }}:
             <div class="text-negative text-weight-bold text-h6 q-ml-sm">
               "{{ currentSearchTerm }}"
             </div>

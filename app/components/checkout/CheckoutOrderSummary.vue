@@ -1,7 +1,12 @@
 <template>
   <q-card class="bg-default" flat>
     <q-card-section v-if="productsInCart.length > 0">
-      <q-item v-for="product in productsInCart" :key="product.id">
+      <q-item
+        v-for="product in productsInCart"
+        :key="product.id"
+        clickable
+        @click.stop="navigateToProduct(product)"
+      >
         <q-item-section avatar>
           <q-img
             :src="product?.sku?.image || product?.sku?.images[0]"
@@ -59,7 +64,7 @@
               flat
               dense
               color="negative"
-              @click="removeProductFromCart(product)"
+              @click="removeProductCart(product)"
             />
           </div>
         </q-item-section>
@@ -148,7 +153,7 @@
 import { useCart } from "~/composables/cart.composable";
 const {
   productsInCart,
-  removeProductFromCart,
+  removeProductCart,
   getTotalPrice,
   freight,
   getTotalDiscount,
@@ -160,7 +165,8 @@ function dialogCoupon() {
   setTimeout(() => {
     loadingCoupon.value = false;
     Dialog.create({
-      title: "<span class='text-dark text-weight-bold'>Cupom inválido ou expirado</span>",
+      title:
+        "<span class='text-dark text-weight-bold'>Cupom inválido ou expirado</span>",
       html: true,
       message: `<span class="text-dark">O cupom de desconto <span class="text-negative text-weight-bold">${couponCode.value}</span> não é válido. Por favor, tente novamente.</span>`,
       ok: true,
@@ -168,5 +174,9 @@ function dialogCoupon() {
       persistent: true,
     });
   }, 1000);
+}
+
+function navigateToProduct(product: any) {
+  navigateTo(`/product/${product.id}`);
 }
 </script>

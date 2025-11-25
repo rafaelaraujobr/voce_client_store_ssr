@@ -5,27 +5,26 @@
         <div class="col-3">
           <q-card flat class="bg-transparent">
             <q-card-section>
-              <div class="text-subtitle1 text-weight-bold q-mb-sm">Contato</div>
+              <div class="text-subtitle1 text-weight-bold q-mb-sm">
+                {{ $t("contact") }}
+              </div>
               <div class="text-subtitle2">
-                <div>Email: contato@flashapp.com</div>
-                <div>central: (11) 99999-9999</div>
+                <div>{{ $t("email") }}: contato@flashapp.com</div>
+                <div>{{ $t("phone") }}: (11) 99999-9999</div>
               </div>
             </q-card-section>
           </q-card>
           <q-card flat class="bg-transparent">
             <q-card-section>
               <div class="text-subtitle1 text-weight-bold q-mb-sm">
-                Termos de uso
+                {{ $t("termsOfUse") }}
               </div>
               <div class="text-subtitle2 flex gap-1">
-                <router-link
-                  to="/privacy-policy"
-                  class="link-decoration-none"
-                >
-                  Política de privacidade
+                <router-link to="/privacy-policy" class="link-decoration-none">
+                  {{ $t("privacyPolicy") }}
                 </router-link>
                 <router-link to="/terms-of-use" class="link-decoration-none">
-                  Termos de uso
+                  {{ $t("termsOfUse") }}
                 </router-link>
               </div>
             </q-card-section>
@@ -35,26 +34,23 @@
           <q-card flat class="bg-transparent">
             <q-card-section>
               <div class="text-subtitle1 text-weight-bold q-mb-sm">
-                Principais dúvidas
+                {{ $t("mainQuestions") }}
               </div>
               <div class="text-subtitle2 flex gap-1">
-                <router-link
-                  to="/privacy-policy"
-                  class="link-decoration-none"
-                >
-                  Troca e devolução
+                <router-link to="/privacy-policy" class="link-decoration-none">
+                  {{ $t("exchangeAndReturn") }}
                 </router-link>
                 <router-link to="/terms-of-use" class="link-decoration-none">
-                  Black Friday
+                  {{ $t("blackFriday") }}
                 </router-link>
                 <router-link to="/terms-of-use" class="link-decoration-none">
-                  Sobre a entrega
+                  {{ $t("aboutDelivery") }}
                 </router-link>
                 <router-link to="/terms-of-use" class="link-decoration-none">
-                  Quantidade de installments
+                  {{ $t("quantityOfInstallments") }}
                 </router-link>
                 <router-link to="/terms-of-use" class="link-decoration-none">
-                  Como fazer uma compra
+                  {{ $t("howToMakeAPurchase") }}
                 </router-link>
               </div>
             </q-card-section>
@@ -64,7 +60,7 @@
           <q-card flat class="bg-transparent">
             <q-card-section>
               <div class="text-subtitle1 text-weight-bold q-mb-sm">
-                Redes sociais
+                {{ $t("socialNetworks") }}
               </div>
               <div class="text-subtitle2">
                 <router-link
@@ -87,7 +83,7 @@
           <q-card flat class="bg-transparent">
             <q-card-section>
               <div class="text-subtitle1 text-weight-bold q-mb-sm">
-                Vendido e entregue por:
+                {{ $t("soldAndDeliveredBy") }}:
               </div>
               <q-tabs
                 v-model="tab"

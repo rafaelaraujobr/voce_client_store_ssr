@@ -39,7 +39,7 @@
               v-if="product.price_discount"
               class="text-grey-7 text-caption row items-center no-wrap"
             >
-              de
+              {{ $t("from") }}
               <div class="q-mx-sm">
                 {{
                   product.price_discount
@@ -47,7 +47,7 @@
                     : numberToReal(product.price)
                 }}
               </div>
-              por
+              {{ $t("by") }}
             </q-item-label>
             <q-item-label class="text-h3 text-weight-bold">{{
               numberToReal(product.price)
@@ -56,11 +56,14 @@
               v-if="product.installments?.installment"
               class="text-grey-7 text-caption row items-center no-wrap"
             >
-              ou {{ product.installments?.installment }}x de
-              {{ numberToReal(product.installments?.value) }}</q-item-label
-            >
+              {{ product.installments?.installment }}x {{ $t("from") }}
+              <div class="q-mx-sm">
+                {{ numberToReal(product.installments?.value) }}
+              </div>
+              {{ $t("by") }}
+            </q-item-label>
             <q-btn
-              label="Confira!"
+              :label="$t('checkOut')"
               color="primary"
               unelevated
               padding="sm md"
@@ -85,11 +88,9 @@ watch(products, async () => {
   slide.value = 1;
 });
 
-
 async function navigateToProduct(productId: string) {
   await navigateTo(`/product/${productId}`);
 }
 </script>
 
-<style lang="sass">
-</style>
+<style lang="sass"></style>
