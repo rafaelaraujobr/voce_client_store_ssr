@@ -35,6 +35,11 @@
             >{{ product?.name }}
             <q-tooltip>{{ product.name }}</q-tooltip>
           </q-item-label>
+          <q-item-label>
+            <div class="text-primary">
+              {{ product.sku?.model }}
+            </div>
+          </q-item-label>
           <q-item-label class="text-weight-medium text-grey-6"
             >Quantidade: {{ product?.quantity }}</q-item-label
           >

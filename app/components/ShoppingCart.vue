@@ -28,9 +28,9 @@
           </q-img>
         </q-item-section>
         <q-item-section>
-          <q-item-label class="text-weight-medium">{{
-            product.name
-          }}</q-item-label>
+          <q-item-label class="text-weight-medium"
+            >{{ product.name }} - <span class="text-primary">{{ product.sku?.model }}</span></q-item-label
+          >
           <q-item-label>
             <div
               v-if="

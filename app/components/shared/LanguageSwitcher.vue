@@ -10,7 +10,9 @@
           v-for="item in locales"
           :key="item.code"
           clickable
-          @click="setLanguage(item.code as 'pt-BR' | 'en-US' | 'es-ES' | 'fr-FR')"
+          @click="
+            setLanguage(item.code as 'pt-BR' | 'en-US' | 'es-ES' | 'fr-FR')
+          "
         >
           <q-item-section side>
             <q-img
@@ -53,14 +55,22 @@ const quasarLangMap: Record<string, string> = {
   "fr-FR": "fr",
 };
 
-async function setLanguage(value: "pt-BR" | "en-US" | "es-ES" | "fr-FR") {
+async function loadQuasarLanguage(value: string) {
   try {
-    const langFile = quasarLangMap[value];
+    const langFile = quasarLangMap[value] || "pt-BR";
     const langPack = await import(`quasar/lang/${langFile}.mjs`);
     lang.set(langPack.default);
-    setLocale(value as any);
   } catch (error) {
-    console.error(`Failed to load language: ${value}`, error);
+    console.error(`Failed to load Quasar language: ${value}`, error);
   }
 }
+
+async function setLanguage(value: "pt-BR" | "en-US" | "es-ES" | "fr-FR") {
+  await loadQuasarLanguage(value);
+  setLocale(value as any);
+}
+
+onMounted(() => {
+  loadQuasarLanguage(locale.value);
+});
 </script>
