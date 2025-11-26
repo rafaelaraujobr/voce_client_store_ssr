@@ -37,9 +37,9 @@
         <q-item-label>
           {{ product?.name }}
         </q-item-label>
-        <q-item-label v-if="(product as any)?.skus?.length > 1">
+        <q-item-label v-if="sortedSkus.length > 1">
           <!-- <q-radio
-            v-for="(i, index) in (product as any)?.skus"
+            v-for="(i, index) in sortedSkus"
             :key="index"
             v-model="skuSelectedId"
             :val="i.id"
@@ -47,7 +47,7 @@
           /> -->
           <div class="q-gutter-x-sm q-my-sm">
             <q-btn
-              v-for="(i, index) in (product as any)?.skus"
+              v-for="(i, index) in sortedSkus"
               :key="index"
               :color="skuSelectedId === i.id ? 'primary' : 'default'"
               :text-color="skuSelectedId === i.id ? 'white' : 'dark'"
@@ -247,9 +247,28 @@ const id = computed(() => route.params.id);
 const skuSelectedId = ref<string | null>(null);
 
 watch(product, () => {
-  if ((product.value as any)?.skus && (product.value as any)?.skus.length > 0)
-    skuSelectedId.value = (product.value as any).skus[0].id;
+  if (sortedSkus.value && sortedSkus.value.length > 0)
+    skuSelectedId.value = sortedSkus.value[0].id;
   else skuSelectedId.value = null;
+});
+
+const sizeOrder = ["XP", "P", "M", "G", "XG", "XXG", "EXG"];
+
+const sortedSkus = computed(() => {
+  const skus = (product.value as any)?.skus.filter(
+    (sku: any) => sku.active === true
+  );
+  if (!Array.isArray(skus)) return [];
+
+  return [...skus].sort((a, b) => {
+    const aIndex = sizeOrder.indexOf(a.model?.toUpperCase() || "");
+    const bIndex = sizeOrder.indexOf(b.model?.toUpperCase() || "");
+    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+    if (aIndex === -1 && bIndex !== -1) return -1;
+    if (aIndex !== -1 && bIndex === -1) return 1;
+
+    return (a.model || "").localeCompare(b.model || "");
+  });
 });
 
 const installments = computed(() => {
