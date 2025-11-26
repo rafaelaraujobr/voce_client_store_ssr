@@ -255,7 +255,7 @@ watch(product, () => {
 const sizeOrder = ["XP", "P", "M", "G", "XG", "XXG", "EXG"];
 
 const sortedSkus = computed(() => {
-  const skus = (product.value as any)?.skus.filter(
+  const skus = (product.value as any)?.skus?.filter(
     (sku: any) => sku.active === true
   );
   if (!Array.isArray(skus)) return [];
@@ -263,10 +263,10 @@ const sortedSkus = computed(() => {
   return [...skus].sort((a, b) => {
     const aIndex = sizeOrder.indexOf(a.model?.toUpperCase() || "");
     const bIndex = sizeOrder.indexOf(b.model?.toUpperCase() || "");
+  
     if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
-    if (aIndex === -1 && bIndex !== -1) return -1;
-    if (aIndex !== -1 && bIndex === -1) return 1;
-
+    if (aIndex !== -1 && bIndex === -1) return -1;
+    if (aIndex === -1 && bIndex !== -1) return 1;
     return (a.model || "").localeCompare(b.model || "");
   });
 });
