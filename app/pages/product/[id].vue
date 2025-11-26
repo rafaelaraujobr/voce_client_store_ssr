@@ -37,7 +37,7 @@
         <q-item-label>
           {{ product?.name }}
         </q-item-label>
-        <q-item-label v-if="sortedSkus.length > 1">
+        <q-item-label>
           <!-- <q-radio
             v-for="(i, index) in sortedSkus"
             :key="index"
