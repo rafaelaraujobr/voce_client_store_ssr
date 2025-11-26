@@ -4,7 +4,7 @@
     dense
     :icon="`img:${flags[currentLocale?.code as 'pt-BR' | 'en-US' | 'es-ES' | 'fr-FR']}`"
   >
-    <q-menu persistent auto-close>
+    <q-menu auto-close>
       <q-list>
         <q-item
           v-for="item in locales"
