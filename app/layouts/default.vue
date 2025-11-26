@@ -167,8 +167,6 @@ watch(productsInCart, (newVal) => {
   if (newVal.length === 0) leftDrawerOpen.value = false;
 });
 
-watch(leftDrawerOpen, (newVal) => {
-
 async function navigateToSearch(value: string) {
   setSearch(value);
   setProductQuery({ ...productQuery.value, search: value, skip: 0 });
