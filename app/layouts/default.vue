@@ -126,7 +126,7 @@ import SignInModal from "~/components/auth/SignInModal.vue";
 import { useShop } from "~/composables/shop.composable";
 import { useCart } from "~/composables/cart.composable";
 const route = useRoute();
-const { getTotalQuantity } = useCart();
+const { getTotalQuantity, productsInCart } = useCart();
 const {
   getShopBySlug,
   shop,
@@ -161,6 +161,13 @@ watch(
     }
   }
 );
+
+
+watch(productsInCart, (newVal) => {
+  if (newVal.length === 0) leftDrawerOpen.value = false;
+});
+
+watch(leftDrawerOpen, (newVal) => {
 
 async function navigateToSearch(value: string) {
   setSearch(value);
