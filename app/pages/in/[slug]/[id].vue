@@ -14,7 +14,8 @@
     </q-breadcrumbs>
     <q-item>
       <q-item-section>
-        <ProductCarousel :product="product" />
+        {{ skuSelected }}
+        <ProductCarousel :images="skuSelected?.sku?.images" />
       </q-item-section>
       <q-item-section class="q-gutter-y-sm">
         <q-item-label class="row items-center q-gutter-x-sm">
@@ -101,7 +102,7 @@
         <q-item-label
           class="text-caption row items-center no-wrap q-gutter-x-sm"
         >
-          Vendido por:
+          {{ $t('soldBy') }}:
           <q-img
             :src="product?.company?.logotipo"
             fit="contain"

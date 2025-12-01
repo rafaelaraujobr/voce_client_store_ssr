@@ -41,7 +41,7 @@
             </div>
           </q-item-label>
           <q-item-label class="text-weight-medium text-grey-6"
-            >Quantidade: {{ product?.quantity }}</q-item-label
+            >{{ $t('quantity') }}: {{ product?.quantity }}</q-item-label
           >
         </q-item-section>
         <q-item-section side>
@@ -82,7 +82,7 @@
           <q-input
             v-model="couponCode"
             type="text"
-            label="Cupom de desconto"
+            :label="$t('discountCoupon')"
             outlined
             dense
             bg-color="white"
@@ -95,7 +95,7 @@
         </div>
         <div class="col-12 col-md-3">
           <q-btn
-            label="Aplicar"
+            :label="$t('apply')"
             color="primary"
             dense
             padding="sm lg"
@@ -110,7 +110,7 @@
     <q-card-section>
       <q-item dense>
         <q-item-section>
-          <q-item-label class="text-weight-medium">Subtotal</q-item-label>
+          <q-item-label class="text-weight-medium">{{ $t('subtotal') }}</q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <q-item-label class="text-weight-bold">{{
@@ -120,7 +120,7 @@
       </q-item>
       <q-item v-if="getTotalDiscount() > 0" dense>
         <q-item-section>
-          <q-item-label class="text-weight-medium">Desconto</q-item-label>
+          <q-item-label class="text-weight-medium">{{ $t('discount') }}</q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <q-item-label class="text-weight-bold"
@@ -130,7 +130,7 @@
       </q-item>
       <q-item v-if="freight?.total && productsInCart.length > 0" dense>
         <q-item-section>
-          <q-item-label class="text-weight-medium">Frete</q-item-label>
+          <q-item-label class="text-weight-medium">{{ $t('freight') }}</q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <q-item-label class="text-weight-bold">{{
@@ -143,7 +143,7 @@
     <q-card-section>
       <q-item>
         <q-item-section>
-          <q-item-label class="text-weight-bold">Total a pagar</q-item-label>
+          <q-item-label class="text-weight-bold">{{ $t('totalToPay') }}</q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <q-item-label class="text-weight-bold">{{

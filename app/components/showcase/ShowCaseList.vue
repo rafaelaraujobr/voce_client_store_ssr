@@ -122,7 +122,7 @@
         v-if="!loadingProducts && products.length < totalProducts"
         :loading="loadingProducts"
         color="primary"
-        label="Carregar mais produtos"
+        :label="$t('loadingMoreProducts')"
         class="q-mt-md"
         padding="sm md"
         @click="loadMoreProducts(slug as string)"
@@ -133,7 +133,7 @@
       class="row justify-center items-center q-mt-md q-py-md"
     >
       <q-spinner-dots color="primary" size="40px" />
-      <span class="q-ml-sm text-grey-6">Carregando mais produtos...</span>
+      <span class="q-ml-sm text-grey-6">{{ $t("loadingMoreProducts") }}</span>
     </div>
 
     <div
@@ -144,7 +144,7 @@
       "
       class="row justify-center items-center q-mt-md q-py-md"
     >
-      <span class="text-grey-6">Todos os produtos foram carregados</span>
+      <span class="text-grey-6">{{ $t("allProductsLoaded") }}</span>
     </div>
   </q-infinite-scroll>
 </template>

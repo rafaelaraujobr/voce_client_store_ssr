@@ -14,7 +14,7 @@
     </q-breadcrumbs>
     <q-item>
       <q-item-section>
-        <ProductCarousel :product="product" />
+        <ProductCarousel :images="skuSelected?.sku?.images" />
       </q-item-section>
       <q-item-section class="q-gutter-y-sm">
         <q-item-label class="row items-center q-gutter-x-sm">
@@ -82,14 +82,14 @@
           class="text-caption row items-center no-wrap q-gutter-x-md q-pa-none"
         >
           <q-btn
-            label="Comprar agora"
+            :label="$t('buyNow')"
             color="dark"
             unelevated
             padding="sm md"
             :no-caps="false"
           />
           <q-btn
-            label="Adicionar ao carrinho"
+            :label="$t('addCart')"
             color="default"
             unelevated
             padding="sm md"
@@ -101,7 +101,7 @@
         <q-item-label
           class="text-caption row items-center no-wrap q-gutter-x-sm"
         >
-          Vendido por:
+          {{ $t('soldBy') }}:
           <q-img
             :src="product?.company?.logotipo"
             fit="contain"

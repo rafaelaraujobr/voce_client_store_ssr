@@ -154,7 +154,7 @@
         v-if="!loadingProducts && products.length < totalProducts"
         :loading="loadingProducts"
         color="primary"
-        label="Carregar mais produtos"
+        :label="$t('loadMoreProducts')"
         class="q-mt-md"
         padding="sm md"
         @click="loadMoreProducts(slug as string)"

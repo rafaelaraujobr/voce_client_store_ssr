@@ -3,7 +3,9 @@
     <div class="col-12">
       <q-card flat>
         <q-card-section>
-          <q-item-label class="text-weight-bold">{{ $t("filters") }}</q-item-label>
+          <q-item-label class="text-weight-bold">{{
+            $t("filters")
+          }}</q-item-label>
           <div class="q-gutter-x-sm">
             <q-chip
               v-for="price in priceApplied"
@@ -27,12 +29,22 @@
               class="q-px-sm"
               @remove="removeCategory(category.id)"
             />
+            <q-chip 
+              v-if="priceApplied.length > 0 || categoriesApplied.length > 0"
+              :label="$t('clearAll')"
+              color="primary"
+              text-color="white"
+              removable
+              dense
+              class="q-px-sm"
+              @remove="clearAll"
+            />
           </div>
         </q-card-section>
         <q-card-section>
-          <q-item-label class="text-weight-bold q-mb-sm"
-            >{{ $t("categories") }}</q-item-label
-          >
+          <q-item-label class="text-weight-bold q-mb-sm">{{
+            $t("categories")
+          }}</q-item-label>
           <div class="scroll" style="max-height: 300px">
             <q-option-group
               v-model="categoriesSelected"
@@ -46,7 +58,9 @@
           </div>
         </q-card-section>
         <q-card-section>
-          <q-item-label class="text-weight-bold q-mb-sm">{{ $t("price") }}</q-item-label>
+          <q-item-label class="text-weight-bold q-mb-sm">{{
+            $t("price")
+          }}</q-item-label>
           <q-option-group
             v-model="priceSelected"
             :options="optionsPrices"
@@ -132,6 +146,16 @@ function removePrice(min: number, max: number) {
   priceSelected.value = priceSelected.value.filter(
     (price) => price.min !== min || price.max !== max
   );
+}
+
+function clearAll() {
+  priceSelected.value = [];
+  categoriesSelected.value = [];
+  setProductQuery({
+    ...productQuery.value,
+    skip: 0,
+  });
+  getProducts(slug.value as string);
 }
 
 watch(priceSelected, (value) => {

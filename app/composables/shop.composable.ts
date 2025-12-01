@@ -119,7 +119,7 @@ export const useShop = () => {
         setProductQuery(newQuery);
       }
     } catch (error) {
-      console.error("❌ Erro ao carregar mais produtos:", error);
+      console.error("Error loading more products:", error);
       throw error;
     } finally {
       Loading.hide();

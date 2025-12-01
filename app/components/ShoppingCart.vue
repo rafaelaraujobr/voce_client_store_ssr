@@ -29,7 +29,10 @@
         </q-item-section>
         <q-item-section>
           <q-item-label class="text-weight-medium"
-            >{{ product.name }} - <span class="text-primary">{{ product.sku?.model }}</span></q-item-label
+            >{{ product.name }} -
+            <span class="text-primary">{{
+              product.sku?.model
+            }}</span></q-item-label
           >
           <q-item-label>
             <div
@@ -101,14 +104,14 @@
       <q-card-section class="q-pa-md q-gutter-y-md">
         <q-item>
           <q-item-section>
-            <q-item-label>Total</q-item-label>
+            <q-item-label>{{ $t("total") }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-item-label>{{ numberToReal(getTotalPrice()) }}</q-item-label>
           </q-item-section>
         </q-item>
         <q-btn
-          label="Finalizar compra"
+          :label="$t('finishPurchase')"
           color="primary"
           class="full-width"
           unelevated

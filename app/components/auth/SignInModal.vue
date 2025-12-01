@@ -14,9 +14,9 @@
       </q-toolbar>
 
       <q-card-section>
-        <div class="text-h5 text-weight-bold text-center">Acessar conta</div>
+        <div class="text-h5 text-weight-bold text-center">{{ $t("accessAccount") }}</div>
         <div class="text-weight-medium text-center">
-          Acesse sua conta para continuar com sua compra
+          {{ $t("accessAccountDescription") }}
         </div>
       </q-card-section>
       <q-card-section>
@@ -43,7 +43,7 @@
             </template>
           </q-input>
           <q-btn
-            label="Entrar"
+            :label="$t('login')"
             :loading="loading"
             color="primary"
             type="submit"
@@ -55,14 +55,14 @@
               <q-separator />
             </div>
             <div class="col-2">
-              <div class="text-weight-medium text-center">ou</div>
+              <div class="text-weight-medium text-center">{{ $t("or") }}</div>
             </div>
             <div class="col-5">
               <q-separator />
             </div>
           </div>
           <q-btn
-            label="Entrar com Google"
+            :label="$t('loginWithGoogle')"
             color="white"
             text-color="dark"
             type="submit"
@@ -72,9 +72,9 @@
             class="full-width border-primary bg-white border-1"
           />
           <div class="text-weight-medium text-center q-mt-md">
-            Ainda não tem uma conta?
+            {{ $t("noAccount") }}
             <router-link to="/signup" class="link-decoration-none"
-              >Criar conta</router-link
+              >{{ $t("createAccount") }}</router-link
             >
           </div>
         </q-form>

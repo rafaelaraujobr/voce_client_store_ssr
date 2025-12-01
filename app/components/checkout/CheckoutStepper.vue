@@ -7,27 +7,27 @@
     flat
     bordered
   >
-    <q-step :name="1" title="Seus dados" icon="settings" :done="step > 1">
+    <q-step :name="1" :title="$t('yourData')" icon="settings" :done="step > 1">
       <q-form @submit="verifyFormData()">
         <div class="text-weight-bold text-subtitle1 q-mb-md">
-          Dados pessoais
+          {{ $t("personalData") }}
         </div>
         <div class="row q-col-gutter-x-sm">
           <div class="col-12 col-md-6">
             <q-input
               v-model="user.name"
-              label="Nome completo"
+              :label="$t('fullName')"
               outlined
               dense
-              :rules="[(val) => !!val || 'Nome completo é obrigatório']"
+              :rules="[(val) => !!val || $t('fullNameRequired')]"
             />
           </div>
           <div class="col-12 col-md-6">
             <q-input
               v-model="user.email"
-              label="E-mail"
+              :label="$t('email')"
               type="email"
-              :rules="[(val) => !!val || 'E-mail é obrigatório']"
+              :rules="[(val) => !!val || $t('emailRequired')]"
               outlined
               dense
             />
@@ -35,7 +35,7 @@
           <div class="col-12 col-md-6">
             <q-input
               v-model="user.phone"
-              label="Telefone"
+              :label="$t('phone')"
               type="tel"
               mask="(##) #####-####"
               outlined
@@ -45,10 +45,10 @@
           <div class="col-12 col-md-6">
             <q-input
               v-model="user.cpf"
-              :rules="[(val) => !!val || 'CPF é obrigatório']"
+              :rules="[(val) => !!val || $t('cpfRequired')]"
               outlined
               dense
-              label="CPF"
+              :label="$t('cpf')"
               type="text"
               mask="###.###.###-##"
             />
@@ -62,8 +62,8 @@
             <q-input
               ref="zipcodeRef"
               v-model="address.zipcode"
-              :rules="[(val) => !!val || 'CEP é obrigatório']"
-              label="CEP"
+              :rules="[(val) => !!val || $t('zipcodeRequired')]"
+              :label="$t('zipcode')"
               outlined
               type="tel"
               mask="#####-###"
@@ -75,8 +75,8 @@
           <div class="col-12 col-md-6">
             <q-input
               v-model="address.street"
-              :rules="[(val) => !!val || 'Rua é obrigatório']"
-              label="Rua"
+              :rules="[(val) => !!val || $t('streetRequired')]"
+              :label="$t('street')"
               type="text"
               outlined
               dense
@@ -86,8 +86,8 @@
             <q-input
               ref="numberRef"
               v-model="address.number"
-              :rules="[(val) => !!val || 'Número é obrigatório']"
-              label="Número"
+              :rules="[(val) => !!val || $t('numberRequired')]"
+              :label="$t('number')"
               type="number"
               outlined
               dense
@@ -98,7 +98,7 @@
               v-model="address.complement"
               outlined
               dense
-              label="Complemento"
+              :label="$t('complement')"
               maxlength="50"
               type="text"
               max-length="50"
@@ -107,8 +107,8 @@
           <div class="col-12 col-md-4">
             <q-input
               v-model="address.neighborhood"
-              :rules="[(val) => !!val || 'Bairro é obrigatório']"
-              label="Bairro"
+              :rules="[(val) => !!val || $t('neighborhoodRequired')]"
+              :label="$t('neighborhood')"
               type="text"
               outlined
               dense
@@ -117,8 +117,8 @@
           <div class="col-12 col-md-6">
             <q-input
               v-model="address.city"
-              :rules="[(val) => !!val || 'Cidade é obrigatório']"
-              label="Cidade"
+              :rules="[(val) => !!val || $t('cityRequired')]"
+              :label="$t('city')"
               type="text"
               outlined
               dense
@@ -127,8 +127,8 @@
           <div class="col-12 col-md-6">
             <q-input
               v-model="address.state"
-              :rules="[(val) => !!val || 'Estado é obrigatório']"
-              label="Estado"
+              :rules="[(val) => !!val || $t('stateRequired')]"
+              :label="$t('state')"
               type="text"
               outlined
               dense
@@ -139,7 +139,7 @@
           <q-btn
             type="submit"
             color="primary"
-            label="Continuar"
+            :label="$t('continue')"
             padding="sm lg"
             dense
             unelevated
@@ -150,12 +150,12 @@
 
     <q-step
       :name="2"
-      title="Sua entrega"
+      :title="$t('yourDelivery')"
       icon="mdi-map-marker"
       :done="step > 2"
     >
       <div class="text-weight-bold text-subtitle1 q-mb-md">
-        Selecione a entrega / retirada
+        {{ $t('selectDelivery') }}
       </div>
       <div class="row">
         <div class="col-12">
@@ -167,15 +167,15 @@
                 </q-item-section>
                 <q-item-section>
                   <q-item-label class="text-weight-bold text-subtitle1">
-                    Economico
+                    {{ $t('economic') }}
                   </q-item-label>
                   <q-item-label
                     class="text-weight-medium text-subtitle2 q-mb-sm"
                   >
-                    {{ freight?.estimatedTime || "0" }} dias úteis
+                    {{ freight?.estimatedTime || "0" }} {{ $t('businessDays') }}
                   </q-item-label>
                   <q-item-label class="text-weight-medium text-subtitle1">
-                    Local de entrega
+                    {{ $t('deliveryLocation') }}
                   </q-item-label>
                   <q-item-label class="text-subtitle2">
                     {{ address?.street || "0" }}, {{ address?.number || "0" }}
@@ -200,7 +200,7 @@
         <div class="row q-mt-md items-center justify-between full-width">
           <q-btn
             color="primary"
-            label="Voltar"
+            :label="$t('back')"
             padding="sm lg"
             flat
             icon="mdi-arrow-left"
@@ -210,7 +210,7 @@
           />
           <q-btn
             color="primary"
-            label="Continuar"
+            :label="$t('continue')"
             padding="sm lg"
             dense
             unelevated
@@ -222,13 +222,13 @@
 
     <q-step :name="3" title="Pagamento" icon="mdi-comment-plus">
       <div class="text-weight-bold text-subtitle1 q-mb-md">
-        Forma de pagamento
+        {{ $t('paymentMethod') }}
       </div>
       <q-card flat bordered>
         <q-expansion-item
           expand-separator
           icon="mdi-credit-card"
-          label="Cartão de crédito"
+          :label="$t('creditCard')"
         >
           <q-card flat>
             <q-form @submit="handleSubmitCreditCard()">
@@ -237,15 +237,15 @@
                   <q-input
                     v-model="creditCard.number"
                     :rules="[
-                      (val) => !!val || 'Número do cartão é obrigatório',
+                      (val) => !!val || $t('creditCardNumberRequired'),
                     ]"
-                    label="Número do cartão"
+                    :label="$t('creditCardNumber')"
                     mask="#### #### #### ####"
                     type="tel"
                     outlined
                     dense
                   >
-                    <template #prepend>
+                    <template #prepend>W
                       <q-img
                         v-if="cardBrandImage"
                         :src="cardBrandImage"
@@ -264,9 +264,9 @@
                   <q-input
                     v-model="creditCard.expirationDate"
                     :rules="[
-                      (val) => !!val || 'Data de expiração é obrigatória',
+                      (val) => !!val || $t('expirationDateRequired'),
                     ]"
-                    label="Data de expiração"
+                    :label="$t('expirationDate')"
                     mask="##/##"
                     type="tel"
                     outlined
@@ -276,8 +276,8 @@
                 <div class="col-12 col-md-6">
                   <q-input
                     v-model="creditCard.cvv"
-                    :rules="[(val) => !!val || 'CVV é obrigatório']"
-                    label="CVV"
+                    :rules="[(val) => !!val || $t('cvvRequired')]"
+                    :label="$t('cvv')"
                     mask="###"
                     type="tel"
                     outlined
@@ -287,8 +287,8 @@
                 <div class="col-12">
                   <q-input
                     v-model="creditCard.name"
-                    :rules="[(val) => !!val || 'Nome do titular é obrigatório']"
-                    label="Nome do titular"
+                    :rules="[(val) => !!val || $t('cardholderNameRequired')]"
+                    :label="$t('cardholderName')"
                     type="text"
                     outlined
                     dense
@@ -298,8 +298,8 @@
                   <q-select
                     v-model="creditCard.installments"
                     :options="installmentsOptions"
-                    :rules="[(val) => !!val || 'Parcelas é obrigatório']"
-                    label="Parcelas"
+                    :rules="[(val) => !!val || $t('installmentsRequired')]"
+                    :label="$t('installments')"
                     type="number"
                     outlined
                     dense
@@ -317,7 +317,7 @@
       <div class="row q-mt-md items-center justify-between full-width">
         <q-btn
           color="primary"
-          label="Voltar"
+          :label="$t('back')"
           padding="sm lg"
           flat
           icon="mdi-arrow-left"
@@ -327,7 +327,7 @@
         />
         <q-btn
           color="positive"
-          :label="`Pagar ${numberToReal(getTotalPrice())}`"
+          :label="`${$t('pay')} ${numberToReal(getTotalPrice())}`"
           padding="sm lg"
           dense
           unelevated
