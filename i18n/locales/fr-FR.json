@@ -103,5 +103,15 @@
   "discountCoupon": "Discount coupon",
   "quantity": "Quantity",
   "clearAll": "Tout effacer",
-  "yourCartIsEmpty": "Votre panier est vide. Ajoutez des produits pour acheter."
+  "yourCartIsEmpty": "Votre panier est vide. Ajoutez des produits pour acheter.",
+  "yourData": "Vos données",
+  "zipcode": "Code postal",
+  "street": "Rue",
+  "number": "Numéro",
+  "complement": "Complément",
+  "neighborhood": "Quartier",
+  "city": "Ville",
+  "state": "État",
+  "country": "Pays",
+  "password": "Mot de passe"
 }

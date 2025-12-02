@@ -103,5 +103,15 @@
   "discountCoupon": "Discount coupon",
   "quantity": "Quantity",
   "clearAll": "Clear all",
-  "yourCartIsEmpty": "Your cart is empty. Add products to buy."
+  "yourCartIsEmpty": "Your cart is empty. Add products to buy.",
+  "yourData": "Your data",
+  "zipcode": "Zipcode",
+  "street": "Street",
+  "number": "Number",
+  "complement": "Complement",
+  "neighborhood": "Neighborhood",
+  "city": "City",
+  "state": "State",
+  "country": "Country",
+  "password": "Password"
 }
