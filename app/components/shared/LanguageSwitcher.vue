@@ -40,7 +40,6 @@ const { locales, setLocale, locale } = useI18n();
 const currentLocale = computed(() => {
   return locales.value.find((item) => item.code === locale.value);
 });
-const { lang } = useQuasar();
 const flags = {
   "pt-BR": flagBr,
   "en-US": flagUs,
@@ -48,29 +47,7 @@ const flags = {
   "fr-FR": flagFr,
 };
 
-const quasarLangMap: Record<string, string> = {
-  "pt-BR": "pt-BR",
-  "en-US": "en-US",
-  "es-ES": "es",
-  "fr-FR": "fr",
-};
-
-async function loadQuasarLanguage(value: string) {
-  try {
-    const langFile = quasarLangMap[value] || "pt-BR";
-    const langPack = await import(`quasar/lang/${langFile}.mjs`);
-    lang.set(langPack.default);
-  } catch (error) {
-    console.error(`Failed to load Quasar language: ${value}`, error);
-  }
-}
-
 async function setLanguage(value: "pt-BR" | "en-US" | "es-ES" | "fr-FR") {
-  await loadQuasarLanguage(value);
   setLocale(value as any);
 }
-
-onMounted(() => {
-  loadQuasarLanguage(locale.value);
-});
 </script>

@@ -153,6 +153,9 @@ function clearAll() {
   categoriesSelected.value = [];
   setProductQuery({
     ...productQuery.value,
+    minPrice: undefined,
+    maxPrice: undefined,
+    categories: undefined,
     skip: 0,
   });
   getProducts(slug.value as string);

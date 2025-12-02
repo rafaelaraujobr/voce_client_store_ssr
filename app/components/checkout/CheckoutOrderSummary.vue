@@ -41,7 +41,7 @@
             </div>
           </q-item-label>
           <q-item-label class="text-weight-medium text-grey-6"
-            >{{ $t('quantity') }}: {{ product?.quantity }}</q-item-label
+            >Quantidade: {{ product?.quantity }}</q-item-label
           >
         </q-item-section>
         <q-item-section side>
@@ -82,7 +82,7 @@
           <q-input
             v-model="couponCode"
             type="text"
-            :label="$t('discountCoupon')"
+            label="Cupom de desconto"
             outlined
             dense
             bg-color="white"
@@ -95,7 +95,7 @@
         </div>
         <div class="col-12 col-md-3">
           <q-btn
-            :label="$t('apply')"
+            label="Aplicar"
             color="primary"
             dense
             padding="sm lg"

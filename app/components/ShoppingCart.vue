@@ -29,10 +29,7 @@
         </q-item-section>
         <q-item-section>
           <q-item-label class="text-weight-medium"
-            >{{ product.name }} -
-            <span class="text-primary">{{
-              product.sku?.model
-            }}</span></q-item-label
+            >{{ product.name }} - <span class="text-primary">{{ product.sku?.model }}</span></q-item-label
           >
           <q-item-label>
             <div
@@ -90,9 +87,10 @@
     </q-list>
     <q-item v-else>
       <q-item-section>
-        <q-item-label class="text-grey-6">{{
-          $t("yourCartIsEmpty")
-        }}</q-item-label>
+        <q-item-label class="text-grey-6"
+          >Seu carrinho está vazio. Adicione produtos para
+          comprar.</q-item-label
+        >
       </q-item-section>
     </q-item>
     <q-card
@@ -103,14 +101,14 @@
       <q-card-section class="q-pa-md q-gutter-y-md">
         <q-item>
           <q-item-section>
-            <q-item-label>{{ $t("total") }}</q-item-label>
+            <q-item-label>Total</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-item-label>{{ numberToReal(getTotalPrice()) }}</q-item-label>
           </q-item-section>
         </q-item>
         <q-btn
-          :label="$t('finishPurchase')"
+          label="Finalizar compra"
           color="primary"
           class="full-width"
           unelevated
