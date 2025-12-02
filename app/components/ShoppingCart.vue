@@ -90,10 +90,9 @@
     </q-list>
     <q-item v-else>
       <q-item-section>
-        <q-item-label class="text-grey-6"
-          >Seu carrinho está vazio. Adicione produtos para
-          comprar.</q-item-label
-        >
+        <q-item-label class="text-grey-6">{{
+          $t("yourCartIsEmpty")
+        }}</q-item-label>
       </q-item-section>
     </q-item>
     <q-card

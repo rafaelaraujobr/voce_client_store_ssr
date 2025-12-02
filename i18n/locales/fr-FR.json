@@ -102,5 +102,6 @@
   "apply": "Apply",
   "discountCoupon": "Discount coupon",
   "quantity": "Quantity",
-  "clearAll": "Tout effacer"
+  "clearAll": "Tout effacer",
+  "yourCartIsEmpty": "Votre panier est vide. Ajoutez des produits pour acheter."
 }

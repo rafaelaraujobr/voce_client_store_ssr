@@ -54,7 +54,7 @@
   "buyNow": "Comprar agora",
   "addCart": "Adicionar ao carrinho",
   "removeCart": "Remover do carrinho",
-  "soldBy": "Vendido por:",
+  "soldBy": "Vendido por",
   "until": "Até",
   "of": "de",
   "accessAccount": "Acessar conta",
@@ -102,5 +102,6 @@
   "apply": "Aplicar",
   "discountCoupon": "Cupom de desconto",
   "quantity": "Quantidade",
-  "clearAll": "Limpar todos"
+  "clearAll": "Limpar todos",
+  "yourCartIsEmpty": "Seu carrinho está vazio. Adicione produtos para comprar."
 }
