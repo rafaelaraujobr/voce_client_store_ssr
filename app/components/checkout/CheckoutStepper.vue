@@ -245,7 +245,7 @@
                     outlined
                     dense
                   >
-                    <template #prepend>W
+                    <template #prepend>
                       <q-img
                         v-if="cardBrandImage"
                         :src="cardBrandImage"
