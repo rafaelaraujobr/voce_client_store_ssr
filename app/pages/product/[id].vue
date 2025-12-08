@@ -85,8 +85,8 @@
             >-
             {{
               getDiscountPercent(
-                skuSelected.sku?.price,
-                skuSelected.sku?.price_discount
+                skuSelected?.sku?.price,
+                skuSelected?.sku?.price_discount
               )
             }}%</q-badge
           >
@@ -99,7 +99,7 @@
           class="text-caption row items-center no-wrap q-gutter-x-md q-pa-none"
         >
           <q-btn
-            v-if="productsInCart.find((p) => p.id === skuSelected.id)"
+            v-if="productsInCart.find((p) => p.id === skuSelected?.id)"
             :label="$t('finishPurchase')"
             color="primary"
             unelevated
@@ -115,7 +115,7 @@
             @click="buyNow"
           />
           <q-btn
-            v-if="!productsInCart.find((p) => p.id === skuSelected.id)"
+            v-if="!productsInCart.find((p) => p.id === skuSelected?.id)"
             :label="$t('addCart')"
             color="default"
             unelevated
@@ -170,20 +170,22 @@
               v-model="zipcode"
               label="CEP"
               mask="#####-###"
+              placeholder="Insira o CEP"
               dense
               outlined
               class="full-width"
+              @keyup.enter="getFreightDetails(zipcode)"
             />
           </div>
           <div class="col-auto">
             <q-btn
               label="Calcular frete"
-              color="primary"
+              color="dark"
               unelevated
               dense
               padding="sm lg"
               :loading="loadingFreight"
-              @click="getFreight(zipcode)"
+              @click="getFreightDetails(zipcode)"
             />
           </div>
         </div>
@@ -196,10 +198,10 @@
               <q-item dense class="q-pa-none">
                 <q-item-section>
                   <q-item-label>
-                    {{ addressToZipcode.logradouro }}
+                    {{ addressToZipcode?.logradouro }}
                   </q-item-label>
                   <q-item-label>
-                    {{ addressToZipcode.bairro }}, {{ addressToZipcode.uf }}
+                    {{ addressToZipcode?.bairro }}, {{ addressToZipcode?.uf }}
                   </q-item-label>
                   <q-item-label> CEP: {{ zipcode }} </q-item-label>
                 </q-item-section>
@@ -209,10 +211,7 @@
         </div>
         <div class="col-6">
           <q-list v-if="deliveryOptions.length > 0">
-            <q-template
-              v-for="(option, index) in deliveryOptions"
-              :key="option.id"
-            >
+            <template v-for="(option, index) in deliveryOptions" :key="index">
               <q-item>
                 <q-item-section>
                   <q-item-label class="text-subtitle1">{{
@@ -224,12 +223,12 @@
                 </q-item-section>
                 <q-item-section side>
                   <q-item-label class="text-weight-bold">{{
-                    formatValueShipping(option.totalPrice || 0)
+                    formatBusinessDays(option.estimatedDeliveryDays || 0)
                   }}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-separator v-if="index < deliveryOptions.length - 1" spaced />
-            </q-template>
+            </template>
           </q-list>
         </div>
       </q-card-section>
@@ -239,7 +238,7 @@
       <q-list class="rounded-borders">
         <q-expansion-item default-opened expand-separator>
           <template #header>
-            <q-item-section avatar>
+            <q-item-section side>
               <q-icon name="mdi-text" color="primary" />
             </q-item-section>
             <q-item-section> {{ $t("productDescription") }} </q-item-section>
@@ -252,7 +251,7 @@
                 style="white-space: pre-line; word-break: break-word"
                 aria-label="Descrição do produto"
                 role="region"
-                v-html="product?.description"
+                v-html="formatDescription(product?.description)"
               />
               <div v-else class="text-grey">
                 {{ $t("noDescriptionAvailable") }}
@@ -289,10 +288,21 @@
             <q-item-section side>
               <q-icon name="mdi-check-decagram-outline" color="primary" />
             </q-item-section>
-            <q-item-section> {{ $t("securePurchase") }} </q-item-section>
+            <q-item-section> {{ $t("securePurchase.title") }} </q-item-section>
           </template>
           <q-card>
-            <q-card-section> {{ $t("securePurchase") }} </q-card-section>
+            <q-card-section>
+              <div class="text-weight-bold q-mb-sm">
+                {{ $t("securePurchase.description1") }}<br >
+                {{ $t("securePurchase.description2") }}
+              </div>
+              <div class="text-body2 q-mb-sm">
+                {{ $t("securePurchase.description3") }}
+              </div>
+              <div class="text-body2">
+                {{ $t("securePurchase.description4") }}
+              </div>
+            </q-card-section>
           </q-card>
         </q-expansion-item>
         <q-expansion-item expand-separator>
@@ -300,21 +310,53 @@
             <q-item-section side>
               <q-icon name="mdi-lock-check-outline" color="primary" />
             </q-item-section>
-            <q-item-section> {{ $t("securePayment") }} </q-item-section>
+            <q-item-section> {{ $t("securePayment.title") }} </q-item-section>
           </template>
           <q-card>
-            <q-card-section> {{ $t("securePayment") }} </q-card-section>
+            <q-card-section>
+              <div class="text-weight-bold q-mb-sm">
+                {{ $t("securePayment.paymentMethods") }}<br >
+                {{ $t("securePayment.paymentMethodsCredit") }}<br >
+                {{ $t("securePayment.paymentMethodsPix") }}
+              </div>
+              <div class="text-body2 q-mb-sm">
+                <span class="text-weight-bold"
+                  >{{ $t("securePayment.protectedTransactions") }} </span
+                ><br >
+                {{ $t("securePayment.protectedTransactionsDesc") }}
+              </div>
+              <div class="text-body2">
+                <span class="text-weight-bold"
+                  >{{ $t("securePayment.dataPrivacy") }} </span
+                ><br >
+                {{ $t("securePayment.dataPrivacyDesc") }}
+              </div>
+            </q-card-section>
           </q-card>
         </q-expansion-item>
         <q-expansion-item expand-separator>
           <template #header>
             <q-item-section side>
-              <q-icon name="mdi-lock-check-outline" color="primary" />
+              <q-icon name="mdi-autorenew" color="primary" />
             </q-item-section>
-            <q-item-section> {{ $t("returnPolicy") }} </q-item-section>
+            <q-item-section> {{ $t("returnPolicy.title") }} </q-item-section>
           </template>
           <q-card>
-            <q-card-section> {{ $t("returnPolicy") }} </q-card-section>
+            <q-card-section>
+              <div class="text-weight-bold q-mb-sm">
+                {{ $t("returnPolicy.description1") }}<br ><br >
+                {{ $t("returnPolicy.description2") }}
+              </div>
+              <div class="text-body2 q-mb-sm">
+                {{ $t("returnPolicy.description3") }}
+              </div>
+              <div class="text-body2 q-mb-sm">
+                {{ $t("returnPolicy.description4") }}
+              </div>
+              <div class="text-body2">
+                {{ $t("returnPolicy.description5") }}
+              </div>
+            </q-card-section>
           </q-card>
         </q-expansion-item>
       </q-list>
@@ -330,7 +372,7 @@ import {
   numberToReal,
   formatDiscount,
   formatBusinessDays,
-  formatValueShipping,
+  formatDescription,
 } from "~/utils/functions";
 import { useShopService } from "~/services/shop.service";
 const { getCalculateFreightService, getAddressByZipcodeService } =
@@ -355,7 +397,7 @@ async function getAddressByZipcode(zipcode: string) {
   const response = await getAddressByZipcodeService(zipcode);
   addressToZipcode.value = response;
 }
-async function getFreight(zipcode: string) {
+async function getFreightDetails(zipcode: string) {
   if (!zipcode || !skuSelected.value?.sku?.id) return;
   loadingFreight.value = true;
   try {

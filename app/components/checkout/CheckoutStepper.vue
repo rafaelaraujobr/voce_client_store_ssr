@@ -155,11 +155,118 @@
       :done="step > 2"
     >
       <div class="text-weight-bold text-subtitle1 q-mb-md">
-        {{ $t('selectDelivery') }}
+        {{ $t("selectDelivery") }}
       </div>
       <div class="row">
         <div class="col-12">
-          <q-list>
+          <template v-for="(item, index) in freight" :key="index">
+            <q-expansion-item expand-separator default-opened dense group="delivery" accordion>
+              <template #header>
+                <q-item-section avatar>
+                  <q-avatar class="border-1 border-default">
+                    <img
+                      v-if="getProductCartBySkuId(item.skus[0]).sku.images[0]"
+                      :src="getProductCartBySkuId(item.skus[0]).sku.images[0]"
+                      width="30px"
+                      height="30px"
+                      fit="contain"
+                    >
+                    <q-icon
+                      v-else
+                      name="mdi-image"
+                      color="primary"
+                      size="24px"
+                    />
+                  </q-avatar>
+                </q-item-section>
+
+                <q-item-section>
+                  <q-item-label
+                    class="text-weight-medium text-subtitle1 ellipsis"
+                    style="max-width: 200px"
+                  >
+                    {{ getProductCartBySkuId(item.skus[0]).name }}
+                    <q-tooltip>{{
+                      getProductCartBySkuId(item.skus[0]).name
+                    }}</q-tooltip>
+                  </q-item-label>
+                </q-item-section>
+
+                <q-item-section side>
+                  <div class="row items-center">
+                    <q-item-label
+                      class="text-weight-medium text-subtitle1 row items-center"
+                    >
+                      <div
+                        class="text-weight-bold text-subtitle2 text-dark q-mr-md"
+                      >
+                        {{
+                          item.deliveries[selectedFreight]?.description || ""
+                        }}:
+                        {{
+                          formatValueShipping(
+                            item.deliveries[selectedFreight]?.totalPrice || 0
+                          )
+                        }}
+                      </div>
+                      <div class="text-weight-medium text-subtitle2">
+                        {{
+                          formatBusinessDays(
+                            item.deliveries[selectedFreight]
+                              ?.estimatedDeliveryDays || 0
+                          )
+                        }}
+                      </div>
+                    </q-item-label>
+                  </div>
+                </q-item-section>
+              </template>
+              <q-card flat>
+                <q-card-section>
+                  <q-list class="q-gutter-y-sm">
+                    <q-item
+                      v-for="(delivery, indexDelivery) in item.deliveries"
+                      :key="indexDelivery"
+                      v-ripple
+                      tag="label"
+                      dense
+                      class="q-py-md rounded-borders border-1 border-default"
+                    >
+                      <q-item-section side>
+                        <q-radio
+                          v-model="selectedFreight"
+                          :val="indexDelivery"
+                        />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label
+                          class="text-weight-bold text-subtitle1 ellipsis text-dark"
+                          >{{ delivery.description }}</q-item-label
+                        >
+                        <q-item-label
+                          class="text-weight-medium text-subtitle2"
+                          >{{
+                            formatBusinessDays(
+                              delivery.estimatedDeliveryDays || 0
+                            )
+                          }}</q-item-label
+                        >
+                      </q-item-section>
+                      <q-item-section side>
+                        <q-item-label
+                          class="text-weight-bold text-subtitle1 text-dark"
+                          >{{
+                            formatValueShipping(delivery.totalPrice)
+                          }}</q-item-label
+                        >
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </template>
+          <!-- <q-list>
             <q-card flat bordered class="border-1 border-primary">
               <q-item v-ripple tag="label" dense class="q-py-md">
                 <q-item-section side top>
@@ -167,15 +274,15 @@
                 </q-item-section>
                 <q-item-section>
                   <q-item-label class="text-weight-bold text-subtitle1">
-                    {{ $t('economic') }}
+                    {{ $t("economic") }}
                   </q-item-label>
                   <q-item-label
                     class="text-weight-medium text-subtitle2 q-mb-sm"
                   >
-                    {{ freight?.estimatedTime || "0" }} {{ $t('businessDays') }}
+                    {{ freight?.estimatedTime || "0" }} {{ $t("businessDays") }}
                   </q-item-label>
                   <q-item-label class="text-weight-medium text-subtitle1">
-                    {{ $t('deliveryLocation') }}
+                    {{ $t("deliveryLocation") }}
                   </q-item-label>
                   <q-item-label class="text-subtitle2">
                     {{ address?.street || "0" }}, {{ address?.number || "0" }}
@@ -195,7 +302,7 @@
                 </q-item-section>
               </q-item>
             </q-card>
-          </q-list>
+          </q-list> -->
         </div>
         <div class="row q-mt-md items-center justify-between full-width">
           <q-btn
@@ -222,7 +329,7 @@
 
     <q-step :name="3" title="Pagamento" icon="mdi-comment-plus">
       <div class="text-weight-bold text-subtitle1 q-mb-md">
-        {{ $t('paymentMethod') }}
+        {{ $t("paymentMethod") }}
       </div>
       <q-card flat bordered>
         <q-expansion-item
@@ -236,9 +343,7 @@
                 <div class="col-12">
                   <q-input
                     v-model="creditCard.number"
-                    :rules="[
-                      (val) => !!val || $t('creditCardNumberRequired'),
-                    ]"
+                    :rules="[(val) => !!val || $t('creditCardNumberRequired')]"
                     :label="$t('creditCardNumber')"
                     mask="#### #### #### ####"
                     type="tel"
@@ -263,9 +368,7 @@
                 <div class="col-12 col-md-6">
                   <q-input
                     v-model="creditCard.expirationDate"
-                    :rules="[
-                      (val) => !!val || $t('expirationDateRequired'),
-                    ]"
+                    :rules="[(val) => !!val || $t('expirationDateRequired')]"
                     :label="$t('expirationDate')"
                     mask="##/##"
                     type="tel"
@@ -341,17 +444,15 @@
 <script setup lang="ts">
 import type { QStepper } from "quasar";
 import { useCart } from "~/composables/cart.composable";
-import { useShop } from "~/composables/shop.composable";
 import { useShopService } from "~/services/shop.service";
 
-import visaImage from "@/assets/images/cardbrand/visa.svg";
-import mastercardImage from "@/assets/images/cardbrand/mastercard.svg";
 import amexImage from "@/assets/images/cardbrand/amex.svg";
-import eloImage from "@/assets/images/cardbrand/elo.svg";
 import discoverImage from "@/assets/images/cardbrand/discover.svg";
+import eloImage from "@/assets/images/cardbrand/elo.svg";
+import mastercardImage from "@/assets/images/cardbrand/mastercard.svg";
+import visaImage from "@/assets/images/cardbrand/visa.svg";
 
 const { getAddressByZipcodeService } = useShopService();
-const { shop } = useShop();
 const { productsInCart, getFreight, freight, getTotalPrice } = useCart();
 const step = ref<number>(1);
 const stepper = ref<InstanceType<typeof QStepper> | null>(null);
@@ -430,30 +531,33 @@ const installmentsOptions = computed(() => {
     .sort((a: { value: number }, b: { value: number }) => a.value - b.value);
 });
 
+function getProductCartBySkuId(id: string): any {
+  const product = productsInCart.value.find((product: any) =>
+    product.sku?.id.includes(id)
+  );
+  return product;
+  if (product) {
+    return product.sku;
+  }
+  return null;
+}
+
 async function verifyFormData(): Promise<void> {
-  const campaigns = shop.value?.campaigns;
-  const productsCampaigns = productsInCart.value.map(
-    (product) => product?.company?.id
-  );
-  const selectedCampaigns = campaigns?.filter((campaign) =>
-    productsCampaigns.includes(campaign.id)
-  );
   const payloadFreight = {
     skus: productsInCart.value.map((product: any) => {
       return {
         id: product.sku?.id as string,
-        amount: product.quantity || (1 as number),
+        qtd: product.quantity || (1 as number),
       };
     }) as any[],
-    accountName: selectedCampaigns?.[0]?.name || "extra",
     zipcode: address.value.zipcode,
   };
+  console.log(payloadFreight);
   try {
     await getFreight(payloadFreight);
     step.value = 2;
   } catch (error: any) {
     console.error("Erro ao verificar dados:", error);
-
 
     const errorData =
       error?._data?.error || error?._data || error?.data || error;

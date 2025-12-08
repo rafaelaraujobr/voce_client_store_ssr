@@ -45,9 +45,31 @@
   "noDescriptionAvailable": "Nenhuma descrição disponível.",
   "productFeatures": "Características",
   "dimensions": "Dimensões",
-  "securePurchase": "Compra segura",
-  "securePayment": "Pagamento seguro",
-  "returnPolicy": "Política de troca e devolução",
+  "securePurchase": {
+    "title": "Compra segura",
+    "description1": "Sua segurança é a nossa prioridade.",
+    "description2": "Em nossa loja, você compra com tranquilidade. Trabalhamos apenas com fornecedores parceiros cuidadosamente selecionados, responsáveis pelo envio e pela qualidade dos produtos.",
+    "description3": "Acompanhe todas as etapas da sua compra pela Central do Cliente, desde a aprovação do pagamento até a entrega.",
+    "description4": "Nosso site é protegido com tecnologia de criptografia de dados, e suas informações estão seguras conosco: não vendemos, trocamos nem compartilhamos dados pessoais com terceiros."
+  },
+  "securePayment": {
+    "title": "Pagamento e segurança",
+    "paymentMethods": "Formas de pagamento disponíveis",
+    "paymentMethodsCredit": "Cartão de crédito – Você pode parcelar suas compras em até 6 vezes, sendo que em até 3x o parcelamento é sem juros.",
+    "paymentMethodsPix": "Pix – Pagamento instantâneo, disponível todos os dias, a qualquer hora. O pagamento deve ser realizado em até 15 minutos após a finalização do pedido.",
+    "protectedTransactions": "Transações protegidas com o PicPay",
+    "protectedTransactionsDesc": "Utilizamos o sistema de pagamento do PicPay, que garante uma experiência de compra rápida, segura e confiável. Todas as transações passam por processos de segurança avançados, protegendo seus dados o tempo todo.",
+    "dataPrivacy": "Privacidade e segurança dos seus dados",
+    "dataPrivacyDesc": "O ambiente da loja é totalmente protegido por criptografia, garantindo que suas informações pessoais e de pagamento não sejam compartilhadas nem armazenadas com terceiros. Aqui, sua compra é segura do início ao fim."
+  },
+  "returnPolicy": {
+    "title": "Política de troca e devolução",
+    "description1": "Você tem seus direitos garantidos.",
+    "description2": "Seguimos todas as diretrizes do Código de Defesa do Consumidor.",
+    "description3": "Se você se arrepender da compra, poderá solicitar a devolução em até 7 dias após o recebimento do produto, conforme o direito de arrependimento previsto por lei.\nCaso o produto apresente defeito, realizamos a troca ou devolução sem custo adicional.",
+    "description4": "Para isso, basta acessar a Central do Cliente e seguir as instruções para abertura de solicitação.",
+    "description5": "Nosso compromisso é com a sua satisfação.\nSe precisar de ajuda em qualquer etapa da sua jornada, nossa equipe de atendimento está pronta para te atender com agilidade e cuidado."
+  },
   "reviews": "Avaliações",
   "copyLink": "Copiar link",
   "finishPurchase": "Finalizar compra",
