@@ -147,17 +147,19 @@
         </q-item-label>
       </q-item-section>
     </q-item>
-    <q-separator spaced inset />
+    <q-separator spaced />
     <q-card flat>
       <q-card-section class="row items-center justify-between q-pa-none">
         <div class="col-auto">
           <q-item>
             <q-item-section>
               <q-item-label
-                ><q-icon name="mdi-truck-outline" color="primary" size="md" />
-              </q-item-label>
-              <q-item-label
-                >Calcular frete e estimativa de entrega</q-item-label
+                ><q-icon
+                  name="mdi-truck-outline"
+                  color="primary"
+                  size="md"
+                  class="q-mr-sm"
+                />Calcular frete e estimativa de entrega</q-item-label
               >
             </q-item-section>
           </q-item>
@@ -226,12 +228,13 @@
                   }}</q-item-label>
                 </q-item-section>
               </q-item>
-              <q-separator v-if="index < deliveryOptions.length - 1" />
+              <q-separator v-if="index < deliveryOptions.length - 1" spaced />
             </q-template>
           </q-list>
         </div>
       </q-card-section>
     </q-card>
+    <q-separator spaced />
     <div class="q-gutter-y-md q-pt-md">
       <q-list class="rounded-borders">
         <q-expansion-item default-opened expand-separator>
