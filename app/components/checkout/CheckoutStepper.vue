@@ -454,7 +454,7 @@ async function verifyFormData(): Promise<void> {
   } catch (error: any) {
     console.error("Erro ao verificar dados:", error);
 
-    // O erro é um Response object com _data.error contendo a mensagem
+
     const errorData =
       error?._data?.error || error?._data || error?.data || error;
     const errorMessage =
