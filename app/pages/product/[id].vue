@@ -148,11 +148,95 @@
       </q-item-section>
     </q-item>
     <q-separator spaced inset />
+    <q-card flat>
+      <q-card-section class="row items-center justify-between q-pa-none">
+        <div class="col-auto">
+          <q-item>
+            <q-item-section>
+              <q-item-label
+                ><q-icon name="mdi-truck-outline" color="primary" size="md" />
+              </q-item-label>
+              <q-item-label
+                >Calcular frete e estimativa de entrega</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+        </div>
+        <div class="col-auto row items-center q-gutter-x-sm">
+          <div class="col-auto">
+            <q-input
+              v-model="zipcode"
+              label="CEP"
+              mask="#####-###"
+              dense
+              outlined
+              class="full-width"
+            />
+          </div>
+          <div class="col-auto">
+            <q-btn
+              label="Calcular frete"
+              color="primary"
+              unelevated
+              dense
+              padding="sm lg"
+              :loading="loadingFreight"
+              @click="getFreight(zipcode)"
+            />
+          </div>
+        </div>
+        <div class="col-6">
+          <q-card v-if="addressToZipcode" flat>
+            <q-card-section>
+              <div class="text-subtitle2 text-weight-bold q-mb-sm">
+                Endereço:
+              </div>
+              <q-item dense class="q-pa-none">
+                <q-item-section>
+                  <q-item-label>
+                    {{ addressToZipcode.logradouro }}
+                  </q-item-label>
+                  <q-item-label>
+                    {{ addressToZipcode.bairro }}, {{ addressToZipcode.uf }}
+                  </q-item-label>
+                  <q-item-label> CEP: {{ zipcode }} </q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="col-6">
+          <q-list v-if="deliveryOptions.length > 0">
+            <q-template
+              v-for="(option, index) in deliveryOptions"
+              :key="option.id"
+            >
+              <q-item>
+                <q-item-section>
+                  <q-item-label class="text-subtitle1">{{
+                    option.description
+                  }}</q-item-label>
+                  <q-item-label class="text-subtitle2">{{
+                    formatBusinessDays(option.estimatedDeliveryDays)
+                  }}</q-item-label>
+                </q-item-section>
+                <q-item-section side>
+                  <q-item-label class="text-weight-bold">{{
+                    formatValueShipping(option.totalPrice || 0)
+                  }}</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-separator v-if="index < deliveryOptions.length - 1" />
+            </q-template>
+          </q-list>
+        </div>
+      </q-card-section>
+    </q-card>
     <div class="q-gutter-y-md q-pt-md">
       <q-list class="rounded-borders">
         <q-expansion-item default-opened expand-separator>
           <template #header>
-            <q-item-section side>
+            <q-item-section avatar>
               <q-icon name="mdi-text" color="primary" />
             </q-item-section>
             <q-item-section> {{ $t("productDescription") }} </q-item-section>
@@ -239,12 +323,22 @@
 <script setup lang="ts">
 import ProductCarousel from "~/components/ProductCarousel.vue";
 import RelatedProducts from "~/components/RelatedProducts.vue";
-import { numberToReal, formatDiscount } from "~/utils/functions";
+import {
+  numberToReal,
+  formatDiscount,
+  formatBusinessDays,
+  formatValueShipping,
+} from "~/utils/functions";
+import { useShopService } from "~/services/shop.service";
+const { getCalculateFreightService, getAddressByZipcodeService } =
+  useShopService();
 const { getProductById, getRelatedProducts, product, shop, slug } = useShop();
 const { addProductToCart, removeProductFromCart, productsInCart } = useCart();
 const route = useRoute();
 const id = computed(() => route.params.id);
 const skuSelectedId = ref<string | null>(null);
+const deliveryOptions = ref<any[]>([]);
+const loadingFreight = ref<boolean>(false);
 
 watch(product, () => {
   if (sortedSkus.value && sortedSkus.value.length > 0)
@@ -252,6 +346,29 @@ watch(product, () => {
   else skuSelectedId.value = null;
 });
 
+const zipcode = ref<string>("");
+const addressToZipcode = ref<any>(null);
+async function getAddressByZipcode(zipcode: string) {
+  const response = await getAddressByZipcodeService(zipcode);
+  addressToZipcode.value = response;
+}
+async function getFreight(zipcode: string) {
+  if (!zipcode || !skuSelected.value?.sku?.id) return;
+  loadingFreight.value = true;
+  try {
+    await getAddressByZipcode(zipcode);
+    if (addressToZipcode.value.erro) return;
+    const { records } = await getCalculateFreightService({
+      zipcode: zipcode,
+      skus: [{ id: skuSelected.value.sku.id, qtd: 1 }],
+    });
+    deliveryOptions.value = records[0]?.deliveries || [];
+  } catch (error) {
+    console.error("Erro ao calcular frete:", error);
+  } finally {
+    loadingFreight.value = false;
+  }
+}
 const sizeOrder = ["XP", "P", "M", "G", "XG", "XXG", "EXG"];
 
 const sortedSkus = computed(() => {
@@ -263,7 +380,7 @@ const sortedSkus = computed(() => {
   return [...skus].sort((a, b) => {
     const aIndex = sizeOrder.indexOf(a.model?.toUpperCase() || "");
     const bIndex = sizeOrder.indexOf(b.model?.toUpperCase() || "");
-  
+
     if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
     if (aIndex !== -1 && bIndex === -1) return -1;
     if (aIndex === -1 && bIndex !== -1) return 1;

@@ -1,3 +1,4 @@
+import { useI18n } from "vue-i18n";
 export function numberToReal(
   value: string | number,
   currency: string = "BRL",
@@ -26,4 +27,19 @@ export function cleanQuery<T extends Record<string, any>>(
         value !== null
     )
   );
+}
+
+export function formatBusinessDays(days: number): string {
+  const { t } = useI18n();
+  if (isNaN(days)) return "";
+  if (days === 0) return "";
+  return days > 1
+    ? `${days} ${t("businessDays")}`
+    : `${days} ${t("businessDay")}`
+}
+
+export function formatValueShipping(value: number): string {
+  if (isNaN(value)) return "";
+  if (value === 0) return "Grátis";
+  return numberToReal(value.toString(), "BRL", "pt-BR") ; 
 }
