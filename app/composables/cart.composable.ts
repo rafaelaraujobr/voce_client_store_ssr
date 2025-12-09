@@ -20,16 +20,16 @@ export const useCart = () => {
     setFreight,
   } = cartStore;
 
-  const { getFreightService } = useShopService();
+  const { getCalculateFreightService } = useShopService();
 
   async function getFreight(payload: any): Promise<any> {
     setLoadingFreight(true);
     try {
-      const response = await getFreightService({
+      const { records } = await getCalculateFreightService({
         ...payload,
       });
-      setFreight(response);
-      return response;
+      setFreight(records);
+      return records;
     } catch (error: any) {
       console.error("Erro ao buscar frete:", error);
       throw error;

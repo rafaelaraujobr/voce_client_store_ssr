@@ -57,6 +57,18 @@ export const useShopService = () => {
     }
   }
 
+  async function getCalculateFreightService(payload: any): Promise<any> {
+    try {
+      return await $api<any>(`shipping/calculate`, {
+        method: "post",
+        body: payload,
+      });
+    } catch (error) {
+      console.error("Erro no getCalculateFreightService:", error);
+      throw error;
+    }
+  }
+
   return {
     getShopBySlugService,
     getProductsService,
@@ -64,5 +76,6 @@ export const useShopService = () => {
     getRelatedProductsService,
     getFreightService,
     getAddressByZipcodeService,
+    getCalculateFreightService,
   };
 };

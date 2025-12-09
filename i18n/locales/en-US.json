@@ -45,9 +45,31 @@
   "noDescriptionAvailable": "No description available.",
   "productFeatures": "Features",
   "dimensions": "Dimensions",
-  "securePurchase": "Secure purchase",
-  "securePayment": "Secure payment",
-  "returnPolicy": "Return policy",
+  "securePurchase": {
+    "title": "Secure purchase",
+    "description1": "Your security is our priority.",
+    "description2": "In our store, you can shop with confidence. We only work with carefully selected partner suppliers responsible for shipping and product quality.",
+    "description3": "Track all steps of your purchase through the Customer Center, from payment approval to delivery.",
+    "description4": "Our site is protected with data encryption technology, and your information is safe with us: we don't sell, trade, or share personal data with third parties."
+  },
+  "securePayment": {
+    "title": "Payment and security",
+    "paymentMethods": "Available payment methods",
+    "paymentMethodsCredit": "Credit card – You can split your purchases up to 6 times, with up to 3x being interest-free.",
+    "paymentMethodsPix": "Pix – Instant payment, available 24/7, anytime. The payment must be made within 15 minutes after the order is completed.",
+    "protectedTransactions": "Protected transactions with PicPay",
+    "protectedTransactionsDesc": "We use the payment system of PicPay, which ensures a fast, secure, and reliable shopping experience. All transactions go through advanced security processes, protecting your data at all times.",
+    "dataPrivacy": "Privacy and security of your data",
+    "dataPrivacyDesc": "The store environment is completely protected by encryption, ensuring that your personal and payment information is not shared or stored with third parties. Here, your purchase is secure from start to finish."
+  },
+  "returnPolicy": {
+    "title": "Return and exchange policy",
+    "description1": "You have your rights guaranteed.",
+    "description2": "We follow all guidelines of the Consumer Defense Code.",
+    "description3": "If you change your mind about the purchase, you can request a return within 7 days after receiving the product, according to the right of withdrawal provided by law.\nIf the product has a defect, we perform the exchange or return without additional cost.",
+    "description4": "To do this, simply access the Customer Center and follow the instructions for opening a request.",
+    "description5": "Our commitment is to your satisfaction.\nIf you need help at any stage of your journey, our customer service team is ready to assist you with agility and care."
+  },
   "reviews": "Reviews",
   "copyLink": "Copy link",
   "finishPurchase": "Finish purchase",
