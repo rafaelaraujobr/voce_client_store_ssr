@@ -1,5 +1,4 @@
 <template>
-  Frete Total: {{ freightTotal }}
   <q-card class="bg-default" flat>
     <q-card-section v-if="productsInCart.length > 0">
       <q-item
@@ -36,7 +35,10 @@
             >{{ product?.name }}
             <q-tooltip>{{ product.name }}</q-tooltip>
           </q-item-label>
-          <q-item-label>
+          <q-item-label
+            class="ellipsis cursor-pointer text-primary"
+            style="max-width: 200px"
+          >
             <div class="text-primary">
               {{ product.sku?.model }}
             </div>

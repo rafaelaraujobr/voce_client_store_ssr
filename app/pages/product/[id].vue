@@ -223,7 +223,7 @@
                 </q-item-section>
                 <q-item-section side>
                   <q-item-label class="text-weight-bold">{{
-                    formatBusinessDays(option.estimatedDeliveryDays || 0)
+                    formatValueShipping(option.totalPrice || 0)
                   }}</q-item-label>
                 </q-item-section>
               </q-item>
