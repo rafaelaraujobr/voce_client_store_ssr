@@ -1,4 +1,5 @@
 <template>
+  Frete Total: {{ freightTotal }}
   <q-card class="bg-default" flat>
     <q-card-section v-if="productsInCart.length > 0">
       <q-item
@@ -110,7 +111,9 @@
     <q-card-section>
       <q-item dense>
         <q-item-section>
-          <q-item-label class="text-weight-medium">{{ $t('subtotal') }}</q-item-label>
+          <q-item-label class="text-weight-medium">{{
+            $t("subtotal")
+          }}</q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <q-item-label class="text-weight-bold">{{
@@ -120,7 +123,9 @@
       </q-item>
       <q-item v-if="getTotalDiscount() > 0" dense>
         <q-item-section>
-          <q-item-label class="text-weight-medium">{{ $t('discount') }}</q-item-label>
+          <q-item-label class="text-weight-medium">{{
+            $t("discount")
+          }}</q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <q-item-label class="text-weight-bold"
@@ -128,13 +133,15 @@
           >
         </q-item-section>
       </q-item>
-      <q-item v-if="freight?.total && productsInCart.length > 0" dense>
+      <q-item v-if="productsInCart.length > 0" dense>
         <q-item-section>
-          <q-item-label class="text-weight-medium">{{ $t('freight') }}</q-item-label>
+          <q-item-label class="text-weight-medium">{{
+            $t("freight")
+          }}</q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <q-item-label class="text-weight-bold">{{
-            numberToReal(freight?.total || 0)
+            formatValueShipping(freightTotal || 0)
           }}</q-item-label>
         </q-item-section>
       </q-item>
@@ -143,11 +150,13 @@
     <q-card-section>
       <q-item>
         <q-item-section>
-          <q-item-label class="text-weight-bold">{{ $t('totalToPay') }}</q-item-label>
+          <q-item-label class="text-weight-bold">{{
+            $t("totalToPay")
+          }}</q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <q-item-label class="text-weight-bold">{{
-            numberToReal(getTotalPrice() + (freight?.total || 0))
+            numberToReal(getTotalPrice() + (freightTotal || 0))
           }}</q-item-label>
         </q-item-section>
       </q-item>
@@ -160,8 +169,8 @@ const {
   productsInCart,
   removeProductCart,
   getTotalPrice,
-  freight,
   getTotalDiscount,
+  freightTotal,
 } = useCart();
 const couponCode = ref<string>("");
 const loadingCoupon = ref<boolean>(false);

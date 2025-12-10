@@ -480,7 +480,8 @@ import mastercardImage from "@/assets/images/cardbrand/mastercard.svg";
 import visaImage from "@/assets/images/cardbrand/visa.svg";
 
 const { getAddressByZipcodeService } = useShopService();
-const { productsInCart, getFreight, freight, getTotalPrice } = useCart();
+const { productsInCart, getFreight, freight, getTotalPrice, setFreightTotal } =
+  useCart();
 const step = ref<number>(1);
 const productsModal = ref<boolean>(false);
 const productsModalIds = ref<string[]>([]);
@@ -512,6 +513,18 @@ const creditCard = ref({
   installments: 1 as number,
 });
 const selectedFreight = ref<any>({});
+watch(
+  selectedFreight,
+  () => {
+    const totalFreight = Object.values(selectedFreight.value).reduce(
+      (acc: number, curr) => acc + Number(curr),
+      0
+    );
+    console.log(totalFreight);
+    setFreightTotal(totalFreight);
+  },
+  { immediate: true, deep: true }
+);
 
 function selectCheapestFreight(): void {
   if (!freight.value || freight.value.length === 0) return;

@@ -114,5 +114,6 @@
   "state": "État",
   "country": "Pays",
   "password": "Mot de passe",
-  "products": "Produits"
+  "products": "Produits",
+  "cpf": "CPF"
 }

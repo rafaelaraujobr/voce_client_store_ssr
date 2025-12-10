@@ -3,7 +3,8 @@ import { useShopService } from "~/services/shop.service";
 
 export const useCart = () => {
   const cartStore = useCartStore();
-  const { productsInCart, loadingFreight, freight } = storeToRefs(cartStore);
+  const { productsInCart, loadingFreight, freight, freightTotal } =
+    storeToRefs(cartStore);
 
   const {
     setProductsInCart,
@@ -18,6 +19,7 @@ export const useCart = () => {
     decrementProductQuantity,
     setLoadingFreight,
     setFreight,
+    setFreightTotal,
   } = cartStore;
 
   const { getCalculateFreightService } = useShopService();
@@ -65,5 +67,7 @@ export const useCart = () => {
     decrementProductQuantity,
     getFreight,
     getTotalDiscount,
+    setFreightTotal,
+    freightTotal,
   };
 };
