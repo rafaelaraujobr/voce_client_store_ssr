@@ -91,7 +91,16 @@
         >
           {{ $t("by") + " " + numberToReal(skuSelected.sku?.price_discount) }}
         </q-item-label>
-        <q-item-label class="text-caption row items-center no-wrap q-mb-md">
+        <q-item-label
+          v-else
+          class="text-h5 text-weight-bold"
+        >
+          {{ numberToReal(skuSelected?.sku?.price) }}
+        </q-item-label>
+        <q-item-label 
+          v-if="installments?.installment > 1"
+          class="text-caption row items-center no-wrap q-mb-md"
+        >
           {{ $t("until") }} {{ installments?.installment }}x {{ $t("of") }}
           {{ numberToReal(installments?.value) }}</q-item-label
         >
