@@ -447,8 +447,7 @@
               <q-item-label
                 class="text-weight-medium text-subtitle2 text-grey-6"
               >
-                {{ $t("quantity") }}: {{ product.quantity }}
-                {{ product.quantity }}</q-item-label
+                {{ $t("quantity") }}: {{ product.quantity }}</q-item-label
               >
             </q-item-section>
             <q-item-section side>
