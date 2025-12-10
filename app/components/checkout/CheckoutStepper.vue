@@ -158,7 +158,7 @@
         {{ $t("selectDelivery") }}
       </div>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 q-gutter-y-sm">
           <template v-for="(item, index) in freight" :key="index">
             <q-expansion-item
               expand-separator
