@@ -107,7 +107,6 @@
     </q-drawer>
     <q-page-container>
       <q-page-scroller
-        v-if="!isMobile"
         v-show="!loadingProducts"
         position="bottom-right"
         :scroll-offset="150"
