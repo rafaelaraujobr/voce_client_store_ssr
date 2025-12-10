@@ -636,7 +636,6 @@ async function verifyFormData(): Promise<void> {
     }) as any[],
     zipcode: address.value.zipcode,
   };
-  console.log(payloadFreight);
   try {
     await getFreight(payloadFreight);
     step.value = 2;
