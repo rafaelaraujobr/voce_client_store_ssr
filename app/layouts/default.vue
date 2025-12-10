@@ -118,7 +118,8 @@
       </q-page-scroller>
       <slot />
 
-      <Footer />
+      <Footer v-if="!isMobile" />
+      <LayoutFooterMobile v-else />
     </q-page-container>
     <SignInModal />
   </q-layout>
@@ -127,6 +128,7 @@
 <script setup lang="ts">
 import LanguageSwitcher from "~/components/shared/LanguageSwitcher.vue";
 import Footer from "~/components/LayoutFooter.vue";
+import LayoutFooterMobile from "~/components/LayoutFooterMobile.vue";
 import ShoppingCart from "~/components/ShoppingCart.vue";
 import SignInModal from "~/components/auth/SignInModal.vue";
 import { useShop } from "~/composables/shop.composable";

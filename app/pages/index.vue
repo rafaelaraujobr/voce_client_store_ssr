@@ -3,7 +3,8 @@
     <div class="wrapper">
       <ShowCaseCategories />
     </div>
-    <ShowCaseCarousel />
+    <ShowCaseCarousel v-if="!isMobile" />
+    <ShowCaseCarouselMobile v-else />
     <div class="wrapper">
       <ShowCaseCampaings />
       <SkeletonShowCaseList v-show="loadingProducts" />
@@ -17,6 +18,7 @@ import { useShop } from "~/composables/shop.composable";
 import SkeletonShowCaseList from "~/components/showcase/ShowCaseSkeletonList.vue";
 import ShowCaseList from "~/components/showcase/ShowCaseList.vue";
 import ShowCaseCarousel from "~/components/showcase/ShowCaseCarousel.vue";
+import ShowCaseCarouselMobile from "~/components/showcase/ShowCaseCarouselMobile.vue";
 import ShowCaseCampaings from "~/components/showcase/ShowCaseCampaings.vue";
 import ShowCaseCategories from "~/components/showcase/ShowCaseCategories.vue";
 const { loadingProducts } = useShop();
@@ -24,4 +26,7 @@ const { loadingProducts } = useShop();
 function myTweak(offset: number): { minHeight: string } {
   return { minHeight: offset ? `calc(100vh - ${offset}px)` : "100vh" };
 }
+const isMobile = computed(() => {
+  return useQuasar().screen.lt.sm;
+});
 </script>
