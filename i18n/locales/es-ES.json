@@ -113,5 +113,6 @@
   "city": "Ciudad",
   "state": "Estado",
   "country": "País",
-  "password": "Contraseña"
+  "password": "Contraseña",
+  "products": "Productos"
 }

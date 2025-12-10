@@ -159,7 +159,6 @@
       </div>
       <div class="row">
         <div class="col-12">
-          {{ selectedFreight }}
           <template v-for="(item, index) in freight" :key="index">
             <q-expansion-item
               expand-separator
@@ -169,31 +168,35 @@
             >
               <template #header>
                 <q-item-section avatar>
-                  <q-avatar
-                    v-for="(image, indexImage) in getFirstImageProductBySkuIds(
-                      item.skus
-                    )"
-                    :key="indexImage"
-                    class="border-1 border-default overlapping"
-                    size="40px"
-                    :style="`left: ${indexImage * 25}px`"
-                    clickable
-                    @click.stop="openProductsModal(item.skus)"
+                  <div
+                    class="avatar-stack"
+                    :style="`width: ${
+                      40 +
+                      (getFirstImageProductBySkuIds(item.skus).length - 1) * 18
+                    }px`"
                   >
-                    <img
-                      v-if="image"
-                      :src="image"
-                      width="30px"
-                      height="30px"
-                      fit="contain"
-                    />
-                    <q-icon
-                      v-else
-                      name="mdi-image"
-                      color="primary"
-                      size="24px"
-                    />
-                  </q-avatar>
+                    <q-avatar
+                      v-for="(
+                        image, indexImage
+                      ) in getFirstImageProductBySkuIds(item.skus)"
+                      :key="indexImage"
+                      class="border-1 border-default avatar-overlapping"
+                      size="40px"
+                      :style="`left: ${indexImage * 18}px; z-index: ${
+                        10 - indexImage
+                      }`"
+                      clickable
+                      @click.stop="openProductsModal(item.skus)"
+                    >
+                      <q-img
+                        :src="image"
+                        style="border-radius: 50%"
+                        width="40px"
+                        height="40px"
+                        fit="contain"
+                      />
+                    </q-avatar>
+                  </div>
                 </q-item-section>
 
                 <q-item-section>
@@ -209,33 +212,24 @@
                 </q-item-section>
 
                 <q-item-section side>
-                  <div class="row items-center">
-                    <q-item-label
-                      class="text-weight-medium text-subtitle1 row items-center"
-                    >
-                      <div
-                        class="text-weight-bold text-subtitle2 text-dark q-mr-md"
-                      >
-                        {{
-                          item.deliveries[selectedFreight[item.skus[0]]]
-                            ?.description || ""
-                        }}:
-                        {{
-                          formatValueShipping(
-                            item.deliveries[selectedFreight[item.skus[0]]]
-                              ?.totalPrice || 0
-                          )
-                        }}
-                      </div>
-                      <div class="text-weight-medium text-subtitle2">
-                        {{
-                          formatBusinessDays(
-                            item.deliveries[selectedFreight[item.skus[0]]]
-                              ?.estimatedDeliveryDays || 0
-                          )
-                        }}
-                      </div>
-                    </q-item-label>
+                  <div class="row items-center justify-end q-col-gutter-x-sm">
+                    <div class="text-weight-bold text-subtitle2 text-dark">
+                      {{ getSelectedDelivery(item)?.description || "" }}
+                    </div>
+                    <div class="text-weight-bold text-subtitle1 text-dark">
+                      {{
+                        formatValueShipping(
+                          getSelectedDelivery(item)?.totalPrice || 0
+                        )
+                      }}
+                    </div>
+                    <div class="text-weight-medium text-caption text-grey-7">
+                      {{
+                        formatBusinessDays(
+                          getSelectedDelivery(item)?.estimatedDeliveryDays || 0
+                        )
+                      }}
+                    </div>
                   </div>
                 </q-item-section>
               </template>
@@ -518,6 +512,44 @@ const creditCard = ref({
   installments: 1 as number,
 });
 const selectedFreight = ref<any>({});
+
+function selectCheapestFreight(): void {
+  if (!freight.value || freight.value.length === 0) return;
+
+  freight.value.forEach((item: any) => {
+    if (!item.deliveries || item.deliveries.length === 0) return;
+
+    const cheapestDelivery = item.deliveries.reduce(
+      (min: any, delivery: any) => {
+        if (!min || delivery.totalPrice < min.totalPrice) {
+          return delivery;
+        }
+        return min;
+      },
+      null
+    );
+
+    if (cheapestDelivery && item.skus?.[0])
+      selectedFreight.value[item.skus[0]] = cheapestDelivery.totalPrice;
+  });
+}
+
+watch(
+  freight,
+  () => {
+    selectCheapestFreight();
+  },
+  { immediate: true, deep: true }
+);
+
+function getSelectedDelivery(item: any): any {
+  if (!item?.deliveries || !item?.skus?.[0]) return null;
+  const selectedPrice = selectedFreight.value[item.skus[0]];
+  return (
+    item.deliveries.find((d: any) => d.totalPrice === selectedPrice) || null
+  );
+}
+
 async function getAddressByZipcode(zipcode: string): Promise<void> {
   const response = await getAddressByZipcodeService(zipcode);
   if (response.erro) return;
@@ -672,7 +704,14 @@ async function handleSubmitCreditCard(): Promise<void> {
 </script>
 
 <style lang="sass" scoped>
-.overlapping
+.avatar-stack
+  position: relative
+  height: 40px
+  display: flex
+  align-items: center
+
+.avatar-overlapping
   border: 2px solid white
   position: absolute
+  top: 0
 </style>
