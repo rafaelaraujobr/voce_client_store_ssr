@@ -17,11 +17,11 @@
           :name="index"
         >
           <div class="row q-col-gutter-md">
-            <div v-for="product in group" :key="product.id" class="col-3">
+            <div v-for="product in group" :key="product.id" class="col">
               <q-card
                 flat
                 bordered
-                class="cursor-pointer product-card border-default col-3"
+                class="cursor-pointer product-card border-default"
                 role="button"
                 :aria-label="`Ver produto ${product.name}`"
                 tabindex="0"
@@ -29,85 +29,81 @@
                 @keydown.enter="navigateToProduct(product.id)"
                 @keydown.space="navigateToProduct(product.id)"
               >
-                <q-card-section class="row q-pa-none q-ma-none items-center">
-                  <div class="col-12 bg-default q-py-sm">
+                <q-card-section class="q-pa-none">
+                  <div class="bg-default q-py-sm">
                     <q-img
                       :src="product.image"
                       fit="contain"
                       spinner-color="primary"
                       class="product-image"
-                      height="118px"
+                      height="150px"
                       spinner-size="82px"
                       loading="lazy"
                       placeholder-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZSIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiNhYWEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW08L3RleHQ+Cjwvc3ZnPg=="
                     >
                       <template #error>
                         <div
-                          class="absolute-full flex flex-center bg-secondary text-white"
+                          class="absolute-full flex flex-center bg-secondary text-white text-center"
+                          style="font-size: 12px"
                         >
                           Imagem indisponível
                         </div>
                       </template>
                     </q-img>
                   </div>
-                  <div class="col-8 col-md-12 q-py-md">
-                    <q-item>
-                      <q-item-section>
-                        <q-item-label lines="2" class="q-mb-sm text-grey-6">{{
-                          product?.name
-                        }}</q-item-label>
-                        <div
-                          v-if="
-                            product.price &&
-                            product.price_discount &&
-                            product.price_discount < product.price
-                          "
+                  <div class="q-pa-md">
+                    <div class="q-pa-none">
+                      <q-item-label 
+                        lines="2" 
+                        class="q-mb-sm text-grey-6 text-body2"
+                      >{{
+                        product?.name
+                      }}</q-item-label>
+                      <div
+                        v-if="
+                          product.price &&
+                          product.price_discount &&
+                          product.price_discount < product.price
+                        "
+                      >
+                        <q-item-label
+                          lines="1"
+                          class="text-caption text-negative"
+                          style="text-decoration: line-through"
                         >
-                          <q-item-label
-                            lines="2"
-                            class="text-subtitle1 text-negative"
-                            style="text-decoration: line-through"
-                          >
-                            {{$t("from") + " " + numberToReal(product?.price) }}</q-item-label
-                          >
-                          <div class="row">
-                            <q-item-label
-                              lines="2"
-                              class="text-h5 text-weight-bold"
-                            >
-                              {{
-                                $t("by") + " " + numberToReal(product?.price_discount)
-                              }}</q-item-label
-                            >
-                          </div>
-                        </div>
-                        <div v-else>
-                          <q-item-label
-                            lines="2"
-                            class="text-h5 text-weight-bold"
-                          >
-                            {{ numberToReal(product?.price) }}</q-item-label
-                          >
-                        </div>
-                        <div
-                          v-if="
-                            product?.installments &&
-                            product.installments.installment > 2
-                          "
-                          class="text-grey-6 text-caption"
+                          {{$t("from") + " " + numberToReal(product?.price) }}</q-item-label
                         >
-                          <b>3x</b>
-                          sem juros de
-                          <b>{{
-                            numberToReal(
-                              (product.installments.value /
-                                product.installments.installment) *
-                                3
-                            )
-                          }}</b>
-                        </div>
-                      </q-item-section>
-                    </q-item>
+                        <q-item-label
+                          lines="1"
+                          class="text-h6 text-weight-bold"
+                        >
+                          {{
+                            $t("by") + " " + numberToReal(product?.price_discount)
+                          }}</q-item-label
+                        >
+                      </div>
+                      <div v-else>
+                        <q-item-label
+                          lines="1"
+                          class="text-h6 text-weight-bold"
+                        >
+                          {{ numberToReal(product?.price) }}</q-item-label
+                        >
+                      </div>
+                      <div
+                        v-if="
+                          product?.installments &&
+                          product.installments.installment > 1
+                        "
+                        class="text-grey-6 text-caption q-mt-xs"
+                      >
+                        <b>{{ product.installments.installment }}x</b>
+                        sem juros de
+                        <b>{{
+                          numberToReal(product.installments.value)
+                        }}</b>
+                      </div>
+                    </div>
                   </div>
                   <q-badge
                     v-if="
@@ -133,7 +129,10 @@
           </div>
         </q-tab-panel>
       </q-tab-panels>
-      <div class="row justify-end q-gutter-x-sm q-mt-md">
+      <div 
+        v-if="productRelatedGroup.length > 1" 
+        class="row justify-end q-gutter-x-sm q-mt-md"
+      >
         <q-btn
           icon="mdi-chevron-left"
           dense
@@ -143,6 +142,11 @@
           :disable="currentGroup === 0"
           @click="prevProductGroup"
         />
+        <div class="flex items-center q-px-md">
+          <span class="text-caption text-grey-6">
+            {{ currentGroup + 1 }} de {{ productRelatedGroup.length }}
+          </span>
+        </div>
         <q-btn
           icon="mdi-chevron-right"
           class="bg-default"
@@ -163,13 +167,25 @@ import { numberToReal, formatDiscount } from "~/utils/functions";
 const { relatedProducts } = useShop();
 const currentGroup = ref<number>(0);
 const productRelatedGroup = computed(() => {
-  if (!relatedProducts.value || !Array.isArray(relatedProducts.value))
+  if (!relatedProducts.value || !Array.isArray(relatedProducts.value) || relatedProducts.value.length <= 1)
     return [];
+  
   const products = relatedProducts.value;
   const groups = [];
-  for (let i = 0; i < products.length; i += 4) {
-    groups.push(products.slice(i, i + 4));
+  
+  const { $q } = useNuxtApp();
+  const itemsPerGroup = $q.screen.lt.sm ? 1 : 4;
+  
+  // No desktop, se tiver até 4 produtos, mostra todos de uma vez
+  if ($q.screen.gt.xs && products.length <= 4) {
+    groups.push(products);
+  } else {
+    // Caso contrário, usa paginação
+    for (let i = 0; i < products.length; i += itemsPerGroup) {
+      groups.push(products.slice(i, i + itemsPerGroup));
+    }
   }
+  
   return groups;
 });
 
