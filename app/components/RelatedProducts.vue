@@ -68,7 +68,7 @@
                             class="text-subtitle1 text-negative"
                             style="text-decoration: line-through"
                           >
-                            {{ numberToReal(product?.price) }}</q-item-label
+                            {{$t("from") + " " + numberToReal(product?.price) }}</q-item-label
                           >
                           <div class="row">
                             <q-item-label
@@ -76,7 +76,7 @@
                               class="text-h5 text-weight-bold"
                             >
                               {{
-                                numberToReal(product?.price_discount)
+                                $t("by") + " " + numberToReal(product?.price_discount)
                               }}</q-item-label
                             >
                           </div>

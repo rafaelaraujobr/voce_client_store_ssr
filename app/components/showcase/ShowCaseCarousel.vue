@@ -35,23 +35,33 @@
             >
               {{ product.name }}
             </q-item-label>
-            <q-item-label
-              v-if="product.price_discount"
-              class="text-grey-7 text-caption row items-center no-wrap"
-            >
-              {{ $t("from") }}
-              <div class="q-mx-sm">
-                {{
-                  product.price_discount
-                    ? numberToReal(product.price_discount)
-                    : numberToReal(product.price)
-                }}
-              </div>
-              {{ $t("by") }}
-            </q-item-label>
-            <q-item-label class="text-h3 text-weight-bold">{{
-              numberToReal(product.price)
-            }}</q-item-label>
+               <div
+                    v-if="
+                      product.price &&
+                      product.price_discount &&
+                      product.price_discount < product.price
+                    "
+                  >
+                    <q-item-label
+                      lines="2"
+                      class="text-subtitle1 text-negative"
+                      style="text-decoration: line-through"
+                    >
+                      {{ $t("from") + " " + numberToReal(product?.price) }}</q-item-label
+                    >
+                    <div class="row">
+                      <q-item-label lines="2" class="text-h5 text-weight-bold">
+                        {{
+                           $t("by") + " " + numberToReal(product?.price_discount)
+                        }}</q-item-label
+                      >
+                    </div>
+                  </div>
+                  <div v-else>
+                    <q-item-label lines="2" class="text-h5 text-weight-bold">
+                      {{ numberToReal(product?.price) }}</q-item-label
+                    >
+                  </div>
             <q-item-label
               v-if="product.installments?.installment"
               class="text-grey-7 text-caption row items-center no-wrap"
