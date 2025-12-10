@@ -161,7 +161,6 @@
         <div class="col-12 q-gutter-y-sm">
           <template v-for="(item, index) in freight" :key="index">
             <q-expansion-item
-              expand-separator
               default-opened
               group="delivery"
               class="rounded-borders border-1 border-default"
