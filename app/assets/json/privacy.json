@@ -1,0 +1,227 @@
+[
+  {
+    "label": "1. PROPÓSITO E ESCOPO DESSA POLÍTICA DE PRIVACIDADE",
+    "icon": "mdi-bullseye-arrow",
+    "content": [
+      "<p>A <strong>VOCÊ.COM.BR</strong> se preocupa em cumprir as leis e regulamentos aplicáveis relacionados à Proteção de Dados Pessoais no Brasil, e em outros países em que eventualmente atuar.</p>",
+      "<p>Esta Política de Privacidade indica a forma pela qual a <strong>VOCE.COM.BR. INTERNET E MARKETPLACE LTDA</strong>, inscrita no CNPJ sob o nº 51.746.599/0001-48, com sede na cidade e no estado do Rio de Janeiro, na Rua Humaitá, nº 275, 6º e 7º andares, Bairro Humaitá, CEP 22.261-005 ('VOCÊ.COM.BR'), realiza tratamento dos Dados dos Empreendedores digitais, consumidores, clientes, parceiros, usuários do site e da plataforma e outras pessoas físicas que com ela se relacionam, sendo aplicáveis a todas elas.</p>",
+      "<p>Caso tenha qualquer questão ou dúvida em relação à forma como tratamos os seus Dados, entre em contato pelo e-mail <span class='iluminador'><a href='mailto:contato@voce.com.br'><strong>contato@voce.com.br</strong></a></span>.</p>"
+    ]
+  },
+  {
+    "label": "2. DEFINIÇÕES DOS TERMOS USADOS NESSA POLÍTICA DE PRIVACIDADE",
+    "icon": "mdi-text-box-search-outline",
+    "content": [
+      "<p><strong>'Plataforma':</strong> é o meio digital através de sítios da Internet para Empreendedores Digitais criarem a sua loja ou revender os produtos.</p>",
+      "<p><strong>'Empreendedores Digitais':</strong> é toda pessoa física ou jurídica que se cadastra na plataforma com intuito de criar sua loja online de forma gratuita, para venda produtos de grandes marcas e para ganhar dinheiro por cada venda realizada;</p>",
+      "<p><strong>'Anunciantes/Marcas':</strong> são aqueles que fornecem os seus catálogos de produtos a serem comercializados e são responsáveis pela logística de entrega, troca ou devolução dos produtos;</p>",
+      "<p><strong>'Consumidores':</strong> são aqueles que se cadastram na plataforma e adquirem produtos nas lojas dos empreendedores digitais.</p>",
+      "<p>As seguintes definições dos termos utilizados nesta Política de Privacidade são extraídas do artigo 5º da Lei Geral de Proteção de Dados (<strong>'LGPD'</strong>):</p>",
+      "<p><strong>'Titular de Dados' ou 'Titular':</strong> qualquer pessoa natural, Titular de Dados Pessoais ou Dados Pessoais Sensíveis, que de alguma forma se relaciona com a VOCÊ.COM.BR;</p>",
+      "<p><strong>'Dados Pessoais':</strong> informações referentes ao Titular dos Dados, que o identifiquem ou que, se combinadas com outras informações, o tornem identificável;</p>",
+      "<p><strong>'Dados Pessoais Sensíveis':</strong> informações referentes ao Titular dos Dados sobre origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou a Organização de caráter religioso, filosófico ou político, dado referente à saúde ou à vida sexual, dado genético ou biométrico;</p>",
+      "<p><strong>'Dados':</strong> termo usado para indicar, conjuntamente, os Dados Pessoais, Dados Pessoais Sensíveis e os Dados Públicos;</p>",
+      "<p><strong>'Menores':</strong> Titular dos Dados que seja considerado criança ou adolescente pelo Estatuto da Criança e do Adolescente, cujos Dados Pessoais e/ou Dados Pessoais Sensíveis sejam Tratados;</p>",
+      "<p><strong>'Finalidade':</strong> Motivo(s) pelo(s) qual(is) as Partes tratam os Dados Pessoais e os Dados Pessoais Sensíveis;</p>",
+      "<p><strong>'Bases Legais':</strong> fundamentação legal, nos termos da LGPD, que dá às Partes a permissão para o Tratamento de Dados;</p>",
+      "<p><strong>'Controladora':</strong> agente de tratamento de Dados a quem competem as decisões referentes ao Tratamento de Dados Pessoais;</p>",
+      "<p><strong>'Operadora':</strong> agente de tratamento de Dados que realiza o tratamento de Dados pessoais em nome da Controladora;</p>",
+      "<p><strong>'Tratamento de Dados' ou 'Tratamento':</strong> todas as operações realizadas com Dados Pessoais e Dados Pessoais Sensíveis, o que inclui a coleta, produção, recepção, classificação, utilização, acesso, reprodução, transmissão, distribuição, processamento, arquivamento, armazenamento, eliminação, avaliação ou controle da informação, modificação, comunicação, transferência, difusão ou extração;</p>",
+      "<p><strong>'LGPD':</strong> Lei 13.709, de 14 de agosto de 2018, que institui a Lei Geral de Proteção de Dados;</p>",
+      "<p><strong>'ANPD':</strong> Autoridade Nacional de Proteção de Dados, órgão da administração pública criado pela LGPD, responsável por zelar, implementar e fiscalizar o cumprimento da lei em todo o território brasileiro.</p>",
+      "<p><strong>'Dados Públicos':</strong> Dados Pessoais e Dados Pessoais Sensíveis cujo acesso é público, ou que foram tornados manifestamente públicos pelo Titular, e que devem ser Tratados considerando os termos do § 4º do artigo 7º da LGPD.</p>",
+      "<p><strong>'Encarregado pelo Tratamento de Dados':</strong> Pessoa natural ou jurídica, indicada pelos agentes de tratamento de Dados, que possui a função de atuar como canal de comunicação entre a Organização, os Titulares dos Dados pessoais e a Autoridade Nacional de Proteção de Dados.</p>"
+    ]
+  },
+  {
+    "label": "3. COLETA DE DADOS PELA VOCÊ.COM.BR",
+    "icon": "mdi-database-import-outline",
+    "content": [
+      "<p>A VOCÊ.COM.BR é um marketplace multimarcas para Empreendedores Digitais interessados em criar sua própria loja virtual, divulgar e vender produtos dos mais variados segmentos/nichos de empresas. Todos os Dados coletados e solicitados pela VOCÊ.COM.BR são necessários e adequados para a realização e desenvolvimento de suas atividades, para o oferecimento de produtos e fornecimento de serviços, assim como necessários e adequados para o desenvolvimento de novos produtos e serviços.</p>",
+      "<p><strong>Assim, a VOCÊ.COM.BR coleta Dados das seguintes formas:</strong></p>",
+      "<ul>",
+      "  <li>Quando o Titular se cadastra na plataforma online da VOCÊ.COM.BR e informa, no formulário disponibilizado no site, os Dados necessários para a realização de seu cadastro como Empreendedor Digital e para a criação da sua loja, bem como receber pagamentos;</li>",
+      "  <br>",
+      "  <li>Quando o Titular cadastrado como Empreendedor Digital na plataforma online da VOCÊ.COM.BR informa seus Dados para fazer login e acessar a conta da sua loja;</li>",
+      "  <br>",
+      "  <li>Quando o Titular consumidor acessa alguma loja criada via plataforma online da VOCÊ.COM.BR para adquirir produtos;</li>",
+      "  <br>",
+      "  <li>Quando o Titular consumidor fornece seus Dados bancários para efetivação das transações de compra e venda de produtos na plataforma e verificação da transação pelo sistema antifraude;</li>",
+      "  <br>",
+      "  <li>Quando o Titular consumidor fornece seus Dados de identificação de endereço para recebimento dos produtos.</li>",
+      "  <br>",
+      "  <li>Quando o Titular disponibiliza seus Dados, via formulário no site da VOCÊ.COM.BR, para falar com o suporte em caso de dúvidas, enviar propostas comerciais ou saber mais informações;</li>",
+      "  <br>",
+      "  <li>Quando o Titular entra em contato com a VOCÊ.COM.BR, via e-mail de contato (contato@voce.com.br) disponível na página inicial do site, para tratar de assuntos diversos e, eventualmente, informando Dados pessoais;</li>",
+      "  <br>",
+      "  <li>Quando o Titular acessa a página da VOCÊ.COM.BR na internet e aceita a política de cookies informada no aviso na tela;</li>",
+      "  <br>",
+      "  <li>Quando o Titular visita o site da VOCÊ.COM.BR e deixa comentários, são coletados os Dados solicitados no formulário de comentários, bem como endereço IP e Dados do navegador do visitante, para auxiliar na detecção de spam.</li>",
+      "</ul>"
+    ]
+  },
+  {
+    "label": "4. DADOS COLETADOS PELA VOCÊ.COM.BR",
+    "icon": "mdi-database-sync-outline",
+    "content": [
+      "<p>Considerando as formas de coleta de Dados dispostas acima, a VOCÊ.COM.BR pode coletar os seguintes Dados:</p>",
+      "<p><strong>Dados de identificação pessoal</strong>, como nome completo, e-mail, telefone, CPF, PIS/NIS, endereço completo, CNPJ, nome completo do responsável pelo contrato;</p>",
+      "<p><strong>Dados financeiros</strong>, como número de conta bancária, tipo de conta (conta corrente ou poupança), número de agência, número do banco, número do cartão, data de validade, código de segurança do cartão, titularidade do cartão e chave PIX;</p>",
+      "<p><strong>Dados relacionados à navegação e ao dispositivo</strong>, como endereço IP do dispositivo utilizado para acessar o site da VOCÊ.COM.BR, interações realizadas no site da VOCÊ.COM.BR, informações de URL, de conexão de rede, do provedor e do dispositivo utilizado para acessar o site da VOCÊ.COM.BR, cookies, atributos do dispositivo utilizado para acessar o site da VOCÊ.COM.BR, Dados de geolocalização do dispositivo utilizado para acessar o site da VOCÊ.COM.BR.</p>",
+      "<p>Nenhum dos Dados mencionados acima é considerado como Dado Pessoal Sensível pela LGPD (artigo 5º, II, LGPD). Contudo, caso a VOCÊ.COM.BR venha a tratar Dados Pessoais Sensíveis, será apenas caso sejam necessários e essenciais para a finalidade pretendida pela VOCÊ.COM.BR, apenas caso haja Base Legal que permita o Tratamento dos Dados Pessoais Sensíveis, e ainda considerando os princípios e outras orientações contidas na LGPD ou outra legislação de proteção de Dados aplicável.</p>"
+    ]
+  },
+  {
+    "label": "5. FINALIDADE E BASE LEGAL PARA O TRATAMENTO DE DADOS REALIZADO PELA VOCÊ.COM.BR",
+    "icon": "mdi-scale-balance",
+    "content": [
+      "<p>A VOCÊ.COM.BR realiza o tratamento dos Dados para as seguintes Finalidades, autorizadas pelas respectivas Bases Legais:</p>",
+      "<div class='q-mb-md'>",
+      "  <p><strong>Finalidade:</strong> Prestar os serviços oferecidos pela VOCÊ.COM.BR, o que inclui a criação de loja online pelos Empreendedores Digitais, compra dos produtos pelos Consumidores e entrega dos produtos pelos Anunciantes/Marcas.<br>",
+      "  <strong>Base Legal:</strong> Execução de contrato (artigo 7º, V, LGPD);</p>",
+      "</div>",
+      "<div class='q-mb-md'>",
+      "  <p><strong>Finalidade:</strong> Contato e comunicação com potenciais Empreendedores Digitais da VOCÊ.COM.BR para apresentar os serviços oferecidos.<br>",
+      "  <strong>Base Legal:</strong> Interesse legítimo (artigo 7º, IX, LGPD);</p>",
+      "</div>",
+      "<div class='q-mb-md'>",
+      "  <p><strong>Finalidade:</strong> Compartilhamento dos Dados bancários relacionados às transações financeiras iniciadas na plataforma, com a bandeira e instituição emissora do cartão, as quais validam as informações e autorizam as transações entre os usuários da plataforma nas operações de compra e venda de produtos.<br>",
+      "  <strong>Base Legal:</strong> Execução de contrato (artigo 7º, V, LGPD);</p>",
+      "</div>",
+      "<div class='q-mb-md'>",
+      "  <p><strong>Finalidade:</strong> Compartilhamento dos Dados bancários relacionados às transações financeiras iniciadas na plataforma, com o terceiro responsável pelo sistema antifraude, para fins de verificação e análise detalhada do comportamento das transações, resguardando os usuários da plataforma de operações suspeitas ou comprovadamente fraudulentas e evitando prejuízos financeiros a esses usuários.<br>",
+      "  <strong>Base Legal:</strong> Proteção do crédito (artigo 7º, X, LGPD);</p>",
+      "</div>",
+      "<div class='q-mb-md'>",
+      "  <p><strong>Finalidade:</strong> Envio de comunicações aos Titulares para fins de marketing, envio de novidades e informações, pesquisa, campanhas e promoções.<br>",
+      "  <strong>Base Legal:</strong> Consentimento (artigo 7º, I, LGPD);</p>",
+      "</div>",
+      "<div class='q-mb-md'>",
+      "  <p><strong>Finalidade:</strong> Envio de respostas aos Titulares que entram em contato no canal disponível no site ou via contato de e-mail da VOCÊ.COM.BR para suporte em caso de dúvidas ou saber mais informações.<br>",
+      "  <strong>Base Legal:</strong> Consentimento (artigo 7º, I, LGPD);</p>",
+      "</div>",
+      "<div class='q-mb-md'>",
+      "  <p><strong>Finalidade:</strong> Permitir, personalizar e melhorar a experiência do usuário que acessa o site da VOCÊ.COM.BR.<br>",
+      "  <strong>Base Legal:</strong> Interesse legítimo (artigo 7º, IX, LGPD).</p>",
+      "</div>",
+      "<p>O consentimento dado pelo Titular dos Dados a VOCÊ.COM.BR é feito conforme o disposto na LGPD, sendo que é fornecido por meio que demonstre a manifestação de vontade do Titular, sendo colhido de forma específica e destacada, para as finalidades específicas mencionadas nessa Política de Privacidade e informadas ao Titular no momento do consentimento.</p>",
+      "<p>A VOCÊ.COM.BR poderá realizar o Tratamento de Dados, especialmente em operações de armazenamento e de arquivamento, a fim de cumprir obrigações legais ou regulatórias (artigo 7º, II, LGPD), ou, ainda, a fim de garantir o exercício regular de seus direitos em processos judiciais, administrativos ou arbitrais (artigo 7º, VI, LGPD).</p>",
+      "<p>A VOCÊ.COM.BR poderá realizar o Tratamento de Dados referentes aos Titulares que realizam compras nas lojas dos Empreendedores Digitais. No entanto, apenas trata ados de identificação pessoal, financeiros e relacionados à navegação e aos dispositivos identificados nessa Política de Privacidade, e trata esses Dados apenas para as finalidades de possibilitar a verificação da compra e poder remunerar seu negócio e os Empreendedores Digitais, bem como de detectar fraudes e outros aspectos de segurança da operação.</p>"
+    ]
+  },
+  {
+    "label": "6. ARMAZENAMENTO, RETENÇÃO E ELIMINAÇÃO DOS DADOS PELA VOCÊ.COM.BR",
+    "icon": "mdi-harddisk",
+    "content": [
+      "<p>Os Dados tratados pela VOCÊ.COM.BR são armazenados somente pelo período necessário para cumprir suas respectivas finalidades, e, se for o caso, para cumprir obrigações legais ou regulatórias, para garantir o exercício regular de seus direitos em processos judiciais, administrativos ou arbitrais, bem como para fins de prestação de contas ou requisição de autoridades ou órgãos públicos competentes.</p>",
+      "<p>Uma vez superados os termos dispostos acima, os Dados são eliminados pela VOCÊ.COM.BR.</p>",
+      "<p>Os Dados coletados por meio do consentimento serão eliminados quando for assim requisitado pelo Titular, salvo se houver eventual obrigação legal de retenção desses Dados, se ainda forem necessários para a prestação dos serviços pela VOCÊ.COM.BR, ou, ainda, se forem necessários a garantir o exercício regular de direitos da VOCÊ.COM.BR em processos judiciais, administrativos ou arbitrais.</p>"
+    ]
+  },
+  {
+    "label": "7. COMPARTILHAMENTO DE DADOS PELA VOCÊ.COM.BR",
+    "icon": "mdi-share-variant",
+    "content": [
+      "<p>A VOCÊ.COM.BR compartilha Dados com Anunciantes/Marcas para operacionalizar a venda produtos de grandes marcas e para ganhar dinheiro por cada venda realizada.</p>",
+      "<p>A VOCÊ.COM.BR compartilha Dados com a plataforma de infraestrutura de pagamentos online para operacionalizar a venda produtos de grandes marcas e para ganhar dinheiro por cada venda realizada.</p>",
+      "<p>A VOCÊ.COM.BR pode compartilhar Dados com terceiros, dentro ou fora do Brasil, nas seguintes hipóteses:</p>",
+      "<ul>",
+      "  <li>Viabilizar e aprimorar a prestação dos serviços e fornecimento dos produtos pela VOCÊ.COM.BR;</li>",
+      "  <br>",
+      "  <li>Analisar e solucionar problemas técnicos relacionados à segurança dos sistemas internos da VOCÊ.COM.BR e do site;</li>",
+      "  <br>",
+      "  <li>Processar transações financeiras referentes aos pagamentos iniciados na plataforma VOCÊ.COM.BR;</li>",
+      "  <br>",
+      "  <li>Utilizar sistemas antifraude para aumentar a segurança das transações financeiras iniciadas na plataforma da VOCÊ.COM.BR;</li>",
+      "  <br>",
+      "  <li>Contratar a prestação de serviços e o fornecimento de produtos necessários ao desenvolvimento da atividade da VOCÊ.COM.BR;</li>",
+      "  <br>",
+      "  <li>Responder solicitações judiciais, administrativas ou arbitrais, bem como pleitear direitos da VOCÊ.COM.BR em juízo ou fora dele;</li>",
+      "  <br>",
+      "  <li>Permitir auditorias legais e auditorias independentes.</li>",
+      "</ul>",
+      "<p>Em todas as hipóteses a VOCÊ.COM.BR se compromete a compartilhar somente Dados essenciais, necessários e adequados para cumprir as respectivas finalidades.</p>",
+      "<p>Quando os Dados forem tratados por meio do consentimento, a VOCÊ.COM.BR se compromete a solicitar o consentimento do Titular caso compartilhe esses Dados com terceiros.</p>"
+    ]
+  },
+  {
+    "label": "8. TRANSFERÊNCIA INTERNACIONAL DE DADOS PELA VOCÊ.COM.BR",
+    "icon": "mdi-web-sync",
+    "content": [
+      "<p>A VOCÊ.COM.BR pode transferir os Dados para outro país, porém apenas quando assegurar que essas operações atendem às normas de segurança e estão adequadas às legislações internacionais e à LGPD.</p>",
+      "<p>A VOCÊ.COM.BR pode transferir Dados para outros países a depender da localização do cliente ou do potencial cliente, e, ainda, a depender da localização do parceiro comercial.</p>",
+      "<p>A VOCÊ.COM.BR utiliza serviços de terceiros que possuem infraestrutura tecnológica estabelecida fora do Brasil, como servidores e serviços de nuvem. Nessa hipótese, buscamos contratar terceiros que atendem padrões de segurança e estão adequados à legislação brasileira bem como a internacional.</p>"
+    ]
+  },
+  {
+    "label": "9. DIREITOS DOS TITULARES DE DADOS",
+    "icon": "mdi-shield-account-outline",
+    "content": [
+      "<p>Em cumprimento aos termos e princípios estabelecidos na LGPD, a VOCÊ.COM.BR garante ao Titular o exercício dos seguintes direitos:</p>",
+      "<ul>",
+      "  <li><strong>Confirmação da existência</strong> do Tratamento de Dados feito pela VOCÊ.COM.BR;</li>",
+      "  <br>",
+      "  <li><strong>Acesso aos Dados</strong> Tratados pela VOCÊ.COM.BR;</li>",
+      "  <br>",
+      "  <li><strong>Correção</strong> dos Dados Tratados pela VOCÊ.COM.BR e que estejam incompletos, inexatos ou desatualizados;</li>",
+      "  <br>",
+      "  <li><strong>Anonimização, bloqueio ou eliminação</strong> de Dados que sejam desnecessários, excessivos, ou tratados em desconformidade com o disposto na LGPD;</li>",
+      "  <br>",
+      "  <li><strong>Portabilidade</strong> dos Dados a outro fornecedor de serviço ou produto, mediante requisição expressa;</li>",
+      "  <br>",
+      "  <li><strong>Eliminação</strong> dos Dados tratados com consentimento do Titular, exceto se configuradas as hipóteses contidas no artigo 16 da LGPD;</li>",
+      "  <br>",
+      "  <li><strong>Obtenção de informações</strong> sobre as entidades públicas ou privadas com as quais a VOCÊ.COM.BR compartilhou os Dados;</li>",
+      "  <br>",
+      "  <li><strong>Informação</strong> sobre a possibilidade do Titular de não fornecer o consentimento e as consequências disso, caso a resposta seja negativa;</li>",
+      "  <br>",
+      "  <li><strong>Revogação do consentimento</strong> dado anteriormente.</li>",
+      "</ul>",
+      "<p>O Titular pode solicitar à VOCÊ.COM.BR o atendimento a quaisquer dos seus direitos elencados acima por meio da funcionalidade do seguinte endereço eletrônico: <span class='iluminador'><a href='mailto:contato@voce.com.br'><strong>contato@voce.com.br</strong></a></span></p>",
+      "<p>A VOCÊ.COM.BR envida máximos esforços para retornar aos Titulares quanto às suas solicitações com a máxima rapidez possível, sempre cumprindo os prazos legais aplicáveis. Contudo, deve ser guardado pelo Titular um prazo razoável entre o envio da solicitação e a resposta, considerando especialmente a complexidade de sua solicitação.</p>",
+      "<p>O Titular deve compreender que o acatamento de algumas das solicitações pela VOCÊ.COM.BR pode implicar em consequências que podem não ser desejadas por ele, como, por exemplo, no impedimento da continuidade da prestação de determinado serviço ou do fornecimento de determinado produto.</p>",
+      "<p>Quando a VOCÊ.COM.BR estiver atuando como controlador, o encarregado de Dados (DPO) deve tomar as medidas necessárias para informar os terceiros que eventualmente tratam esses Dados na condição de operadores para atender à eventual solicitação de eliminação dos Dados.</p>"
+    ]
+  },
+  {
+    "label": "10. PROTEÇÃO DE DADOS E SEGURANÇA",
+    "icon": "mdi-server-security",
+    "content": [
+      "<p>A VOCÊ.COM.BR toma todas as medidas técnicas e organizacionais razoáveis e necessárias para garantir a proteção e a segurança dos Dados por ela tratados.</p>",
+      "<p>A VOCÊ.COM.BR armazena todos os Dados Tratados em arquivos e servidores próprios ou por ela contratados, sempre considerando o nível de segurança.</p>",
+      "<p>A VOCÊ.COM.BR envida os melhores esforços para preservar a privacidade dos Dados dos Titulares. Contudo, importante ressaltar que nenhuma estrutura é totalmente segura a ponto de garantir integralmente a segurança dos Dados e impedir totalmente acessos não autorizados a esses Dados. Por esse motivo, o Titular também deverá tomar as medidas apropriadas para a proteção de suas informações.</p>"
+    ]
+  },
+  {
+    "label": "11. COOKIES",
+    "icon": "mdi-cookie",
+    "content": [
+      "<p>Para garantir que os usuários tenham uma experiência agradável enquanto visitam o site da VOCÊ.COM.BR na internet, são utilizados cookies e/ou outras tecnologias de rastreamento similares que coletam de maneira automática ou passiva algumas informações do Titular e de sua atividade, assim como é feito pela maioria dos sites.</p>",
+      "<p>Os Dados coletados por meio de cookies são tratados de acordo com o disposto nesta Política de Privacidade.</p>"
+    ]
+  },
+  {
+    "label": "12. ATUALIZAÇÕES NA POLÍTICA DE PRIVACIDADE",
+    "icon": "mdi-shield-edit-outline",
+    "content": [
+      "<p>A VOCÊ.COM.BR se reserva o direito, a seu exclusivo critério e conveniência, de alterar ou atualizar a qualquer tempo esta Política de Privacidade, sendo que a VOCÊ.COM.BR avisará sobre cada atualização no site da VOCÊ.COM.BR e/ou por e-mail, caso o Titular tenha optado por recebê-los.</p>"
+    ]
+  },
+  {
+    "label": "13. ENCARREGADO PELO TRATAMENTO DE DADOS PESSOAIS",
+    "icon": "mdi-account-tie-outline",
+    "content": [
+      "<p>A VOCÊ.COM.BR tem um encarregado da proteção de Dados, que atua como canal de comunicação entre a VOCÊ.COM.BR (tanto quando ocupa a posição de controladora quanto quando ocupa a posição de operadora), os Titulares de Dados e a Autoridade Nacional de Proteção de Dados.</p>",
+      "<p>O contato do Encarregado pela Proteção de Dados (DPO) da VOCÊ.COM.BR é, <span class='iluminador'><a href='mailto:contato@voce.com.br'><strong>contato@voce.com.br</strong></a></span>.</p>"
+    ]
+  },
+  {
+    "label": "14. DISPOSIÇÕES GERAIS",
+    "icon": "mdi-file-document-edit-outline",
+    "content": [
+      "<p>Esta Política de Privacidade deve ser regida e interpretada de acordo com a legislação da República Federativa do Brasil, em especial a Lei nº 13.709 de 14 de agosto de 2018, a LGPD, independentemente das leis de outros estados ou países.</p>",
+      "<p>Caso o Titular tenha qualquer dúvida, ou queira mais informações sobre a Política de Privacidade da VOCÊ.COM.BR, deverá enviar e-mail para <span class='iluminador'><a href='mailto:contato@voce.com.br'><strong>contato@voce.com.br</strong></a></span>.</p>",
+      "<p>Em caso de quaisquer conflitos entre esta Política de Privacidade e as informações fornecidas pelo atendimento do e-mail indicado acima, prevalecerão as disposições contidas nesta Política de Privacidade.</p>"
+    ]
+  }
+]
