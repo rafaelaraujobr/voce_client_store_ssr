@@ -10,14 +10,14 @@
       <q-breadcrumbs-el
         :label="product?.name"
         class="ellipsis"
-        style="max-width: 200px"
+        :style="{ maxWidth: $q.screen.lt.sm ? '120px' : '200px' }"
       />
     </q-breadcrumbs>
-    <q-item>
-      <q-item-section>
+    <div class="row q-col-gutter-md">
+      <div class="col-12 col-md-6">
         <ProductCarousel :images="skuSelected?.sku?.images" />
-      </q-item-section>
-      <q-item-section class="q-gutter-y-sm">
+      </div>
+      <div class="col-12 col-md-6 q-gutter-y-sm">
         <q-item-label class="row items-center q-gutter-x-sm">
           <q-icon name="mdi-star" color="primary" size="1.2em" />
           <div class="text-primary">4.8</div>
@@ -37,40 +37,34 @@
         <q-item-label>
           {{ product?.name }}
         </q-item-label>
-        <q-item-label>
-          <!-- <q-radio
-            v-for="(i, index) in sortedSkus"
-            :key="index"
-            v-model="skuSelectedId"
-            :val="i.id"
-            :label="i.model"
-          /> -->
-          <div class="q-gutter-x-sm q-my-sm">
-            <q-btn
+        <q-item-label v-if="sortedSkus.length > 1">
+          <div class="row q-col-gutter-xs">
+            <div
               v-for="(i, index) in sortedSkus"
               :key="index"
-              :color="skuSelectedId === i.id ? 'primary' : 'default'"
-              :text-color="skuSelectedId === i.id ? 'white' : 'dark'"
-              padding="sm md"
-              dense
-              unelevated
-              :label="i.model"
-              @click="skuSelectedId = i.id"
-            />
+              class="col-auto"
+            >
+              <q-btn
+                :color="skuSelectedId === i.id ? 'primary' : 'default'"
+                :text-color="skuSelectedId === i.id ? 'white' : 'dark'"
+                padding="sm md"
+                dense
+                unelevated
+                :label="i.model"
+                class="full-width"
+                style="min-width: 60px"
+                @click="skuSelectedId = i.id"
+              />
+            </div>
           </div>
         </q-item-label>
         <q-item-label
           v-if="skuSelected?.sku?.price_discount < skuSelected?.sku?.price"
           class="text-caption text-negative q-pt-sm"
+          style="text-decoration: line-through"
         >
-          {{ numberToReal(skuSelected.sku?.price_discount) }}
-        </q-item-label>
-        <q-item-label
-          v-if="skuSelected?.sku?.price"
-          class="text-h5 text-weight-bold"
-        >
-          {{ numberToReal(skuSelected.sku?.price) }}
-          <q-badge
+          {{ $t("from") + " " + numberToReal(skuSelected.sku?.price) }} 
+           <q-badge
             v-if="
               skuSelected.sku?.price &&
               skuSelected.sku?.price_discount &&
@@ -81,7 +75,7 @@
               top: '10px',
             }"
             text-color="black"
-            class="text-subtitle1 text-weight-bold"
+            class="text-subtitle1 text-weight-bold q-ml-sm"
             >-
             {{
               getDiscountPercent(
@@ -91,51 +85,67 @@
             }}%</q-badge
           >
         </q-item-label>
+        <q-item-label
+          v-if="skuSelected?.sku?.price > skuSelected?.sku?.price_discount"
+          class="text-h5 text-weight-bold"
+        >
+          {{ $t("by") + " " + numberToReal(skuSelected.sku?.price_discount) }}
+        </q-item-label>
         <q-item-label class="text-caption row items-center no-wrap q-mb-md">
           {{ $t("until") }} {{ installments?.installment }}x {{ $t("of") }}
           {{ numberToReal(installments?.value) }}</q-item-label
         >
-        <q-item-label
-          class="text-caption row items-center no-wrap q-gutter-x-md q-pa-none"
-        >
-          <q-btn
-            v-if="productsInCart.find((p) => p.id === skuSelected?.id)"
-            :label="$t('finishPurchase')"
-            color="primary"
-            unelevated
-            padding="sm md"
-            @click="finishPurchase"
-          />
-          <q-btn
-            v-else
-            :label="$t('buyNow')"
-            color="dark"
-            unelevated
-            padding="sm md"
-            @click="buyNow"
-          />
-          <q-btn
-            v-if="!productsInCart.find((p) => p.id === skuSelected?.id)"
-            :label="$t('addCart')"
-            color="default"
-            unelevated
-            padding="sm md"
-            text-color="dark"
-            class="bg-default"
-            icon="mdi-cart-plus"
-            @click="addProductToCart(skuSelected)"
-          />
-          <q-btn
-            v-else
-            :label="$t('removeCart')"
-            color="negative"
-            unelevated
-            padding="sm md"
-            @click="removeProductFromCart(skuSelected)"
-          />
-        </q-item-label>
+        <div class="row q-col-gutter-sm q-mt-md">
+          <div class="col-12 col-sm-6">
+            <q-btn
+              v-if="productsInCart.find((p) => p.id === skuSelected?.id)"
+              :label="$t('finishPurchase')"
+              color="primary"
+              unelevated
+              padding="md"
+              class="full-width"
+              size="md"
+              @click="finishPurchase"
+            />
+            <q-btn
+              v-else
+              :label="$t('buyNow')"
+              color="dark"
+              unelevated
+              padding="md"
+              class="full-width"
+              size="md"
+              @click="buyNow"
+            />
+          </div>
+          <div class="col-12 col-sm-6">
+            <q-btn
+              v-if="!productsInCart.find((p) => p.id === skuSelected?.id)"
+              :label="$t('addCart')"
+              color="default"
+              unelevated
+              padding="md"
+              text-color="dark"
+              class="bg-default full-width"
+              icon="mdi-cart-plus"
+              size="md"
+              @click="addProductToCart(skuSelected)"
+            />
+            <q-btn
+              v-else
+              :label="$t('removeCart')"
+              color="negative"
+              unelevated
+              padding="md"
+              class="full-width"
+              size="md"
+              @click="removeProductFromCart(skuSelected)"
+            />
+          </div>
+        </div>
         <q-item-label
           class="text-caption row items-center no-wrap q-gutter-x-sm"
+          :class="{ 'justify-center': $q.screen.lt.md, 'justify-start': $q.screen.gt.sm }"
         >
           {{ $t("soldBy") }}:
           <q-img
@@ -145,10 +155,10 @@
             width="80px"
           />
         </q-item-label>
-      </q-item-section>
-    </q-item>
+      </div>
+    </div>
     <q-separator spaced />
-    <q-card flat>
+     <q-card flat>
       <q-card-section class="row items-center justify-between q-pa-none">
         <div class="col-auto">
           <q-item>
