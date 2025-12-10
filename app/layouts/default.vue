@@ -3,7 +3,8 @@
     <q-header class="text-dark backdrop-blur bg-white" bordered>
       <div class="wrapper">
         <q-toolbar>
-          <q-toolbar-title>
+          <q-btn v-if="isMobile" flat dense icon="mdi-menu" size="lg" />
+          <q-toolbar-title :class="{ 'text-center q-ml-xl': isMobile }">
             <q-img
               v-if="shop?.logotipo"
               :src="shop?.logotipo"
@@ -26,6 +27,7 @@
           </q-toolbar-title>
           <div class="row items-center q-gutter-x-sm">
             <q-input
+              v-if="!isMobile"
               v-model="currentSearch"
               :placeholder="$t('searchPlaceholder')"
               color="primary"
@@ -45,26 +47,27 @@
             </q-input>
             <q-btn
               color="primary"
-              :label="$t('login')"
+              :label="isMobile ? '' : $t('login')"
               icon="mdi-account-outline"
               flat
-              padding="sm md"
+              :padding="isMobile ? 'xs sm' : 'sm md'"
               class="text-weight-medium"
               @click="navigateTo(`${route.path}?modal=signin`)"
             />
             <q-btn
+              v-if="!isMobile"
               color="primary"
               :label="$t('createAccount')"
               flat
-              padding="sm md"
+              :padding="isMobile ? 'xs sm' : 'sm md'"
               class="text-weight-medium"
             />
             <q-btn
               color="primary"
-              :label="$t('cart')"
+              :label="isMobile ? '' : $t('cart')"
               icon="mdi-cart-outline"
               flat
-              padding="sm md"
+              :padding="isMobile ? 'xs sm' : 'sm md'"
               class="text-weight-medium"
               :class="{ 'text-weight-bold bg-default': qtdProductsInCart > 0 }"
               @click="leftDrawerOpen = !leftDrawerOpen"
@@ -103,15 +106,18 @@
       <ShoppingCart />
     </q-drawer>
     <q-page-container>
-      <slot />
       <q-page-scroller
+        v-if="!isMobile"
         v-show="!loadingProducts"
         position="bottom-right"
         :scroll-offset="150"
         :offset="[18, 18]"
+        class="z-max"
       >
-        <q-btn fab icon="mdi-arrow-up" color="accent" />
+        <q-btn fab icon="mdi-arrow-up" color="accent" class="z-max" />
       </q-page-scroller>
+      <slot />
+
       <Footer />
     </q-page-container>
     <SignInModal />
@@ -138,6 +144,10 @@ const {
   setSearch,
 } = useShop();
 
+const isMobile = computed(() => {
+  return useQuasar().screen.lt.sm;
+});
+
 watch(slug, async (newVal) => {
   if (newVal && shop.value === null) await getShopBySlug(newVal as string);
 });
@@ -161,7 +171,6 @@ watch(
     }
   }
 );
-
 
 watch(productsInCart, (newVal) => {
   if (newVal.length === 0) leftDrawerOpen.value = false;

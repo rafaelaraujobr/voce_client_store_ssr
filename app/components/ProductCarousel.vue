@@ -21,7 +21,8 @@
             <template #error>
               <div
                 class="absolute-full flex flex-center bg-secondary text-white text-center"
-                style="max-width: 300px; margin: 0 auto">
+                style="max-width: 300px; margin: 0 auto"
+              >
                 {{ $t("imageUnavailable") }}
               </div>
             </template>
@@ -48,7 +49,7 @@
           <q-img
             :src="image"
             fit="contain"
-            style="height: 220px"
+            :style="isMobile ? 'height: 180px' : 'height: 220px'"
             class="cursor-pointer"
             @click="handleImageClick()"
           />
@@ -56,7 +57,7 @@
       </q-tab-panels>
     </template>
   </q-splitter>
-  
+
   <q-img
     v-else
     :src="images?.[0] ?? '/favicon.ico	'"
@@ -95,7 +96,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 const slide = ref<number>(1);
-const imageSelected = computed(() => props.images?.[(slide.value - 1) as number]);
+const imageSelected = computed(
+  () => props.images?.[(slide.value - 1) as number]
+);
 const props = defineProps<{
   images: string[] | undefined;
 }>();
@@ -104,4 +107,8 @@ const splitterModel = ref(12);
 function handleImageClick() {
   dialog.value = true;
 }
+
+const isMobile = computed(() => {
+  return useQuasar().screen.lt.sm;
+});
 </script>
