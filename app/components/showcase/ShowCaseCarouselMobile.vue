@@ -52,8 +52,8 @@
                     $t("from") + " " + numberToReal(product?.price)
                   }}</q-item-label
                 >
-                <div class="row">
-                  <q-item-label lines="2" class="text-h5 text-weight-bold">
+                <div class="row justify-center">
+                  <q-item-label lines="2" class="text-h5 text-weight-bold text-center">
                     {{
                       $t("by") + " " + numberToReal(product?.price_discount)
                     }}</q-item-label
