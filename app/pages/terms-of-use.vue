@@ -1,38 +1,8 @@
-<!-- <script setup>
-import { useTenant } from "~/composables/tenant.composable";
-definePageMeta({
-  layout: "empty",
-});
-const tenant = useTenant();
-</script>
-<template>
-  <div
-    class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center"
-  >
-    <div>
-      <div style="font-size: 30vh">Política de privacidade</div>
-      <div>{{ tenant }}</div>
-
-      <div class="text-h2" style="opacity: 0.4">Política de privacidade</div>
-
-      <q-btn
-        class="q-mt-xl"
-        color="white"
-        text-color="blue"
-        unelevated
-        to="/"
-        label="Go Home"
-        no-caps
-      />
-    </div>
-  </div>
-</template> -->
-
 <template>
   <q-page class="terms-container q-pa-md">
     <q-card class="terms-card q-mb-lg q-mt-xl">
       <q-card-section>
-        <div class="text-h5 text-weight-bold q-mx-sm q-mb-md">TERMOS DE USO – <strong>VOCÊ.COM.BR</strong></div>
+        <div class="text-h5 text-weight-bold q-mx-sm q-mb-md">TERMOS DE USO – VOCÊ.COM.BR</div>
         <div class="text-subtitle2 q-mx-sm q-mb-lg">Última atualização em 20 de Maio de 2024.</div>
         
         <q-list bordered separator class="rounded-borders">
@@ -102,7 +72,7 @@ const acceptTerms = () => {
   $q.notify({
     color: 'positive',
     message: 'Termos de Uso aceitos com sucesso!',
-    icon: 'check_circle'
+    icon: 'fas fa-check-circle'
   })
   emit('terms-accepted')
 }

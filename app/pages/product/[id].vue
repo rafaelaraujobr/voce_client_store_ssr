@@ -37,27 +37,23 @@
         <q-item-label>
           {{ product?.name }}
         </q-item-label>
-        <q-item-label v-if="sortedSkus.length > 1">
-          <div class="row q-col-gutter-xs">
-            <div
-              v-for="(i, index) in sortedSkus"
-              :key="index"
-              class="col-auto"
-            >
-              <q-btn
-                :color="skuSelectedId === i.id ? 'primary' : 'default'"
-                :text-color="skuSelectedId === i.id ? 'white' : 'dark'"
-                padding="sm md"
-                dense
-                unelevated
-                :label="i.model"
-                class="full-width"
-                style="min-width: 60px"
-                @click="skuSelectedId = i.id"
-              />
-            </div>
-          </div>
-        </q-item-label>
+        <div v-if="sortedSkus.length > 1" class="q-mb-md">
+          <q-select
+            v-model="skuSelectedId"
+            :options="skuOptions"
+            option-value="value"
+            option-label="label"
+            emit-value
+            map-options
+            outlined
+            dense
+            label="Selecione uma opção"
+            class="full-width"
+            behavior="menu"
+            :display-value="selectedSkuLabel"
+          >
+          </q-select>
+        </div>
         <q-item-label
           v-if="skuSelected?.sku?.price_discount < skuSelected?.sku?.price"
           class="text-caption text-negative q-pt-sm"
@@ -450,6 +446,18 @@ const sortedSkus = computed(() => {
     if (aIndex === -1 && bIndex !== -1) return 1;
     return (a.model || "").localeCompare(b.model || "");
   });
+});
+
+const skuOptions = computed(() => {
+  return sortedSkus.value.map((sku: any) => ({
+    label: sku.model || 'Variação',
+    value: sku.id
+  }));
+});
+
+const selectedSkuLabel = computed(() => {
+  const selected = sortedSkus.value.find((sku: any) => sku.id === skuSelectedId.value);
+  return selected?.model || 'Selecione uma opção';
 });
 
 const installments = computed(() => {

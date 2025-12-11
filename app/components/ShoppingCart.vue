@@ -37,13 +37,13 @@
                 product.sku?.price_discount &&
                 product.sku?.price_discount < product.sku?.price
               "
-              class="no-wrap row items-center q-gutter-x-sm"
+              class="no-wrap row items-center ju q-gutter-x-sm"
             >
-              <div class="text-grey-7" style="text-decoration: line-through">
-                {{ numberToReal(product.sku?.price) }}
+              <div class="text-negative" style="text-decoration: line-through">
+                 {{ $t("from") + " " + numberToReal(product.sku?.price) }}
               </div>
               <div class="text-weight-bold">
-                {{ numberToReal(product.sku?.price_discount) }}
+                {{ $t("by")  + " " + numberToReal(product.sku?.price_discount) }}
               </div>
             </div>
             <div v-else class="text-weight-bold">

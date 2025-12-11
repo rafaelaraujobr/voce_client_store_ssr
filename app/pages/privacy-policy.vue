@@ -71,7 +71,7 @@ const acceptPrivacyPolicy = () => {
   $q.notify({
     color: 'positive',
     message: 'Política de Privacidade aceita com sucesso!',
-    icon: 'check_circle'
+    icon: 'fas fa-check-circle'
   })
 
   emit('privacy-policy-accepted')
