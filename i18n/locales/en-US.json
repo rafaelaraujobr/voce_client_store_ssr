@@ -137,5 +137,7 @@
   "country": "Country",
   "password": "Password",
   "products": "Products",
-  "cpf": "CPF"
+  "cpf": "CPF",
+  "lastOptionAvailable": "Last option available",
+  "selectAnOption": "Select an option"
 }

@@ -46,7 +46,10 @@ const categorySelected = computed({
     setProductQuery({ ...productQuery.value, skip: 0 });
   },
 });
-const categories = computed(() => shop?.value?.categories || []);
+const categories = computed(() => {
+  const cats = shop?.value?.categories || [];
+  return [...cats].sort((a, b) => a.name.localeCompare(b.name));
+});
 
 const centerActiveTab = () => {
   nextTick(() => {

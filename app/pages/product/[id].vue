@@ -47,11 +47,16 @@
             map-options
             outlined
             dense
-            label="Selecione uma opção"
+            :label="skuOptions.length > 1 ? $t('selectAnOption') : undefined"
             class="full-width"
             behavior="menu"
             :display-value="selectedSkuLabel"
-          >
+            :readonly="skuOptions.length === 1"
+            :dropdown-icon="skuOptions.length > 1 ? 'mdi-chevron-down' : 'none'"
+           >
+            <q-tooltip v-if="skuOptions.length === 1" class="bg-grey-8">
+              {{ $t("lastOptionAvailable") }}
+            </q-tooltip>
           </q-select>
         </div>
         <q-item-label

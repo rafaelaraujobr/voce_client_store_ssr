@@ -115,5 +115,7 @@
   "country": "País",
   "password": "Contraseña",
   "products": "Productos",
-  "cpf": "CPF"
+  "cpf": "CPF",
+  "lastOptionAvailable": "Última opción disponible",
+  "selectAnOption": "Selecciona una opción"
 }
