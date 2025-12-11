@@ -37,7 +37,7 @@
         <q-item-label>
           {{ product?.name }}
         </q-item-label>
-        <div v-if="sortedSkus.length > 1" class="q-mb-md">
+        <div v-if="sortedSkus.length > 0" class="q-mb-md">
           <q-select
             v-model="skuSelectedId"
             :options="skuOptions"
