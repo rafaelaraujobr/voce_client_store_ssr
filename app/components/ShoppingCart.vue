@@ -85,14 +85,11 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <q-item v-else>
-      <q-item-section>
-        <q-item-label class="text-grey-6"
-          >Seu carrinho está vazio. Adicione produtos para
-          comprar.</q-item-label
-        >
-      </q-item-section>
-    </q-item>
+    <div v-else class="flex flex-center column q-pa-lg q-gutter-y-md">
+      <q-item-label class="text-grey-6 text-center">
+        {{ $t("yourCartIsEmpty") }}
+      </q-item-label>
+    </div>
     <q-card
       v-if="productsInCart.length > 0"
       class="absolute-bottom bg-default"
