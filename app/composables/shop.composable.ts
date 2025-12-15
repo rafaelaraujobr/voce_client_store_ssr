@@ -1,5 +1,7 @@
 import { useShopService } from "~/services/shop.service";
 import { cleanQuery } from "~/utils/functions";
+import { useShopStore } from "~/stores/shop";
+import { storeToRefs } from "pinia";
 
 export const useShop = () => {
   const shopStore = useShopStore();
@@ -17,6 +19,7 @@ export const useShop = () => {
     setRelatedProducts,
     setProductFilters,
     setSearch,
+    setPixPayment
   } = shopStore;
 
   const {
@@ -32,6 +35,7 @@ export const useShop = () => {
     loadingProducts,
     producFilters,
     search,
+    pixPayment
   } = storeToRefs(shopStore);
 
   const {
@@ -151,5 +155,7 @@ export const useShop = () => {
     getRelatedProducts,
     setProductFilters,
     setSearch,
+    pixPayment,
+    setPixPayment
   };
 };

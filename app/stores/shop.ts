@@ -27,6 +27,12 @@ export const useShopStore = defineStore("shop", () => {
   const loading = ref<boolean>(false);
   const loadingProducts = ref<boolean>(false);
   const totalProducts = ref<number>(0);
+  const pixPayment = ref<any>({
+    transactionId: null,
+    qrCode: null,
+    qrCodeBase64: null,
+    expirationTime: null
+  });
 
   function setShop(payload: Shop): void {
     shop.value = payload;
@@ -79,6 +85,9 @@ export const useShopStore = defineStore("shop", () => {
   function setLoadingProducts(payload: boolean): void {
     loadingProducts.value = payload;
   }
+  function setPixPayment(data: any) {
+    pixPayment.value = data
+  }
 
   return {
     shop,
@@ -106,5 +115,7 @@ export const useShopStore = defineStore("shop", () => {
     setSlug,
     setRelatedProducts,
     setProductFilters,
+    pixPayment,
+    setPixPayment
   };
 });
