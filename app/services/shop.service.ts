@@ -69,6 +69,8 @@ export const useShopService = () => {
     }
   }
 
+
+
   return {
     getShopBySlugService,
     getProductsService,

@@ -70,6 +70,7 @@
             unelevated
             :icon="`img:${GoogleIcon}`"
             class="full-width border-primary bg-white border-1"
+            @click="onLoginGoogle"
           />
           <div class="text-weight-medium text-center q-mt-md">
             {{ $t("noAccount") }}
@@ -85,6 +86,8 @@
 
 <script setup lang="ts">
 import GoogleIcon from "@/assets/images/google-icon.svg";
+import { useShop } from "~/composables/shop.composable";
+const { shop } = useShop();
 const route = useRoute();
 const router = useRouter();
 const modalSignIn = computed<boolean>(() => route.query.modal === "signin");
@@ -108,5 +111,17 @@ function handleSubmit() {
 }
 function togglePassword() {
   showPassword.value = !showPassword.value;
+}
+
+async function onLoginGoogle() {
+  if (!shop.value) return
+  
+  const config = useRuntimeConfig()
+  const storeId = shop.value.id
+  const storeSlug = shop.value.slug
+  const apiUrl = config.public.apiGatewayBase
+  const backendUrl = `${apiUrl}auth/google?storeId=${storeId}&storeSlug=${storeSlug}`
+
+  window.location.href = backendUrl
 }
 </script>

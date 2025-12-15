@@ -9,7 +9,7 @@
                 {{ $t("contact") }}
               </div>
               <div class="text-subtitle2">
-                <div>{{ $t("email") }}: contato@flashapp.com</div>
+                <div>{{ $t("email") }}: contato@voce.com.br</div>
                 <div>{{ $t("phone") }}: (11) 99999-9999</div>
               </div>
             </q-card-section>

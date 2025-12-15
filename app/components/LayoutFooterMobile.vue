@@ -35,7 +35,7 @@
             </q-item-section>
           </template>
           <div class="q-pl-md q-pb-sm text-grey-5 text-body2">
-            <div>{{ $t("email") }}: contato@flashapp.com</div>
+            <div>{{ $t("email") }}: contato@voce.com.br</div>
             <div>{{ $t("phone") }}: (11) 99999-9999</div>
           </div>
         </q-expansion-item>
