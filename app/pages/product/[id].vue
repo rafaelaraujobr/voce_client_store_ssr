@@ -68,7 +68,7 @@
            <q-badge
             v-if="
               skuSelected.sku?.price &&
-              skuSelected.sku?.price_discount &&
+              skuSelected.sku?.price_discount > 0 &&
               skuSelected.sku?.price_discount < skuSelected.sku?.price
             "
             :style="{
@@ -87,7 +87,7 @@
           >
         </q-item-label>
         <q-item-label
-          v-if="skuSelected?.sku?.price > skuSelected?.sku?.price_discount"
+          v-if="skuSelected?.sku?.price > skuSelected?.sku?.price_discount && skuSelected.sku?.price_discount > 0"
           class="text-h5 text-weight-bold"
         >
           {{ $t("by") + " " + numberToReal(skuSelected.sku?.price_discount) }}
