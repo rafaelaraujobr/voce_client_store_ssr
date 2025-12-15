@@ -60,7 +60,7 @@
           </q-select>
         </div>
         <q-item-label
-          v-if="skuSelected?.sku?.price_discount < skuSelected?.sku?.price"
+          v-if="skuSelected?.sku?.price_discount < skuSelected?.sku?.price && skuSelected?.sku?.price_discount > 0"
           class="text-caption text-negative q-pt-sm"
           style="text-decoration: line-through"
         >
