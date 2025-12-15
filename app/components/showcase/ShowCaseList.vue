@@ -1,6 +1,5 @@
 <template>
   <q-infinite-scroll ref="scrollTargetRef" :offset="800" debounce="500">
-    <!-- @load="onScroll" -->
     <div class="row q-col-gutter-md full-width">
       <div
         v-for="product in products"
@@ -60,7 +59,9 @@
                       class="text-subtitle1 text-negative"
                       style="text-decoration: line-through"
                     >
-                      {{$t("from") + " " + numberToReal(product?.price) }}</q-item-label
+                      {{
+                        $t("from") + " " + numberToReal(product?.price)
+                      }}</q-item-label
                     >
                     <div class="row">
                       <q-item-label lines="2" class="text-h5 text-weight-bold">
@@ -178,25 +179,6 @@ function getDiscountPercent(
 function navigateToProduct(product: Product) {
   navigateTo(`/product/${product.id}`);
 }
-
-// async function onScroll(_: number, done: () => void) {
-//   if (
-//     isLoadingMore.value ||
-//     loadingProducts.value ||
-//     products.value.length >= totalProducts.value
-//   ) {
-//     done();
-//     return;
-//   }
-
-//   try {
-//     isLoadingMore.value = true;
-//     await loadMoreProducts(slug.value as string);
-//   } finally {
-//     isLoadingMore.value = false;
-//     done();
-//   }
-// }
 
 watch(
   () => slug.value,
