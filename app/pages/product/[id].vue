@@ -438,7 +438,7 @@ const sizeOrder = ["XP", "P", "M", "G", "XG", "XXG", "EXG"];
 
 const sortedSkus = computed(() => {
   const skus = (product.value as any)?.skus?.filter(
-    (sku: any) => sku.active === true
+    (sku: any) => sku.active === true && sku.model && sku.model.trim() !== ""
   );
   if (!Array.isArray(skus)) return [];
 
@@ -479,11 +479,16 @@ const installments = computed(() => {
 const skuSelected = computed(() => {
   if (!product.value) return null;
   const { skus, ...rest } = product.value as any;
-  if (Array.isArray(skus))
+  if (Array.isArray(skus)) {
+    let selectedSku = skus.find((sku: any) => sku.id === skuSelectedId.value);
+    if (!selectedSku) {
+      selectedSku = skus.find((sku: any) => sku.active === true);
+    }
     return {
-      sku: skus.find((sku: any) => sku.id === skuSelectedId.value),
+      sku: selectedSku,
       ...rest,
     };
+  }
 
   return { ...rest, sku: { ...skus[0], images: skus[0].images ?? [] } };
 });
