@@ -437,12 +437,22 @@ async function getFreightDetails(zipcode: string) {
 const sizeOrder = ["XP", "P", "M", "G", "XG", "XXG", "EXG"];
 
 const sortedSkus = computed(() => {
-  const skus = (product.value as any)?.skus?.filter(
-    (sku: any) => sku.active === true && sku.model && sku.model.trim() !== ""
+  const allActiveSkus = (product.value as any)?.skus?.filter(
+    (sku: any) => sku.active === true
   );
-  if (!Array.isArray(skus)) return [];
+  if (!Array.isArray(allActiveSkus)) return [];
 
-  return [...skus].sort((a, b) => {
+  const hasValidModel = (sku: any) => {
+    if (!sku.model) return false;
+    const trimmedModel = sku.model.trim();
+    return trimmedModel !== "" && trimmedModel !== "." && !/^[.,\-_\s]+$/.test(trimmedModel);
+  };
+
+  const skusToShow = allActiveSkus.length > 1 
+    ? allActiveSkus 
+    : allActiveSkus.filter(hasValidModel);
+
+  return [...skusToShow].sort((a, b) => {
     const aIndex = sizeOrder.indexOf(a.model?.toUpperCase() || "");
     const bIndex = sizeOrder.indexOf(b.model?.toUpperCase() || "");
 
@@ -454,15 +464,22 @@ const sortedSkus = computed(() => {
 });
 
 const skuOptions = computed(() => {
-  return sortedSkus.value.map((sku: any) => ({
-    label: sku.model || 'Variação',
-    value: sku.id
-  }));
+  return sortedSkus.value.map((sku: any, index: number) => {
+    const hasValidModel = sku.model && sku.model.trim() !== "" && 
+                         sku.model.trim() !== "." && !/^[.,\-_\s]+$/.test(sku.model.trim());
+    
+    const label = hasValidModel ? sku.model : `Opção ${index + 1}`;
+    
+    return {
+      label: label,
+      value: sku.id
+    };
+  });
 });
 
 const selectedSkuLabel = computed(() => {
-  const selected = sortedSkus.value.find((sku: any) => sku.id === skuSelectedId.value);
-  return selected?.model || 'Selecione uma opção';
+  const selectedOption = skuOptions.value.find((option: any) => option.value === skuSelectedId.value);
+  return selectedOption?.label || 'Selecione uma opção';
 });
 
 const installments = computed(() => {
