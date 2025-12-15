@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useTenant } from "~/composables/tenant.composable";
+
 
 export const useAccountStore = defineStore('account', () => {
   const profile = ref<any>({})

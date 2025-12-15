@@ -1,9 +1,6 @@
-
-  
-  
 export const useAccountService = () => {
-    const { $apiGateway } = useNuxtApp();
-  
+  const { $apiGateway } = useNuxtApp();
+
   async function loginService(data: any): Promise<any> {
     return await $apiGateway<any>("login", {
       method: "post",
@@ -23,9 +20,28 @@ export const useAccountService = () => {
     });
   }
 
-   return {
-      loginService,
-      logoutService,
-      getProfileUserService,
-    };
+  async function checkEmailService(
+    email: string,
+    storeId: string
+  ): Promise<any> {
+    return await $apiGateway<any>(
+      `marketplace/${storeId}/check-email/${email}`
+    );
+  }
+
+  async function createAccountService(data: any): Promise<any> {
+    return await $apiGateway<any>('marketplace/register', {
+      method: "post",
+      body: data,
+    });
+  }
+  
+
+  return {
+    loginService,
+    logoutService,
+    getProfileUserService,
+    checkEmailService,
+    createAccountService,
+  };
 };

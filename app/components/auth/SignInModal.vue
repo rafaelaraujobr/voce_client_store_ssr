@@ -14,7 +14,9 @@
       </q-toolbar>
 
       <q-card-section>
-        <div class="text-h5 text-weight-bold text-center">{{ $t("accessAccount") }}</div>
+        <div class="text-h5 text-weight-bold text-center">
+          {{ $t("accessAccount") }}
+        </div>
         <div class="text-weight-medium text-center">
           {{ $t("accessAccountDescription") }}
         </div>
@@ -74,9 +76,9 @@
           />
           <div class="text-weight-medium text-center q-mt-md">
             {{ $t("noAccount") }}
-            <router-link to="/signup" class="link-decoration-none"
-              >{{ $t("createAccount") }}</router-link
-            >
+            <router-link to="/signup" class="link-decoration-none">
+              {{ $t("createAccount") }}
+            </router-link>
           </div>
         </q-form>
       </q-card-section>
@@ -95,7 +97,7 @@ const email = ref<string>("");
 const password = ref<string>("");
 const showPassword = ref<boolean>(false);
 const loading = ref<boolean>(false);
-async function closeModal() {
+async function closeModal(): Promise<void> {
   const currentQuery = { ...route.query };
   delete currentQuery.modal;
   await router.push({
@@ -114,14 +116,14 @@ function togglePassword() {
 }
 
 async function onLoginGoogle() {
-  if (!shop.value) return
-  
-  const config = useRuntimeConfig()
-  const storeId = shop.value.id
-  const storeSlug = shop.value.slug
-  const apiUrl = config.public.apiGatewayBase
-  const backendUrl = `${apiUrl}auth/google?storeId=${storeId}&storeSlug=${storeSlug}`
+  if (!shop.value) return;
 
-  window.location.href = backendUrl
+  const config = useRuntimeConfig();
+  const storeId = shop.value.id;
+  const storeSlug = shop.value.slug;
+  const apiUrl = config.public.apiGatewayBase;
+  const backendUrl = `${apiUrl}auth/google?storeId=${storeId}&storeSlug=${storeSlug}`;
+
+  window.location.href = backendUrl;
 }
 </script>

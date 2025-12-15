@@ -16,6 +16,7 @@ export const quasarOptions: ModuleOptions = {
       "eva-icons",
       "mdi-v7",
       "material-symbols-outlined",
+      "material-symbols-rounded",
       "fontawesome-v6",
     ],
   },
