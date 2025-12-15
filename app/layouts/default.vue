@@ -61,6 +61,7 @@
               flat
               :padding="isMobile ? 'xs sm' : 'sm md'"
               class="text-weight-medium"
+              :to="`/auth/sign-up`"
             />
             <q-btn
               color="primary"
@@ -121,6 +122,7 @@
       <LayoutFooterMobile v-else />
     </q-page-container>
     <SignInModal />
+    <RegisterModal />
   </q-layout>
 </template>
 
@@ -130,6 +132,7 @@ import Footer from "~/components/LayoutFooter.vue";
 import LayoutFooterMobile from "~/components/LayoutFooterMobile.vue";
 import ShoppingCart from "~/components/ShoppingCart.vue";
 import SignInModal from "~/components/auth/SignInModal.vue";
+import RegisterModal from "~/components/auth/RegisterModal.vue";
 import { useShop } from "~/composables/shop.composable";
 import { useCart } from "~/composables/cart.composable";
 const route = useRoute();

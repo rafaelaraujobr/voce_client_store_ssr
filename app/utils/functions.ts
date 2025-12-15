@@ -70,3 +70,44 @@ export function formatDescription(desc: string): string {
   if (!formatted.endsWith("</p>")) formatted = formatted + "</p>";
   return formatted.trim();
 }
+
+export function checkPassword(type: string, password: string): boolean {
+  switch (type) {
+    case "minLength":
+      return password.length >= 8;
+    case "number":
+      return /\d/.test(password);
+    case "uppercase":
+      return /[A-Z]/.test(password);
+    case "special":
+      return /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    default:
+      return false;
+  }
+}
+
+export function checkPasswordMatch(
+  password: string,
+  confirmPassword: string
+): boolean {
+  return (
+    (password === confirmPassword &&
+      password.length >= 8 &&
+      /\d/.test(password) &&
+      /[A-Z]/.test(password) &&
+      /[!@#$%^&*(),.?":{}|<>]/.test(password)) ||
+    false
+  );
+}
+
+export const emailProviders = {
+  "gmail.com": "https://mail.google.com",
+  "yahoo.com": "https://mail.yahoo.com",
+  "outlook.com": "https://outlook.live.com",
+  "hotmail.com": "https://outlook.live.com",
+  "icloud.com": "https://www.icloud.com/mail",
+  "bol.com.br": "https://www.bol.com.br",
+  "uol.com.br": "https://www.uol.com.br",
+  "terra.com.br": "https://webmail.terra.com.br",
+  "ig.com.br": "https://webmail.ig.com.br",
+};
