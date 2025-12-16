@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <q-page class="flex flex-center" padding>
+    <q-page class="flex flex-center bg-primary" padding>
       <q-stepper
         v-model="step"
         animated
@@ -13,7 +13,7 @@
         class="bg-transparent"
         style="width: 100vw; max-width: 400px"
       >
-        <q-step :name="1" title="initial" :done="step > 1">
+        <q-step :name="1" title="initial" :done="step > 1" class="">
           <q-form @submit="step++">
             <q-card flat>
               <q-card-section class="text-center">
@@ -86,7 +86,7 @@
                   >
                     <div class="row items-center justify-center q-gutter-sm">
                       <q-img
-                        src="@/assets/images/google-icon.svg"
+                        :src="GoogleIcon"
                         alt="Google icon"
                         style="width: 20px; height: 20px"
                       />
@@ -372,6 +372,7 @@
 </template>
 
 <script setup lang="ts">
+import GoogleIcon from "@/assets/images/google-icon.svg";
 import { useShop } from "~/composables/shop.composable";
 import { useAccountService } from "~/services/account.service";
 import { useQuasar } from "quasar";

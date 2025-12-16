@@ -53,19 +53,22 @@
             :display-value="selectedSkuLabel"
             :readonly="skuOptions.length === 1"
             :dropdown-icon="skuOptions.length > 1 ? 'mdi-chevron-down' : 'none'"
-           >
+          >
             <q-tooltip v-if="skuOptions.length === 1" class="bg-grey-8">
               {{ $t("lastOptionAvailable") }}
             </q-tooltip>
           </q-select>
         </div>
         <q-item-label
-          v-if="skuSelected?.sku?.price_discount < skuSelected?.sku?.price && skuSelected?.sku?.price_discount > 0"
+          v-if="
+            skuSelected?.sku?.price_discount < skuSelected?.sku?.price &&
+            skuSelected?.sku?.price_discount > 0
+          "
           class="text-caption text-negative q-pt-sm"
           style="text-decoration: line-through"
         >
-          {{ $t("from") + " " + numberToReal(skuSelected.sku?.price) }} 
-           <q-badge
+          {{ $t("from") + " " + numberToReal(skuSelected.sku?.price) }}
+          <q-badge
             v-if="
               skuSelected.sku?.price &&
               skuSelected.sku?.price_discount > 0 &&
@@ -87,18 +90,18 @@
           >
         </q-item-label>
         <q-item-label
-          v-if="skuSelected?.sku?.price > skuSelected?.sku?.price_discount && skuSelected.sku?.price_discount > 0"
+          v-if="
+            skuSelected?.sku?.price > skuSelected?.sku?.price_discount &&
+            skuSelected.sku?.price_discount > 0
+          "
           class="text-h5 text-weight-bold"
         >
           {{ $t("by") + " " + numberToReal(skuSelected.sku?.price_discount) }}
         </q-item-label>
-        <q-item-label
-          v-else
-          class="text-h5 text-weight-bold"
-        >
+        <q-item-label v-else class="text-h5 text-weight-bold">
           {{ numberToReal(skuSelected?.sku?.price) }}
         </q-item-label>
-        <q-item-label 
+        <q-item-label
           v-if="installments?.installment > 1"
           class="text-caption row items-center no-wrap q-mb-md"
         >
@@ -141,21 +144,52 @@
               size="md"
               @click="addProductToCart(skuSelected)"
             />
-            <q-btn
+            <div
               v-else
-              :label="$t('removeCart')"
-              color="negative"
-              unelevated
-              padding="md"
-              class="full-width"
-              size="md"
-              @click="removeProductFromCart(skuSelected)"
-            />
+              class="row items-center bg-default justify-between rounded-borders q-px-md custom-height"
+            >
+              <q-btn
+                v-if="productInCart?.quantity > 1"
+                icon="mdi-minus"
+                flat
+                dense
+                color="primary"
+                size="md"
+                class="full-height"
+                @click="decrementProductQuantity(productInCart)"
+              />
+              <q-btn
+                v-else
+                icon="eva-trash-2-outline"
+                flat
+                dense
+                color="negative"
+                size="md"
+                class="full-height"
+                @click="removeProductFromCart(productInCart)"
+              />
+              <div class="text-weight-medium text-center q-px-md text-h6">
+                {{ productInCart?.quantity }}
+              </div>
+              <q-btn
+                icon="mdi-plus"
+                flat
+                dense
+                color="primary"
+                size="md"
+                class="full-height"
+                @click="incrementProductQuantity(productInCart)"
+              />
+            </div>
           </div>
         </div>
+
         <q-item-label
           class="text-caption row items-center no-wrap q-gutter-x-sm"
-          :class="{ 'justify-center': $q.screen.lt.md, 'justify-start': $q.screen.gt.sm }"
+          :class="{
+            'justify-center': $q.screen.lt.md,
+            'justify-start': $q.screen.gt.sm,
+          }"
         >
           {{ $t("soldBy") }}:
           <q-img
@@ -168,7 +202,7 @@
       </div>
     </div>
     <q-separator spaced />
-     <q-card flat>
+    <q-card flat>
       <q-card-section class="row items-center justify-between q-pa-none">
         <div class="col-auto">
           <q-item>
@@ -313,7 +347,7 @@
           <q-card>
             <q-card-section>
               <div class="text-weight-bold q-mb-sm">
-                {{ $t("securePurchase.description1") }}<br >
+                {{ $t("securePurchase.description1") }}<br />
                 {{ $t("securePurchase.description2") }}
               </div>
               <div class="text-body2 q-mb-sm">
@@ -335,20 +369,20 @@
           <q-card>
             <q-card-section>
               <div class="text-weight-bold q-mb-sm">
-                {{ $t("securePayment.paymentMethods") }}<br >
-                {{ $t("securePayment.paymentMethodsCredit") }}<br >
+                {{ $t("securePayment.paymentMethods") }}<br />
+                {{ $t("securePayment.paymentMethodsCredit") }}<br />
                 {{ $t("securePayment.paymentMethodsPix") }}
               </div>
               <div class="text-body2 q-mb-sm">
                 <span class="text-weight-bold"
                   >{{ $t("securePayment.protectedTransactions") }} </span
-                ><br >
+                ><br />
                 {{ $t("securePayment.protectedTransactionsDesc") }}
               </div>
               <div class="text-body2">
                 <span class="text-weight-bold"
                   >{{ $t("securePayment.dataPrivacy") }} </span
-                ><br >
+                ><br />
                 {{ $t("securePayment.dataPrivacyDesc") }}
               </div>
             </q-card-section>
@@ -364,7 +398,7 @@
           <q-card>
             <q-card-section>
               <div class="text-weight-bold q-mb-sm">
-                {{ $t("returnPolicy.description1") }}<br ><br >
+                {{ $t("returnPolicy.description1") }}<br /><br />
                 {{ $t("returnPolicy.description2") }}
               </div>
               <div class="text-body2 q-mb-sm">
@@ -398,7 +432,13 @@ import { useShopService } from "~/services/shop.service";
 const { getCalculateFreightService, getAddressByZipcodeService } =
   useShopService();
 const { getProductById, getRelatedProducts, product, shop, slug } = useShop();
-const { addProductToCart, removeProductFromCart, productsInCart } = useCart();
+const {
+  addProductToCart,
+  removeProductFromCart,
+  productsInCart,
+  incrementProductQuantity,
+  decrementProductQuantity,
+} = useCart();
 const route = useRoute();
 const id = computed(() => route.params.id);
 const skuSelectedId = ref<string | null>(null);
@@ -445,12 +485,17 @@ const sortedSkus = computed(() => {
   const hasValidModel = (sku: any) => {
     if (!sku.model) return false;
     const trimmedModel = sku.model.trim();
-    return trimmedModel !== "" && trimmedModel !== "." && !/^[.,\-_\s]+$/.test(trimmedModel);
+    return (
+      trimmedModel !== "" &&
+      trimmedModel !== "." &&
+      !/^[.,\-_\s]+$/.test(trimmedModel)
+    );
   };
 
-  const skusToShow = allActiveSkus.length > 1 
-    ? allActiveSkus 
-    : allActiveSkus.filter(hasValidModel);
+  const skusToShow =
+    allActiveSkus.length > 1
+      ? allActiveSkus
+      : allActiveSkus.filter(hasValidModel);
 
   return [...skusToShow].sort((a, b) => {
     const aIndex = sizeOrder.indexOf(a.model?.toUpperCase() || "");
@@ -465,21 +510,26 @@ const sortedSkus = computed(() => {
 
 const skuOptions = computed(() => {
   return sortedSkus.value.map((sku: any, index: number) => {
-    const hasValidModel = sku.model && sku.model.trim() !== "" && 
-                         sku.model.trim() !== "." && !/^[.,\-_\s]+$/.test(sku.model.trim());
-    
+    const hasValidModel =
+      sku.model &&
+      sku.model.trim() !== "" &&
+      sku.model.trim() !== "." &&
+      !/^[.,\-_\s]+$/.test(sku.model.trim());
+
     const label = hasValidModel ? sku.model : `Opção ${index + 1}`;
-    
+
     return {
       label: label,
-      value: sku.id
+      value: sku.id,
     };
   });
 });
 
 const selectedSkuLabel = computed(() => {
-  const selectedOption = skuOptions.value.find((option: any) => option.value === skuSelectedId.value);
-  return selectedOption?.label || 'Selecione uma opção';
+  const selectedOption = skuOptions.value.find(
+    (option: any) => option.value === skuSelectedId.value
+  );
+  return selectedOption?.label || "Selecione uma opção";
 });
 
 const installments = computed(() => {
@@ -508,6 +558,10 @@ const skuSelected = computed(() => {
   }
 
   return { ...rest, sku: { ...skus[0], images: skus[0].images ?? [] } };
+});
+
+const productInCart = computed(() => {
+  return productsInCart.value.find((p) => p.id === skuSelected.value?.id);
 });
 
 const { refresh } = await useLazyAsyncData(`product-${id.value}`, async () => {
@@ -599,3 +653,11 @@ useHead(() => ({
   ],
 }));
 </script>
+<style scoped>
+.custom-height {
+  height: 55px;
+}
+.full-height {
+  height: 100%;
+}
+</style>
