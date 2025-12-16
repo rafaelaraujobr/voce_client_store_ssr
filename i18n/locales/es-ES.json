@@ -117,5 +117,6 @@
   "products": "Productos",
   "cpf": "CPF",
   "lastOptionAvailable": "Opción disponible",
-  "selectAnOption": "Selecciona una opción"
+  "selectAnOption": "Selecciona una opción",
+  "maxQuantityReached": "Cantidad máxima alcanzada (6 productos)"
 }

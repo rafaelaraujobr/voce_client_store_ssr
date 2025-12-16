@@ -110,33 +110,33 @@
         >
         
         <div class="q-mb-md">
-          <q-select
-            v-model="selectedQuantity"
-            :options="quantityOptions"
-            outlined
-            dense
-            emit-value
-            map-options
-            :label="$t('quantity') || 'Quantidade'"
-            class="full-width"
-            style="max-width: 120px;"
-          />
+          <div class="relative-position" style="max-width: 120px;">
+            <q-select
+              v-model="selectedQuantity"
+              :options="quantityOptions"
+              outlined
+              dense
+              emit-value
+              map-options
+              :label="$t('quantity')"
+              class="full-width"
+              :disable="isQuantitySelectDisabled"
+            />
+            <q-tooltip
+              v-if="isQuantitySelectDisabled"
+              class="bg-negative text-white"
+              anchor="center right"
+              self="center left"
+              :offset="[10, 0]"
+            >
+              {{ $t('maxQuantityReached') }}
+            </q-tooltip>
+          </div>
         </div>
         
         <div class="row q-col-gutter-sm q-mt-md">
           <div class="col-12 col-sm-6">
             <q-btn
-              v-if="productsInCart.find((p) => p.id === skuSelected?.id)"
-              :label="$t('finishPurchase')"
-              color="primary"
-              unelevated
-              padding="md"
-              class="full-width"
-              size="md"
-              @click="finishPurchase"
-            />
-            <q-btn
-              v-else
               :label="$t('buyNow')"
               color="dark"
               unelevated
@@ -148,7 +148,6 @@
           </div>
           <div class="col-12 col-sm-6">
             <q-btn
-              v-if="!productsInCart.find((p) => p.id === skuSelected?.id)"
               :label="$t('addCart')"
               color="default"
               unelevated
@@ -157,17 +156,8 @@
               class="bg-default full-width"
               icon="mdi-cart-plus"
               size="md"
+              :disable="!canAddToCart"
               @click="addProductToCartWithQuantity"
-            />
-           <q-btn
-              v-else
-              :label="$t('removeCart')"
-              color="negative"
-              unelevated
-              padding="md"
-              class="full-width"
-              size="md"
-              @click="removeProductFromCart(skuSelected)"
             />
           </div>
         </div>
@@ -432,11 +422,6 @@ const selectedQuantity = ref<number>(1);
 const deliveryOptions = ref<any[]>([]);
 const loadingFreight = ref<boolean>(false);
 
-const quantityOptions = Array.from({ length: 6 }, (_, i) => ({
-  label: `${i + 1}`,
-  value: i + 1,
-}));
-
 watch(product, () => {
   if (sortedSkus.value && sortedSkus.value.length > 0)
     skuSelectedId.value = sortedSkus.value[0].id;
@@ -556,6 +541,37 @@ const productInCart = computed(() => {
   return productsInCart.value.find((p) => p.id === skuSelected.value?.id);
 });
 
+const quantityOptions = computed(() => {
+  const currentQuantityInCart = productInCart.value?.quantity || 0;
+  const maxAllowed = 6 - currentQuantityInCart;
+  
+  if (maxAllowed <= 0) return [];
+  
+  return Array.from({ length: maxAllowed }, (_, i) => ({
+    label: `${i + 1}`,
+    value: i + 1,
+  }));
+});
+
+const isQuantitySelectDisabled = computed(() => {
+  const currentQuantityInCart = productInCart.value?.quantity || 0;
+  return currentQuantityInCart >= 6;
+});
+
+const canAddToCart = computed(() => {
+  const currentQuantityInCart = productInCart.value?.quantity || 0;
+  return currentQuantityInCart < 6;
+});
+
+// Ajustar selectedQuantity quando as opções mudarem
+watch(quantityOptions, (newOptions) => {
+  if (newOptions.length === 0) {
+    selectedQuantity.value = 1;
+  } else if (selectedQuantity.value > newOptions.length) {
+    selectedQuantity.value = newOptions.length;
+  }
+});
+
 const { refresh } = await useLazyAsyncData(`product-${id.value}`, async () => {
   await getProductById(slug.value as string, id.value as string);
   await getRelatedProducts(id.value as string);
@@ -563,7 +579,10 @@ const { refresh } = await useLazyAsyncData(`product-${id.value}`, async () => {
 
 async function buyNow() {
   await refresh();
-  addProductToCartWithQuantity();
+  if (!productInCart.value) {
+    addProductToCartWithQuantity();
+  }
+  
   navigateTo("/checkout");
 }
 
@@ -574,7 +593,6 @@ function addProductToCartWithQuantity() {
     addProductToCart(skuSelected.value);
   }
   
-  // Reset quantity to 1 after adding to cart
   selectedQuantity.value = 1;
 }
 
