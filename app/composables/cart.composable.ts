@@ -30,8 +30,19 @@ export const useCart = () => {
       const { records } = await getCalculateFreightService({
         ...payload,
       });
-      setFreight(records);
-      return records;
+      
+      // Transforma a estrutura da API para o formato esperado pelo componente
+      // API retorna: [{ company: {...}, results: [{ id, deliveries }] }]
+      // Componente espera: [{ skus: [id], deliveries: [...] }]
+      const transformedRecords = records.flatMap((record: any) => {
+        return record.results.map((result: any) => ({
+          skus: [result.id],
+          deliveries: result.deliveries
+        }));
+      });
+      
+      setFreight(transformedRecords);
+      return transformedRecords;
     } catch (error: any) {
       console.error("Erro ao buscar frete:", error);
       throw error;
