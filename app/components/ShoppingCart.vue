@@ -75,11 +75,20 @@
               {{ product?.quantity }}
             </div>
             <q-btn
+              v-if="product.quantity < 6"
               icon="mdi-plus"
               flat
               dense
               color="primary"
               @click="incrementProductQuantity(product)"
+            />
+            <q-btn
+              v-else
+              icon="mdi-plus"
+              flat
+              dense
+              color="primary"
+              disabled
             />
           </div>
         </q-item-section>
