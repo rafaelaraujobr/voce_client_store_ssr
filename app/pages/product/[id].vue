@@ -157,7 +157,7 @@
               class="bg-default full-width"
               icon="mdi-cart-plus"
               size="md"
-@click="addProductToCartWithQuantity"
+              @click="addProductToCartWithQuantity"
             />
            <q-btn
               v-else
