@@ -76,7 +76,7 @@
           />
           <div class="text-weight-medium text-center q-mt-md">
             {{ $t("noAccount") }}
-            <router-link to="/signup" class="link-decoration-none">
+            <router-link to="/sign-up" class="link-decoration-none">
               {{ $t("createAccount") }}
             </router-link>
           </div>
