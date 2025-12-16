@@ -89,6 +89,13 @@
       <q-item-label class="text-grey-6 text-center">
         {{ $t("yourCartIsEmpty") }}
       </q-item-label>
+      <q-img
+        :src="emptyCart"
+        alt="Empty Cart"
+        width="150px"
+        loading="lazy"
+        class="q-mt-lg"
+      />
     </div>
     <q-card
       v-if="productsInCart.length > 0"
@@ -120,6 +127,7 @@
 <script setup lang="ts">
 import { useCart } from "~/composables/cart.composable";
 import { numberToReal } from "~/utils/functions";
+import emptyCart from "@/assets/images/card_not_found.svg";
 const {
   productsInCart,
   incrementProductQuantity,
