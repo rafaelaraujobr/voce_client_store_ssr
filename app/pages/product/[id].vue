@@ -563,7 +563,7 @@ const canAddToCart = computed(() => {
   return currentQuantityInCart < 6;
 });
 
-// Ajustar selectedQuantity quando as opções mudarem
+
 watch(quantityOptions, (newOptions) => {
   if (newOptions.length === 0) {
     selectedQuantity.value = 1;
@@ -594,11 +594,6 @@ function addProductToCartWithQuantity() {
   }
   
   selectedQuantity.value = 1;
-}
-
-async function finishPurchase() {
-  await refresh();
-  navigateTo("/checkout");
 }
 
 watch(id, async (newId, oldId) => {
