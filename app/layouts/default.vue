@@ -61,7 +61,7 @@
               flat
               :padding="isMobile ? 'xs sm' : 'sm md'"
               class="text-weight-medium"
-              :to="`/auth/sign-up`"
+              :to="`/auth/signup`"
             />
             <q-btn
               color="primary"

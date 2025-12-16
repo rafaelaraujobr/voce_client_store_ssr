@@ -379,7 +379,7 @@ import { useShop } from "~/composables/shop.composable";
 import { useAccountService } from "~/services/account.service";
 import { useQuasar } from "quasar";
 import type { QInput } from "quasar";
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import {
   emailProviders,
@@ -416,8 +416,13 @@ const showPassword = ref<boolean>(false);
 const showConfirmPassword = ref<boolean>(false);
 const showTerms = ref<boolean>(false);
 const showPrivacy = ref<boolean>(false);
-const currentUrl = window.location.origin;
+const currentUrl = ref<string>("");
 const fullUrl = ref<string>("");
+
+// Inicializa currentUrl apenas no cliente
+onMounted(() => {
+  currentUrl.value = window.location.origin;
+});
 const checkDocuments = async () => {
   loading.value = true;
   errorName.value = false;
@@ -480,7 +485,7 @@ const onCreateAccount = async () => {
   }
 };
 function openTerms() {
-  const termsUrl = `${currentUrl}/pdf/termos_uso.pdf`;
+  const termsUrl = `${currentUrl.value}/pdf/termos_uso.pdf`;
   if ($q.screen.lt.sm) window.open(termsUrl, "_blank");
   else {
     fullUrl.value = termsUrl;
@@ -488,7 +493,7 @@ function openTerms() {
   }
 }
 function openPrivacy() {
-  const privacyUrl = `${currentUrl}/pdf/politica_privacidade.pdf`;
+  const privacyUrl = `${currentUrl.value}/pdf/politica_privacidade.pdf`;
   if ($q.screen.lt.sm) window.open(privacyUrl, "_blank");
   else {
     fullUrl.value = privacyUrl;
