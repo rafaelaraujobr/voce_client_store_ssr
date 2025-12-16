@@ -108,6 +108,21 @@
           {{ $t("until") }} {{ installments?.installment }}x {{ $t("of") }}
           {{ numberToReal(installments?.value) }}</q-item-label
         >
+        
+        <div class="q-mb-md">
+          <q-select
+            v-model="selectedQuantity"
+            :options="quantityOptions"
+            outlined
+            dense
+            emit-value
+            map-options
+            :label="$t('quantity') || 'Quantidade'"
+            class="full-width"
+            style="max-width: 120px;"
+          />
+        </div>
+        
         <div class="row q-col-gutter-sm q-mt-md">
           <div class="col-12 col-sm-6">
             <q-btn
@@ -142,45 +157,18 @@
               class="bg-default full-width"
               icon="mdi-cart-plus"
               size="md"
-              @click="addProductToCart(skuSelected)"
+@click="addProductToCartWithQuantity"
             />
-            <div
+           <q-btn
               v-else
-              class="row items-center bg-default justify-between rounded-borders q-px-md custom-height"
-            >
-              <q-btn
-                v-if="productInCart?.quantity > 1"
-                icon="mdi-minus"
-                flat
-                dense
-                color="primary"
-                size="md"
-                class="full-height"
-                @click="decrementProductQuantity(productInCart)"
-              />
-              <q-btn
-                v-else
-                icon="eva-trash-2-outline"
-                flat
-                dense
-                color="negative"
-                size="md"
-                class="full-height"
-                @click="removeProductFromCart(productInCart)"
-              />
-              <div class="text-weight-medium text-center q-px-md text-h6">
-                {{ productInCart?.quantity }}
-              </div>
-              <q-btn
-                icon="mdi-plus"
-                flat
-                dense
-                color="primary"
-                size="md"
-                class="full-height"
-                @click="incrementProductQuantity(productInCart)"
-              />
-            </div>
+              :label="$t('removeCart')"
+              color="negative"
+              unelevated
+              padding="md"
+              class="full-width"
+              size="md"
+              @click="removeProductFromCart(skuSelected)"
+            />
           </div>
         </div>
 
@@ -435,15 +423,19 @@ const { getProductById, getRelatedProducts, product, shop, slug } = useShop();
 const {
   addProductToCart,
   removeProductFromCart,
-  productsInCart,
-  incrementProductQuantity,
-  decrementProductQuantity,
+  productsInCart
 } = useCart();
 const route = useRoute();
 const id = computed(() => route.params.id);
 const skuSelectedId = ref<string | null>(null);
+const selectedQuantity = ref<number>(1);
 const deliveryOptions = ref<any[]>([]);
 const loadingFreight = ref<boolean>(false);
+
+const quantityOptions = Array.from({ length: 6 }, (_, i) => ({
+  label: `${i + 1}`,
+  value: i + 1,
+}));
 
 watch(product, () => {
   if (sortedSkus.value && sortedSkus.value.length > 0)
@@ -571,8 +563,19 @@ const { refresh } = await useLazyAsyncData(`product-${id.value}`, async () => {
 
 async function buyNow() {
   await refresh();
-  addProductToCart(skuSelected.value);
+  addProductToCartWithQuantity();
   navigateTo("/checkout");
+}
+
+function addProductToCartWithQuantity() {
+  if (!skuSelected.value) return;
+  
+  for (let i = 0; i < selectedQuantity.value; i++) {
+    addProductToCart(skuSelected.value);
+  }
+  
+  // Reset quantity to 1 after adding to cart
+  selectedQuantity.value = 1;
 }
 
 async function finishPurchase() {
@@ -656,8 +659,5 @@ useHead(() => ({
 <style scoped>
 .custom-height {
   height: 55px;
-}
-.full-height {
-  height: 100%;
 }
 </style>
