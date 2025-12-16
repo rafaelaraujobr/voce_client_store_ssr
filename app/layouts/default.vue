@@ -132,7 +132,6 @@ import Footer from "~/components/LayoutFooter.vue";
 import LayoutFooterMobile from "~/components/LayoutFooterMobile.vue";
 import ShoppingCart from "~/components/ShoppingCart.vue";
 import SignInModal from "~/components/auth/SignInModal.vue";
-import RegisterModal from "~/components/auth/RegisterModal.vue";
 import { useShop } from "~/composables/shop.composable";
 import { useCart } from "~/composables/cart.composable";
 const route = useRoute();
