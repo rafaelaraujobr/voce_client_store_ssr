@@ -51,9 +51,15 @@ export const useCartStore = defineStore(
 
     function getTotalDiscount(): number {
       return productsInCart.value.reduce(
-        (acc, product) =>
-          acc +
-          (product.sku?.price - product.sku?.price_discount) * product.quantity,
+        (acc, product) => {
+          const price = product.sku?.price || 0;
+          const priceDiscount = product.sku?.price_discount || 0;
+          
+          if (priceDiscount && priceDiscount > 0 && priceDiscount < price) {
+            return acc + (price - priceDiscount) * product.quantity;
+          }
+          return acc;
+        },
         0
       );
     }

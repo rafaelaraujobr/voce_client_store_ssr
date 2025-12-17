@@ -36,6 +36,28 @@ export const useAccountService = () => {
     });
   }
   
+  async function forgotPasswordService(data: any): Promise<any> {
+    return await $apiGateway<any>('forgot-password', {
+      method: "post",
+      body: data,
+    });
+  }
+
+  async function updatePasswordService(data: any): Promise<any> {
+    return await $apiGateway<any>('reset-password', {
+      method: "patch",
+      body: data,
+    });
+  }
+
+  async function refreshTokenService(refreshToken: string): Promise<any> {
+    return await $apiGateway<any>('refresh-token', {
+      method: "patch",
+      headers: {
+        ['X-Auto-Refresh-Token']: refreshToken
+      }
+    });
+  }
 
   return {
     loginService,
@@ -43,5 +65,8 @@ export const useAccountService = () => {
     getProfileUserService,
     checkEmailService,
     createAccountService,
+    forgotPasswordService,
+    updatePasswordService,
+    refreshTokenService
   };
 };

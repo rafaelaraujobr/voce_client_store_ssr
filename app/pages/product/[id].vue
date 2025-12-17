@@ -589,9 +589,19 @@ async function buyNow() {
 function addProductToCartWithQuantity() {
   if (!skuSelected.value) return;
   
-  for (let i = 0; i < selectedQuantity.value; i++) {
+  const quantityToAdd = selectedQuantity.value;
+  
+  for (let i = 0; i < quantityToAdd; i++) {
     addProductToCart(skuSelected.value);
   }
+
+  Notify.create({
+    message: `${quantityToAdd} ${quantityToAdd > 1 ? 'produtos adicionados' : 'produto adicionado'} ao carrinho com sucesso!`,
+    color: 'positive',
+    icon: 'mdi-check-circle-outline',
+    position: 'top',
+    timeout: 3000,
+  });
   
   selectedQuantity.value = 1;
 }

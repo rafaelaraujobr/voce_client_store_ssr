@@ -122,7 +122,6 @@
       <LayoutFooterMobile v-else />
     </q-page-container>
     <SignInModal />
-    <RegisterModal />
   </q-layout>
 </template>
 
