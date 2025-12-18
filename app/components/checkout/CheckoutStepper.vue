@@ -305,12 +305,86 @@
       <div class="text-weight-bold text-subtitle1 q-mb-md">
         {{ $t("paymentMethod") }}
       </div>
+      <q-card flat bordered class="q-mb-md">
+        <q-expansion-item
+          :model-value="paymentMethod === 'pix'"
+          expand-separator
+          @update:model-value="(val) => val && (paymentMethod = 'pix')"
+        >
+          <template #header>
+            <q-item-section side>
+              <q-radio
+                v-model="paymentMethod"
+                val="pix"
+                @click.stop="paymentMethod = 'pix'"
+              />
+            </q-item-section>
+            <q-item-section avatar>
+              <q-icon color="primary" name="fa-brands fa-pix" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="text-primary">Pix</q-item-label>
+            </q-item-section>
+          </template>
+          <q-card flat>
+            <q-form @submit="handleSubmitPix()">
+              <div class="row q-col-gutter-x-sm q-pa-sm">
+                <div class="col-12">
+                  <q-card flat>
+                    <q-card-section>
+                      {{ numberToReal(getTotalPrice()) }}
+                    </q-card-section>
+                    <div class="q-pa-md">
+                      <q-list bordered class="rounded-borders">
+                        <q-item>
+                          <q-item-section avatar>
+                            <q-icon name="fa-solid fa-qrcode" />
+                          </q-item-section>
+
+                          <q-item-section class="text-grey-7">
+                            O QR Code estará disponível após fechar o pedido
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </div>
+                    <q-item dense class="q-px-none q-pa-md">
+                      <q-item-section top side class="q-px-sm">
+                        <q-icon name="sym_r_feedback" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label caption lines="2"
+                          >O valor pode ser alterado conforme a opção de pagamento</q-item-label
+                        >
+                      </q-item-section>
+                    </q-item>
+                  </q-card>
+                </div>
+              </div>
+            </q-form>
+          </q-card>
+        </q-expansion-item>   
+      </q-card>
       <q-card flat bordered>
         <q-expansion-item
+          :model-value="paymentMethod === 'creditCard'"
           expand-separator
-          icon="mdi-credit-card"
-          :label="$t('creditCard')"
+          @update:model-value="(val) => val && (paymentMethod = 'creditCard')"
         >
+          <template #header>
+            <q-item-section side>
+              <q-radio
+                v-model="paymentMethod"
+                val="creditCard"
+                @click.stop="paymentMethod = 'creditCard'"
+              />
+            </q-item-section>
+            <q-item-section avatar>
+              <q-icon color="primary" name="fa-solid fa-credit-card" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="text-primary">{{ $t('creditCard') }}</q-item-label>
+            </q-item-section>
+          </template>
           <q-card flat>
             <q-form @submit="handleSubmitCreditCard()">
               <div class="row q-col-gutter-x-sm q-pa-sm">
@@ -408,7 +482,7 @@
           padding="sm lg"
           dense
           unelevated
-          type="submit"
+          @click="handlePayment()"
         />
       </div>
     </q-step>
@@ -470,7 +544,6 @@
 import type { QStepper } from "quasar";
 import { useCart } from "~/composables/cart.composable";
 import { useShopService } from "~/services/shop.service";
-
 import amexImage from "@/assets/images/cardbrand/amex.svg";
 import discoverImage from "@/assets/images/cardbrand/discover.svg";
 import eloImage from "@/assets/images/cardbrand/elo.svg";
@@ -510,6 +583,7 @@ const creditCard = ref({
   cvv: "" as string,
   installments: 1 as number,
 });
+const paymentMethod = ref<string>("pix");
 const selectedFreight = ref<any>({});
 watch(
   selectedFreight,
@@ -708,8 +782,23 @@ function getCardBrand(cardNumber: string): string {
   return "desconhecida";
 }
 
+async function handlePayment(): Promise<void> {
+  if (paymentMethod.value === 'pix') {
+    await handleSubmitPix();
+  } else if (paymentMethod.value === 'creditCard') {
+    await handleSubmitCreditCard();
+  }
+}
+
 async function handleSubmitCreditCard(): Promise<void> {
   console.log(creditCard.value);
+}
+
+async function handleSubmitPix(): Promise<void> {
+  console.log("Pix payment selected");
+  
+ navigateTo(`/pix-payment`);
+
 }
 </script>
 
