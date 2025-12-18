@@ -299,7 +299,16 @@
             <q-item-section> {{ $t("productFeatures") }} </q-item-section>
           </template>
           <q-card>
-            <q-card-section> {{ $t("productFeatures") }} </q-card-section>
+            <q-card-section> 
+              <q-item v-for="(item, index) in selectGroup" :key="index" dense>
+                <q-item-section>
+                  <q-item-label> {{ item.description }}</q-item-label>
+                </q-item-section>
+                <q-item-section side>
+                  <q-item-label>{{ item.value }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-card-section>
           </q-card>
         </q-expansion-item>
         <q-expansion-item expand-separator>
@@ -310,7 +319,14 @@
             <q-item-section> {{ $t("dimensions") }} </q-item-section>
           </template>
           <q-card>
-            <q-card-section> {{ $t("dimensions") }} </q-card-section>
+            <q-card-section> 
+             <div v-if="skuSelected?.sku">
+               <q-item-label>{{ $t("weight") }}: {{ skuSelected.sku.weight }} kg</q-item-label>
+               <q-item-label>{{ $t("height") }}: {{ skuSelected.sku.height }} cm</q-item-label>
+               <q-item-label>{{ $t("width") }}: {{ skuSelected.sku.width }} cm</q-item-label>
+               <q-item-label>{{ $t("length") }}: {{ skuSelected.sku.length }} cm</q-item-label>
+              </div>
+            </q-card-section>
           </q-card>
         </q-expansion-item>
       </q-list>
@@ -536,6 +552,21 @@ const skuSelected = computed(() => {
 
   return { ...rest, sku: { ...skus[0], images: skus[0].images ?? [] } };
 });
+
+const selectGroup = computed<any>(() => {
+  if (!skuSelected.value?.sku?.groups) return [];
+  
+  try {
+    const groups = typeof skuSelected.value.sku.groups === 'string' 
+      ? JSON.parse(skuSelected.value.sku.groups) 
+      : skuSelected.value.sku.groups;
+    
+    return groups?.[0]?.items || [];
+  } catch (error) {
+    console.error('Erro ao fazer parse dos grupos:', error);
+    return [];
+  }
+})
 
 const productInCart = computed(() => {
   return productsInCart.value.find((p) => p.id === skuSelected.value?.id);
