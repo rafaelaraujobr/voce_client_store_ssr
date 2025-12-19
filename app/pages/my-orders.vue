@@ -32,28 +32,34 @@
                   {{ $t("enterOrderNumberToTrack") }}
                 </div>
               </div>
-              <q-input
-                v-model="numberOfOrder"
-                :placeholder="$t('numberOfOrder')"
-                outlined
-                dense
-                clearable
-                @keyup.enter="getOrders"
-                @clear="clearNumberOfOrder"
-              >
-                <template #prepend>
-                  <q-icon name="mdi-magnify" color="primary" />
-                </template>
-              </q-input>
-              <q-btn
-                :label="$t('search')"
-                color="primary"
-                class="full-width q-mt-md"
-                unelevated
-                :loading="loading"
-                :disable="!numberOfOrder"
-                @click="getOrders"
-              />
+              <div class="row q-col-gutter-md items-center">
+                <div class="col-12 col-md-9">
+                  <q-input
+                    v-model="numberOfOrder"
+                    :placeholder="$t('numberOfOrder')"
+                    outlined
+                    dense
+                    clearable
+                    @keyup.enter="getOrders"
+                    @clear="clearNumberOfOrder"
+                  >
+                    <template #prepend>
+                      <q-icon name="mdi-magnify" color="primary" />
+                    </template>
+                  </q-input>
+                </div>
+                <div class="col-12 col-md-3">
+                  <q-btn
+                    :label="$t('search')"
+                    color="primary"
+                    class="full-width"
+                    unelevated
+                    :loading="loading"
+                    :disable="!numberOfOrder"
+                    @click="getOrders"
+                  />
+                </div>
+              </div>
             </q-card-section>
           </q-card>
         </div>
@@ -124,7 +130,7 @@
                         :src="getProductImage(item.sku)"
                         :alt="item.sku.product.name"
                         @error="handleImageError"
-                      >
+                      />
                     </q-avatar>
                   </q-item-section>
 
