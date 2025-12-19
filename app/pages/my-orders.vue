@@ -126,9 +126,10 @@
                 <template #header>
                   <q-item-section avatar>
                     <q-avatar rounded size="60px">
-                      <img
+                      <q-img
                         :src="getProductImage(item.sku)"
                         :alt="item.sku.product.name"
+                        fit="contain"
                         @error="handleImageError"
                       />
                     </q-avatar>
@@ -145,7 +146,7 @@
                   </q-item-section>
                 </template>
 
-                <q-card flat bordered>
+                <q-card>
                   <q-card-section>
                     <div class="text-subtitle2 text-weight-medium q-mb-sm">
                       {{ $t("productDescription") }}
