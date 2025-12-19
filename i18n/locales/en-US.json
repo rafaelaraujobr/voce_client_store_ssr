@@ -160,5 +160,8 @@
   "enterOrderNumberToTrack": "Enter the order number to track it",
   "close": "Close",
   "images": "Images",
-  "model": "Model"
+  "model": "Model",
+  "payment": "Payment",
+  "qrCodeAvailable": "The QR Code will be available after placing the order",
+  "valueCanChange": "The value may change according to the payment option"
 }

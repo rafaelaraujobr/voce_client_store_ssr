@@ -160,5 +160,8 @@
   "enterOrderNumberToTrack": "Entrez le numéro de commande pour le suivre",
   "close": "Fermer",
   "images": "Images",
-  "model": "Modèle"
+  "model": "Modèle",
+  "payment": "Paiement",
+  "qrCodeAvailable": "Le code QR sera disponible après avoir passé la commande",
+  "valueCanChange": "La valeur peut changer selon l'option de paiement"
 }

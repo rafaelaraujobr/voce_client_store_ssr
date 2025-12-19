@@ -462,7 +462,7 @@ async function getFreightDetails(zipcode: string) {
       zipcode: zipcode,
       skus: [{ id: skuSelected.value.sku.id, qtd: 1 }],
     });
-    deliveryOptions.value = records[0]?.deliveries || [];
+    deliveryOptions.value = records[0]?.results[0]?.deliveries || [];
   } catch (error) {
     console.error("Erro ao calcular frete:", error);
   } finally {
