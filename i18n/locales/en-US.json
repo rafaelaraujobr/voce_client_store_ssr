@@ -163,5 +163,17 @@
   "model": "Model",
   "payment": "Payment",
   "qrCodeAvailable": "The QR Code will be available after placing the order",
-  "valueCanChange": "The value may change according to the payment option"
+  "valueCanChange": "The value may change according to the payment option",
+  "payViaPixTitle": "Pay via Pix to secure your purchase!",
+  "pendingPayment": "Pending payment",
+  "codeExpiresIn": "This code expires in:",
+  "copyPixCode": "Copy Pix code",
+  "important": "Important:",
+  "paymentCancelWarning": "If your payment is not completed by the specified deadline, your order will be canceled.",
+  "pixCodeCopied": "Pix code copied successfully!",
+  "copyError": "Error copying code",
+  "paymentTimeExpired": "Payment time has expired!",
+  "paymentCanceled": "Payment canceled!",
+  "paymentReceived": "Payment received successfully!",
+  "connectionError": "Connection failed. Please reload the page."
 }

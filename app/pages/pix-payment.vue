@@ -2,12 +2,12 @@
   <q-page class="flex flex-center" padding>
     <div class="payment-container">
       <div class="payment-header bg-positive">
-        <h4 class="text-center text-white text-h6 q-ma-lg q-mt-xl">Pague via Pix para garantir sua compra!</h4>
-        <q-badge color="primary" class="q-pa-sm q-mb-xl">Pagamento pendente</q-badge>
+        <h4 class="text-center text-white text-h6 q-ma-lg q-mt-xl">{{ $t('payViaPixTitle') }}</h4>
+        <q-badge color="primary" class="q-pa-sm q-mb-xl">{{ $t('pendingPayment') }}</q-badge>
       </div>
 
       <div class="payment-timer q-mt-md">
-        <p class="text-center q-mb-sm">Este código expira em:</p>
+        <p class="text-center q-mb-sm">{{ $t('codeExpiresIn') }}</p>
         <p class="text-center text-bold">{{ formatTime }}</p>
       </div>
 
@@ -23,7 +23,7 @@
             <q-btn 
               color="primary" 
               class="full-width q-mt-sm q-mt-lg" 
-              label="Copiar código Pix"
+              :label="$t('copyPixCode')"
               @click="copyPixCode"
               icon-right="content_copy"
             >
@@ -35,10 +35,10 @@
       <div class="payment-alert q-mt-lg">
         <q-banner class="bg-amber-1 text-amber-9">
           <template v-slot:avatar>
-            <q-icon name="warning" color="amber-9" />
+            <q-icon name="fa-solid fa-triangle-exclamation" color="amber-9" />
           </template>
           <div>
-            <span class="text-weight-bold">Importante:</span> Caso seu pagamento não seja efetivado até o prazo informado, seu pedido será cancelado.
+            <span class="text-weight-bold">{{ $t('important') }}</span> {{ $t('paymentCancelWarning') }}
           </div>
         </q-banner>
       </div>
@@ -89,7 +89,7 @@ const copyPixCode = () => {
     .then(() => {
       $q.notify({
         color: 'positive',
-        message: 'Código Pix copiado com sucesso!',
+        message: $t('pixCodeCopied'),
         icon: 'done',
         position: 'top'
       })
@@ -98,7 +98,7 @@ const copyPixCode = () => {
       console.error('Erro ao copiar: ', err)
       $q.notify({
         color: 'negative',
-        message: 'Erro ao copiar código',
+        message: $t('copyError'),
         icon: 'error',
         position: 'top'
       })
@@ -122,7 +122,7 @@ const startTimer = () => {
       clearTimer()
       $q.notify({
         color: 'negative',
-        message: 'O tempo para pagamento expirou!',
+        message: $t('paymentTimeExpired'),
         icon: 'timer_off',
         position: 'top'
       })
@@ -150,7 +150,7 @@ const reconnectWebSocket = () => {
     console.error('Máximo de tentativas de reconexão atingido')
     $q.notify({
       color: 'negative',
-      message: 'Falha na conexão. Recarregue a página.',
+      message: $t('connectionError'),
       icon: 'error',
       position: 'top'
     })
@@ -186,7 +186,7 @@ const initWebSocket = () => {
         if (status === 'canceled') {
           $q.notify({
             color: 'negative',
-            message: 'Pagamento cancelado!',
+            message: $t('paymentCanceled'),
             icon: 'cancel',
             position: 'top'
           })
@@ -197,7 +197,7 @@ const initWebSocket = () => {
         } else if (status === 'paid') {
           $q.notify({
             color: 'positive',
-            message: 'Pagamento recebido com sucesso!',
+            message: $t('paymentReceived'),
             icon: 'done',
             position: 'top'
           })

@@ -163,5 +163,17 @@
   "model": "Modèle",
   "payment": "Paiement",
   "qrCodeAvailable": "Le code QR sera disponible après avoir passé la commande",
-  "valueCanChange": "La valeur peut changer selon l'option de paiement"
+  "valueCanChange": "La valeur peut changer selon l'option de paiement",
+  "payViaPixTitle": "Payez via Pix pour sécuriser votre achat!",
+  "pendingPayment": "Paiement en attente",
+  "codeExpiresIn": "Ce code expire dans:",
+  "copyPixCode": "Copier le code Pix",
+  "important": "Important:",
+  "paymentCancelWarning": "Si votre paiement n'est pas effectué dans les délais spécifiés, votre commande sera annulée.",
+  "pixCodeCopied": "Code Pix copié avec succès!",
+  "copyError": "Erreur lors de la copie du code",
+  "paymentTimeExpired": "Le délai de paiement a expiré!",
+  "paymentCanceled": "Paiement annulé!",
+  "paymentReceived": "Paiement reçu avec succès!",
+  "connectionError": "Échec de la connexion. Veuillez recharger la page."
 }
