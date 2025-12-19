@@ -146,5 +146,19 @@
   "cpf": "CPF",
   "lastOptionAvailable": "Option disponible",
   "selectAnOption": "Sélectionnez une option",
-  "maxQuantityReached": "Quantité maximale atteinte (6 produits)"
+  "maxQuantityReached": "Quantité maximale atteinte (6 produits)",
+  "myOrders": "Mes commandes",
+  "numberOfOrder": "Numéro de commande",
+  "orderDetails": "Détails de la commande",
+  "orderId": "ID de commande",
+  "orderDate": "Date de commande",
+  "status": "Statut",
+  "totalPrice": "Prix total",
+  "commission": "Commission",
+  "orderHistory": "Historique de la commande",
+  "searchForOrder": "Rechercher une commande par numéro",
+  "enterOrderNumberToTrack": "Entrez le numéro de commande pour le suivre",
+  "close": "Fermer",
+  "images": "Images",
+  "model": "Modèle"
 }
