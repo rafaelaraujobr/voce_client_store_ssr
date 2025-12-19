@@ -308,6 +308,9 @@
                   <q-item-label>{{ item.value }}</q-item-label>
                 </q-item-section>
               </q-item>
+              <div v-if="selectGroup.length === 0" class="text-grey">
+                {{ $t("noFeaturesAvailable") }}
+              </div>
             </q-card-section>
           </q-card>
         </q-expansion-item>
@@ -325,6 +328,9 @@
                <q-item-label>{{ $t("height") }}: {{ skuSelected.sku.height }} cm</q-item-label>
                <q-item-label>{{ $t("width") }}: {{ skuSelected.sku.width }} cm</q-item-label>
                <q-item-label>{{ $t("length") }}: {{ skuSelected.sku.length }} cm</q-item-label>
+              </div>
+              <div v-else class="text-grey">
+                {{ $t("noDimensionsAvailable") }}
               </div>
             </q-card-section>
           </q-card>
