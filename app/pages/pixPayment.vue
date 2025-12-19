@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
@@ -112,169 +112,169 @@ const clearTimer = () => {
   }
 }
 
-// const startTimer = () => {
-//   clearTimer()
+const startTimer = () => {
+  clearTimer()
   
-//   timer.value = setInterval(() => {
-//     if (expirationTime.value > 0) {
-//       expirationTime.value--
-//     } else {
-//       clearTimer()
-//       $q.notify({
-//         color: 'negative',
-//         message: 'O tempo para pagamento expirou!',
-//         icon: 'timer_off',
-//         position: 'top'
-//       })
-//       router.push(`${shop.value.slug}/order-canceled`)
-//     }
-//   }, 1000)
-// }
-// const closeWebSocketConnection = () => {
-//   if (websocket.value) {
-//     websocket.value.close()
-//     websocket.value = null
-//   }
-//   reconnectAttempts.value = 0
-// }
+  timer.value = setInterval(() => {
+    if (expirationTime.value > 0) {
+      expirationTime.value--
+    } else {
+      clearTimer()
+      $q.notify({
+        color: 'negative',
+        message: 'O tempo para pagamento expirou!',
+        icon: 'timer_off',
+        position: 'top'
+      })
+      router.push(`/order-canceled`)
+    }
+  }, 1000)
+}
+const closeWebSocketConnection = () => {
+  if (websocket.value) {
+    websocket.value.close()
+    websocket.value = null
+  }
+  reconnectAttempts.value = 0
+}
 
-// const reconnectWebSocket = () => {
-//   if (reconnectAttempts.value < maxReconnectAttempts) {
-//     reconnectAttempts.value++
-//     console.log(`Tentativa de reconexão ${reconnectAttempts.value}/${maxReconnectAttempts}`)
+const reconnectWebSocket = () => {
+  if (reconnectAttempts.value < maxReconnectAttempts) {
+    reconnectAttempts.value++
+    console.log(`Tentativa de reconexão ${reconnectAttempts.value}/${maxReconnectAttempts}`)
     
-//     setTimeout(() => {
-//       initWebSocket()
-//     }, 2000 * reconnectAttempts.value)
-//   } else {
-//     console.error('Máximo de tentativas de reconexão atingido')
-//     $q.notify({
-//       color: 'negative',
-//       message: 'Falha na conexão. Recarregue a página.',
-//       icon: 'error',
-//       position: 'top'
-//     })
-//   }
-// }
+    setTimeout(() => {
+      initWebSocket()
+    }, 2000 * reconnectAttempts.value)
+  } else {
+    console.error('Máximo de tentativas de reconexão atingido')
+    $q.notify({
+      color: 'negative',
+      message: 'Falha na conexão. Recarregue a página.',
+      icon: 'error',
+      position: 'top'
+    })
+  }
+}
 
-// const initWebSocket = () => {
-//   if (!transactionId.value) {
-//     console.error('Erro: ID da transação não fornecido')
-//     return
-//   }
+const initWebSocket = () => {
+  if (!transactionId.value) {
+    console.error('Erro: ID da transação não fornecido')
+    return
+  }
 
-//   if (websocket.value) {
-//     websocket.value.close()
-//   }
+  if (websocket.value) {
+    websocket.value.close()
+  }
 
-//   const websocketUrl = `${import.meta.env.VITE_WS_CONNECTION}?transaction_id=${transactionId.value}`
+  const websocketUrl = `${import.meta.env.VITE_WS_CONNECTION}?transaction_id=${transactionId.value}`
   
-//   try {
-//     websocket.value = new WebSocket(websocketUrl)
+  try {
+    websocket.value = new WebSocket(websocketUrl)
     
-//     websocket.value.onopen = () => {
-//       console.log('Conexão WebSocket estabelecida')
-//       reconnectAttempts.value = 0 
-//     }
+    websocket.value.onopen = () => {
+      console.log('Conexão WebSocket estabelecida')
+      reconnectAttempts.value = 0 
+    }
     
-//     websocket.value.onmessage = (event) => {
-//       try {
-//         const data = JSON.parse(event.data)
-//         console.log('Mensagem recebida do WebSocket:', data)
+    websocket.value.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data)
+        console.log('Mensagem recebida do WebSocket:', data)
 
-//         const status = data?.status?.toLowerCase() || '';
-//         if (status === 'canceled') {
-//           $q.notify({
-//             color: 'negative',
-//             message: 'Pagamento cancelado!',
-//             icon: 'cancel',
-//             position: 'top'
-//           })
+        const status = data?.status?.toLowerCase() || '';
+        if (status === 'canceled') {
+          $q.notify({
+            color: 'negative',
+            message: 'Pagamento cancelado!',
+            icon: 'cancel',
+            position: 'top'
+          })
           
-//           closeWebSocketConnection()
-//           clearTimer()
-//           router.push(`${shop.value.slug}/order-canceled`)
-//         } else if (status === 'paid') {
-//           $q.notify({
-//             color: 'positive',
-//             message: 'Pagamento recebido com sucesso!',
-//             icon: 'done',
-//             position: 'top'
-//           })
+          closeWebSocketConnection()
+          clearTimer()
+          router.push(`/order-canceled`)
+        } else if (status === 'paid') {
+          $q.notify({
+            color: 'positive',
+            message: 'Pagamento recebido com sucesso!',
+            icon: 'done',
+            position: 'top'
+          })
           
-//           closeWebSocketConnection()
-//           clearTimer()
-//           router.push(`${shop.value.slug}/order-placed`)
-//         }
-//       } catch (error) {
-//         console.error('Erro ao processar mensagem do WebSocket:', error)
-//       }
-//     }
+          closeWebSocketConnection()
+          clearTimer()
+          router.push(`/order-placed`)
+        }
+      } catch (error) {
+        console.error('Erro ao processar mensagem do WebSocket:', error)
+      }
+    }
     
-//     websocket.value.onerror = (error) => {
-//       console.error('Erro na conexão WebSocket:', error)
-//     }
+    websocket.value.onerror = (error) => {
+      console.error('Erro na conexão WebSocket:', error)
+    }
     
-//     websocket.value.onclose = (event) => {
-//       console.log('Conexão WebSocket fechada', event.code, event.reason)
+    websocket.value.onclose = (event) => {
+      console.log('Conexão WebSocket fechada', event.code, event.reason)
       
-//       if (event.code !== 1000 && expirationTime.value > 0) {
-//         reconnectWebSocket()
-//       }
-//     }
-//   } catch (error) {
-//     console.error('Erro ao criar WebSocket:', error)
-//     reconnectWebSocket()
-//   }
-// }
-// const handleVisibilityChange = () => {
-//   if (!document.hidden && expirationTime.value > 0) {
-//     const initialExpirationTime = pixPayment.value?.expirationTime * 60
-//     const currentTime = Math.floor(Date.now() / 1000)
-//     const startTime = currentTime - (initialExpirationTime - expirationTime.value)
-//     const newExpirationTime = Math.max(0, initialExpirationTime - (currentTime - startTime))
+      if (event.code !== 1000 && expirationTime.value > 0) {
+        reconnectWebSocket()
+      }
+    }
+  } catch (error) {
+    console.error('Erro ao criar WebSocket:', error)
+    reconnectWebSocket()
+  }
+}
+const handleVisibilityChange = () => {
+  if (!document.hidden && expirationTime.value > 0) {
+    const initialExpirationTime = pixPayment.value?.expirationTime * 60
+    const currentTime = Math.floor(Date.now() / 1000)
+    const startTime = currentTime - (initialExpirationTime - expirationTime.value)
+    const newExpirationTime = Math.max(0, initialExpirationTime - (currentTime - startTime))
     
-//     if (newExpirationTime !== expirationTime.value) {
-//       expirationTime.value = newExpirationTime
+    if (newExpirationTime !== expirationTime.value) {
+      expirationTime.value = newExpirationTime
       
-//       if (newExpirationTime <= 0) {
-//         clearTimer()
-//         closeWebSocketConnection()
-//         router.push(`${shop.value.slug}/order-canceled`)
-//       }
-//     }
-//   }
-// }
+      if (newExpirationTime <= 0) {
+        clearTimer()
+        closeWebSocketConnection()
+        router.push(`/order-canceled`)
+      }
+    }
+  }
+}
 
-// onMounted(() => {
-//   if (!pixPayment.value) {
-//     console.error('Dados do pagamento não encontrados')
-//     router.push(`${shop.value.slug}`)
-//     return
-//   }
+onMounted(() => {
+  if (!pixPayment.value) {
+    console.error('Dados do pagamento não encontrados')
+    router.push(`/`)
+    return
+  }
 
-//   if (!pixPayment.value.expirationTime) {
-//     console.error('Tempo de expiração do pagamento não encontrado')
-//     return
-//   }
+  if (!pixPayment.value.expirationTime) {
+    console.error('Tempo de expiração do pagamento não encontrado')
+    return
+  }
 
-//   expirationTime.value = pixPayment.value.expirationTime * 60
+  expirationTime.value = pixPayment.value.expirationTime * 60
 
-//   if (expirationTime.value > 0) {
-//     startTimer()
-//     initWebSocket()
-//   } else {
-//     router.push(`${shop.value.slug}/order-canceled`)
-//   }
+  if (expirationTime.value > 0) {
+    startTimer()
+    initWebSocket()
+  } else {
+    router.push(`/order-canceled`)
+  }
 
-//   document.addEventListener('visibilitychange', handleVisibilityChange)
-// })
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+})
 
-// onBeforeUnmount(() => {
-//   clearTimer()
-//   closeWebSocketConnection()
-//   document.removeEventListener('visibilitychange', handleVisibilityChange)
-// })
+onBeforeUnmount(() => {
+  clearTimer()
+  closeWebSocketConnection()
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
+})
 </script>
 
 <style scoped>

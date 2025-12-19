@@ -512,9 +512,12 @@ const openEmail = () => {
   }, 5000);
 };
 async function onLoginGoogle() {
-  const storeId = shop.value?.id;
-  const storeSlug = shop.value?.slug;
-  const apiUrl = import.meta.env.VITE_API_BASE;
+  if (!shop.value) return;
+
+  const config = useRuntimeConfig();
+  const storeId = shop.value.id;
+  const storeSlug = shop.value.slug;
+  const apiUrl = config.public.apiGatewayBase;
   const backendUrl = `${apiUrl}auth/google?storeId=${storeId}&storeSlug=${storeSlug}`;
 
   window.location.href = backendUrl;

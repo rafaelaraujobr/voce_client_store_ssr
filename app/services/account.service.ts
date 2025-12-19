@@ -20,6 +20,12 @@ export const useAccountService = () => {
     });
   }
 
+  async function getProfileService(): Promise<any> {
+    return await $apiGateway<any>(`marketplace/profile/addresses`, {
+      method: "get",
+    });
+  }
+
   async function checkEmailService(
     email: string,
     storeId: string
@@ -67,6 +73,7 @@ export const useAccountService = () => {
     createAccountService,
     forgotPasswordService,
     updatePasswordService,
-    refreshTokenService
+    refreshTokenService,
+    getProfileService
   };
 };
