@@ -57,7 +57,7 @@
             <q-btn
               color="primary"
               :label="isMobile ? '' : $t('myOrders')"
-              icon="mdi-history"
+              icon="mdi-shopping-outline"
               flat
               :padding="isMobile ? 'xs sm' : 'sm md'"
               class="text-weight-medium"
@@ -98,9 +98,9 @@
       v-model="leftDrawerOpen"
       side="right"
       overlay
-      behavior="desktop"
+      behavior="mobile"
       bordered
-      :width="500"
+      :width="430"
       class="bg-white"
     >
       <q-toolbar class="q-pa-md">
@@ -142,6 +142,7 @@ import ShoppingCart from "~/components/ShoppingCart.vue";
 import SignInModal from "~/components/auth/SignInModal.vue";
 import { useShop } from "~/composables/shop.composable";
 import { useCart } from "~/composables/cart.composable";
+import { is } from "quasar";
 const route = useRoute();
 const { getTotalQuantity, productsInCart } = useCart();
 const {
