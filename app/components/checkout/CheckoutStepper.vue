@@ -332,7 +332,7 @@
                 <div class="col-12">
                   <q-card flat>
                     <q-card-section>
-                      {{ numberToReal(getTotalPrice()) }}
+                      {{ numberToReal(getTotalPrice() + (freightTotal || 0)) }}
                     </q-card-section>
                     <div class="q-pa-md">
                       <q-list bordered class="rounded-borders">
@@ -353,7 +353,8 @@
                       </q-item-section>
                       <q-item-section>
                         <q-item-label caption lines="2"
-                          >O valor pode ser alterado conforme a opção de pagamento</q-item-label
+                          >O valor pode ser alterado conforme a opção de
+                          pagamento</q-item-label
                         >
                       </q-item-section>
                     </q-item>
@@ -362,7 +363,7 @@
               </div>
             </q-form>
           </q-card>
-        </q-expansion-item>   
+        </q-expansion-item>
       </q-card>
       <q-card flat bordered>
         <q-expansion-item
@@ -382,7 +383,9 @@
               <q-icon color="primary" name="fa-solid fa-credit-card" />
             </q-item-section>
             <q-item-section>
-              <q-item-label class="text-primary">{{ $t('creditCard') }}</q-item-label>
+              <q-item-label class="text-primary">{{
+                $t("creditCard")
+              }}</q-item-label>
             </q-item-section>
           </template>
           <q-card flat>
@@ -478,7 +481,7 @@
         />
         <q-btn
           color="positive"
-          :label="`${$t('pay')} ${numberToReal(getTotalPrice())}`"
+          :label="`${$t('pay')} ${numberToReal(getTotalPrice() + (freightTotal || 0))}`"
           padding="sm lg"
           dense
           unelevated
@@ -551,8 +554,14 @@ import mastercardImage from "@/assets/images/cardbrand/mastercard.svg";
 import visaImage from "@/assets/images/cardbrand/visa.svg";
 
 const { getAddressByZipcodeService } = useShopService();
-const { productsInCart, getFreight, freight, getTotalPrice, setFreightTotal } =
-  useCart();
+const {
+  productsInCart,
+  getFreight,
+  freight,
+  getTotalPrice,
+  setFreightTotal,
+  freightTotal,
+} = useCart();
 const step = ref<number>(1);
 const productsModal = ref<boolean>(false);
 const productsModalIds = ref<string[]>([]);
@@ -783,9 +792,9 @@ function getCardBrand(cardNumber: string): string {
 }
 
 async function handlePayment(): Promise<void> {
-  if (paymentMethod.value === 'pix') {
+  if (paymentMethod.value === "pix") {
     await handleSubmitPix();
-  } else if (paymentMethod.value === 'creditCard') {
+  } else if (paymentMethod.value === "creditCard") {
     await handleSubmitCreditCard();
   }
 }
@@ -796,7 +805,7 @@ async function handleSubmitCreditCard(): Promise<void> {
 
 async function handleSubmitPix(): Promise<void> {
   console.log("Pix payment selected");
- navigateTo(`/pix-payment`);
+  navigateTo(`/pix-payment`);
 }
 </script>
 
