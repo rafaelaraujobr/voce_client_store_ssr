@@ -69,6 +69,15 @@ export const useShopService = () => {
     }
   }
 
+  async function getOrdersService(numberOfOrder: string): Promise<any> {
+    try {
+      return await $apiGateway<any>(`marketplace/order/guest/${numberOfOrder}`);
+    } catch (error) {
+      console.error("Erro no getOrdersService:", error);
+      throw error;
+    }
+  }
+
   return {
     getShopBySlugService,
     getProductsService,
@@ -77,5 +86,6 @@ export const useShopService = () => {
     getFreightService,
     getAddressByZipcodeService,
     getCalculateFreightService,
+    getOrdersService,
   };
 };

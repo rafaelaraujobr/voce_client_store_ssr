@@ -55,6 +55,15 @@
               @click="navigateTo(`${route.path}?modal=signin`)"
             />
             <q-btn
+              color="primary"
+              :label="isMobile ? '' : $t('myOrders')"
+              icon="mdi-history"
+              flat
+              :padding="isMobile ? 'xs sm' : 'sm md'"
+              class="text-weight-medium"
+              @click="navigateTo(`/my-orders`)"
+            />
+            <q-btn
               v-if="!isMobile"
               color="primary"
               :label="$t('createAccount')"

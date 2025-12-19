@@ -108,9 +108,9 @@
           {{ $t("until") }} {{ installments?.installment }}x {{ $t("of") }}
           {{ numberToReal(installments?.value) }}</q-item-label
         >
-        
+
         <div class="q-mb-md">
-          <div class="relative-position" style="max-width: 120px;">
+          <div class="relative-position" style="max-width: 120px">
             <q-select
               v-model="selectedQuantity"
               :options="quantityOptions"
@@ -129,11 +129,11 @@
               self="center left"
               :offset="[10, 0]"
             >
-              {{ $t('maxQuantityReached') }}
+              {{ $t("maxQuantityReached") }}
             </q-tooltip>
           </div>
         </div>
-        
+
         <div class="row q-col-gutter-sm q-mt-md">
           <div class="col-12 col-sm-6">
             <q-btn
@@ -247,15 +247,15 @@
               <q-item>
                 <q-item-section>
                   <q-item-label class="text-subtitle1">{{
-                    option.description
+                    option?.description
                   }}</q-item-label>
                   <q-item-label class="text-subtitle2">{{
-                    formatBusinessDays(option.estimatedDeliveryDays)
+                    formatBusinessDays(option?.estimatedDeliveryDays)
                   }}</q-item-label>
                 </q-item-section>
                 <q-item-section side>
                   <q-item-label class="text-weight-bold">{{
-                    formatValueShipping(option.totalPrice || 0)
+                    formatValueShipping(option?.totalPrice || 0)
                   }}</q-item-label>
                 </q-item-section>
               </q-item>
@@ -341,7 +341,7 @@
           <q-card>
             <q-card-section>
               <div class="text-weight-bold q-mb-sm">
-                {{ $t("securePurchase.description1") }}<br />
+                {{ $t("securePurchase.description1") }}<br >
                 {{ $t("securePurchase.description2") }}
               </div>
               <div class="text-body2 q-mb-sm">
@@ -363,20 +363,20 @@
           <q-card>
             <q-card-section>
               <div class="text-weight-bold q-mb-sm">
-                {{ $t("securePayment.paymentMethods") }}<br />
-                {{ $t("securePayment.paymentMethodsCredit") }}<br />
+                {{ $t("securePayment.paymentMethods") }}<br >
+                {{ $t("securePayment.paymentMethodsCredit") }}<br >
                 {{ $t("securePayment.paymentMethodsPix") }}
               </div>
               <div class="text-body2 q-mb-sm">
                 <span class="text-weight-bold"
                   >{{ $t("securePayment.protectedTransactions") }} </span
-                ><br />
+                ><br >
                 {{ $t("securePayment.protectedTransactionsDesc") }}
               </div>
               <div class="text-body2">
                 <span class="text-weight-bold"
                   >{{ $t("securePayment.dataPrivacy") }} </span
-                ><br />
+                ><br >
                 {{ $t("securePayment.dataPrivacyDesc") }}
               </div>
             </q-card-section>
@@ -392,7 +392,7 @@
           <q-card>
             <q-card-section>
               <div class="text-weight-bold q-mb-sm">
-                {{ $t("returnPolicy.description1") }}<br /><br />
+                {{ $t("returnPolicy.description1") }}<br ><br >
                 {{ $t("returnPolicy.description2") }}
               </div>
               <div class="text-body2 q-mb-sm">
@@ -426,13 +426,9 @@ import { useShopService } from "~/services/shop.service";
 const { getCalculateFreightService, getAddressByZipcodeService } =
   useShopService();
 const { getProductById, getRelatedProducts, product, shop, slug } = useShop();
-const {
-  addProductToCart,
-  removeProductFromCart,
-  productsInCart
-} = useCart();
+const { addProductToCart, productsInCart } = useCart();
 const route = useRoute();
-const id = computed(() => route.params.id);
+const id = computed(() => route.params?.id);
 const skuSelectedId = ref<string | null>(null);
 const selectedQuantity = ref<number>(1);
 const deliveryOptions = ref<any[]>([]);
@@ -575,9 +571,9 @@ const productInCart = computed(() => {
 const quantityOptions = computed(() => {
   const currentQuantityInCart = productInCart.value?.quantity || 0;
   const maxAllowed = 6 - currentQuantityInCart;
-  
+
   if (maxAllowed <= 0) return [];
-  
+
   return Array.from({ length: maxAllowed }, (_, i) => ({
     label: `${i + 1}`,
     value: i + 1,
@@ -593,7 +589,6 @@ const canAddToCart = computed(() => {
   const currentQuantityInCart = productInCart.value?.quantity || 0;
   return currentQuantityInCart < 6;
 });
-
 
 watch(quantityOptions, (newOptions) => {
   if (newOptions.length === 0) {
@@ -613,27 +608,29 @@ async function buyNow() {
   if (!productInCart.value) {
     addProductToCartWithQuantity();
   }
-  
+
   navigateTo("/checkout");
 }
 
 function addProductToCartWithQuantity() {
   if (!skuSelected.value) return;
-  
+
   const quantityToAdd = selectedQuantity.value;
-  
+
   for (let i = 0; i < quantityToAdd; i++) {
     addProductToCart(skuSelected.value);
   }
 
   Notify.create({
-    message: `${quantityToAdd} ${quantityToAdd > 1 ? 'produtos adicionados' : 'produto adicionado'} ao carrinho com sucesso!`,
-    color: 'positive',
-    icon: 'mdi-check-circle-outline',
-    position: 'top',
+    message: `${quantityToAdd} ${
+      quantityToAdd > 1 ? "produtos adicionados" : "produto adicionado"
+    } ao carrinho com sucesso!`,
+    color: "positive",
+    icon: "mdi-check-circle-outline",
+    position: "top",
     timeout: 3000,
   });
-  
+
   selectedQuantity.value = 1;
 }
 
@@ -667,7 +664,7 @@ const description = computed(() =>
     : "Confira este produto incrível!"
 );
 const category = computed(() =>
-  product?.value?.category_id ? product.value.category_id : "Produto"
+  product?.value?.category_id ? product.value?.category_id : "Produto"
 );
 
 function copyLink() {
