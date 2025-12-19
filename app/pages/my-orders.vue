@@ -85,25 +85,11 @@
                   </div>
                 </div>
                 <div class="col-12 col-md-6">
-                  <div class="text-body2 text-grey-7">{{ $t("status") }}</div>
-                  <div class="text-body1 text-weight-medium">
-                    {{ formatStatus(orderDetails.order.status.name) }}
-                  </div>
-                </div>
-                <div class="col-12 col-md-6">
                   <div class="text-body2 text-grey-7">
                     {{ $t("totalPrice") }}
                   </div>
                   <div class="text-h6 text-primary text-weight-bold">
                     {{ formatCurrency(orderDetails.order.price) }}
-                  </div>
-                </div>
-                <div class="col-12 col-md-6">
-                  <div class="text-body2 text-grey-7">
-                    {{ $t("commission") }}
-                  </div>
-                  <div class="text-body1 text-weight-medium">
-                    {{ formatCurrency(orderDetails.order.userCommission) }}
                   </div>
                 </div>
               </div>
@@ -146,7 +132,7 @@
                   </q-item-section>
                 </template>
 
-                <q-card>
+                <q-card flat>
                   <q-card-section>
                     <div class="text-subtitle2 text-weight-medium q-mb-sm">
                       {{ $t("productDescription") }}
@@ -227,6 +213,7 @@
 <script setup lang="ts">
 import { useShopService } from "~/services/shop.service";
 const { getOrdersService } = useShopService();
+const route = useRoute();
 
 definePageMeta({
   ssr: false,
@@ -236,14 +223,30 @@ const numberOfOrder = ref<string | undefined>(undefined);
 const orderDetails = ref<any | null>(null);
 const loading = ref<boolean>(false);
 
+onMounted(() => {
+  const orderIdFromUrl = route.query.orderId as string | undefined;
+  if (orderIdFromUrl) {
+    numberOfOrder.value = orderIdFromUrl;
+    getOrders();
+  }
+});
+
+watch(
+  () => route.query.orderId,
+  (newOrderId) => {
+    if (newOrderId && typeof newOrderId === "string") {
+      numberOfOrder.value = newOrderId;
+      getOrders();
+    }
+  }
+);
+
 async function getOrders() {
   if (!numberOfOrder.value) return;
-
   try {
     loading.value = true;
     const response = await getOrdersService(numberOfOrder.value as string);
     console.log(response);
-
     if (response?.history && response?.order) orderDetails.value = response;
   } catch (error) {
     console.error(error);
