@@ -796,9 +796,7 @@ async function handleSubmitCreditCard(): Promise<void> {
 
 async function handleSubmitPix(): Promise<void> {
   console.log("Pix payment selected");
-  
  navigateTo(`/pix-payment`);
-
 }
 </script>
 
