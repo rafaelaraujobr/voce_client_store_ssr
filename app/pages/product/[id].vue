@@ -291,7 +291,7 @@
             </q-card-section>
           </q-card>
         </q-expansion-item>
-        <q-expansion-item expand-separator v-if="selectGroup.length > 0">
+        <q-expansion-item v-if="selectGroup.length > 0" expand-separator>
           <template #header>
             <q-item-section side>
               <q-icon name="mdi-information-outline" color="primary" />
@@ -311,7 +311,7 @@
             </q-card-section>
           </q-card>
         </q-expansion-item>
-        <q-expansion-item expand-separator v-if="skuSelected?.sku?.weight || skuSelected?.sku?.height || skuSelected?.sku?.width || skuSelected?.sku?.length">
+        <q-expansion-item v-if="skuSelected?.sku?.weight || skuSelected?.sku?.height || skuSelected?.sku?.width || skuSelected?.sku?.length" expand-separator>
           <template #header>
             <q-item-section side>
               <q-icon name="mdi-ruler-square" color="primary" />
