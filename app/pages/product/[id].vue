@@ -291,7 +291,7 @@
             </q-card-section>
           </q-card>
         </q-expansion-item>
-        <q-expansion-item expand-separator>
+        <q-expansion-item expand-separator v-if="selectGroup.length > 0">
           <template #header>
             <q-item-section side>
               <q-icon name="mdi-information-outline" color="primary" />
@@ -308,29 +308,23 @@
                   <q-item-label>{{ item.value }}</q-item-label>
                 </q-item-section>
               </q-item>
-              <div v-if="selectGroup.length === 0" class="text-grey">
-                {{ $t("noFeaturesAvailable") }}
-              </div>
             </q-card-section>
           </q-card>
         </q-expansion-item>
-        <q-expansion-item expand-separator>
+        <q-expansion-item expand-separator v-if="skuSelected?.sku?.weight || skuSelected?.sku?.height || skuSelected?.sku?.width || skuSelected?.sku?.length">
           <template #header>
             <q-item-section side>
               <q-icon name="mdi-ruler-square" color="primary" />
             </q-item-section>
             <q-item-section> {{ $t("dimensions") }} </q-item-section>
           </template>
-          <q-card>
-            <q-card-section> 
-             <div v-if="skuSelected?.sku">
+          <q-card >
+            <q-card-section > 
+             <div >
                <q-item-label>{{ $t("weight") }}: {{ skuSelected.sku.weight }} kg</q-item-label>
                <q-item-label>{{ $t("height") }}: {{ skuSelected.sku.height }} cm</q-item-label>
                <q-item-label>{{ $t("width") }}: {{ skuSelected.sku.width }} cm</q-item-label>
                <q-item-label>{{ $t("length") }}: {{ skuSelected.sku.length }} cm</q-item-label>
-              </div>
-              <div v-else class="text-grey">
-                {{ $t("noDimensionsAvailable") }}
               </div>
             </q-card-section>
           </q-card>
