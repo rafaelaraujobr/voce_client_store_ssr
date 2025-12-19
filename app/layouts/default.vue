@@ -68,6 +68,7 @@
               color="primary"
               :label="$t('createAccount')"
               flat
+              icon="mdi-account-plus-outline"
               :padding="isMobile ? 'xs sm' : 'sm md'"
               class="text-weight-medium"
               :to="`/auth/signup`"
@@ -202,11 +203,30 @@ function navigateToHome() {
   navigateTo("/");
 }
 
+function handleEscapeKey(event: KeyboardEvent) {
+  if (event.key === "Escape" && leftDrawerOpen.value) {
+    leftDrawerOpen.value = false;
+  }
+}
+
 const currentUrl = computed(() => {
   if (import.meta.client && window?.location) return window.location.href;
   return `${process.env.SITE_URL || "https://seu-dominio.com"}${
     route.fullPath
   }`;
+});
+
+// Event listener para ESC key
+onMounted(() => {
+  if (import.meta.client) {
+    document.addEventListener("keydown", handleEscapeKey);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (import.meta.client) {
+    document.removeEventListener("keydown", handleEscapeKey);
+  }
 });
 
 await useLazyAsyncData("shop-data", async () => {

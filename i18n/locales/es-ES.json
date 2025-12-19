@@ -175,5 +175,20 @@
   "paymentTimeExpired": "¡El tiempo de pago ha expirado!",
   "paymentCanceled": "¡Pago cancelado!",
   "paymentReceived": "¡Pago recibido con éxito!",
-  "connectionError": "Error de conexión. Por favor, recargue la página."
+  "connectionError": "Error de conexión. Por favor, recargue la página.",
+  "orderNotFound": "Pedido no encontrado",
+  "orderNotFoundMessage": "No pudimos encontrar un pedido con este número. Verifique que el número sea correcto e inténtelo nuevamente.",
+  "searchError": "Error en la búsqueda",
+  "searchErrorMessage": "Ocurrió un error al buscar el pedido. Inténtelo nuevamente en unos momentos.",
+  "clearSearch": "Limpiar búsqueda",
+  "orderStatus": {
+    "paid": "Pagado",
+    "invoice_created": "Factura Creada",
+    "in_separation": "En Separación",
+    "in_transit": "En Tránsito",
+    "delivered": "Entregado",
+    "commission_approved": "Comisión Aprobada",
+    "cancelled": "Cancelado",
+    "pending": "Pendiente"
+  }
 }

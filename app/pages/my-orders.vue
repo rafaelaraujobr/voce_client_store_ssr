@@ -63,6 +63,33 @@
             </q-card-section>
           </q-card>
         </div>
+        
+        <div v-if="searchPerformed && !orderDetails && !loading" class="col-12">
+          <q-card flat bordered class="text-center q-pa-xl">
+            <q-icon 
+              :name="hasError ? 'mdi-alert-circle-outline' : 'mdi-package-variant-remove'" 
+              size="64px" 
+              :color="hasError ? 'negative' : 'grey-5'" 
+              class="q-mb-md"
+            />
+            <div class="text-h6 text-weight-medium q-mb-sm">
+              {{ hasError ? $t(errorMessage) : $t('orderNotFound') }}
+            </div>
+            <div class="text-body2 text-grey-7 q-mb-lg" style="max-width: 400px; margin: 0 auto;">
+              {{ hasError && errorMessage !== 'orderNotFound' ? $t(`${errorMessage}Message`) : $t('orderNotFoundMessage') }}
+            </div>
+            <div class="row justify-center q-gutter-sm q-mt-md">
+              <q-btn
+                :label="$t('clearSearch')"
+                color="primary"
+                unelevated
+                @click="clearNumberOfOrder"
+              />
+            </div>
+          </q-card>
+        </div>
+        
+        <!-- Detalhes do pedido existente -->
         <div v-if="orderDetails" class="col-12">
           <q-card class="q-mb-md" flat bordered>
             <q-card-section>
@@ -222,6 +249,9 @@ definePageMeta({
 const numberOfOrder = ref<string | undefined>(undefined);
 const orderDetails = ref<any | null>(null);
 const loading = ref<boolean>(false);
+const searchPerformed = ref<boolean>(false);
+const hasError = ref<boolean>(false);
+const errorMessage = ref<string>("");
 
 onMounted(() => {
   const orderIdFromUrl = route.query.orderId as string | undefined;
@@ -243,14 +273,38 @@ watch(
 
 async function getOrders() {
   if (!numberOfOrder.value) return;
+  
   try {
     loading.value = true;
+    hasError.value = false;
+    errorMessage.value = "";
+    
     const response = await getOrdersService(numberOfOrder.value as string);
     console.log(response);
-    if (response?.history && response?.order) orderDetails.value = response;
-  } catch (error) {
+    
+    if (response?.history && response?.order) {
+      orderDetails.value = response;
+      searchPerformed.value = true;
+    } else {
+      // API retornou mas sem dados válidos
+      orderDetails.value = null;
+      searchPerformed.value = true;
+      hasError.value = false; // Não é erro, apenas não encontrado
+    }
+  } catch (error: any) {
     console.error(error);
     orderDetails.value = null;
+    searchPerformed.value = true;
+    hasError.value = true;
+    
+    // Definir mensagem de erro baseada no tipo de erro
+    if (error?.response?.status === 404) {
+      errorMessage.value = "orderNotFound";
+    } else if (error?.message?.includes('network') || error?.code === 'NETWORK_ERROR') {
+      errorMessage.value = "connectionError";
+    } else {
+      errorMessage.value = "searchError";
+    }
   } finally {
     loading.value = false;
   }
@@ -263,6 +317,9 @@ function myTweak(offset: number): { minHeight: string } {
 function clearNumberOfOrder() {
   numberOfOrder.value = undefined;
   orderDetails.value = null;
+  searchPerformed.value = false;
+  hasError.value = false;
+  errorMessage.value = "";
 }
 
 function formatCurrency(value: number): string {
@@ -286,18 +343,13 @@ function formatDate(dateString: string): string {
 }
 
 function formatStatus(status: string): string {
-  const statusMap: Record<string, string> = {
-    paid: "Pago",
-    invoice_created: "Nota Fiscal Criada",
-    in_separation: "Em Separação",
-    in_transit: "Em Trânsito",
-    delivered: "Entregue",
-    commission_approved: "Comissão Aprovada",
-    cancelled: "Cancelado",
-    pending: "Pendente",
-  };
 
-  return statusMap[status] || status;
+  
+  try {
+    return $t(`orderStatus.${status}`);
+  } catch {
+    return status.charAt(0).toUpperCase() + status.slice(1).replace('_', ' ');
+  }
 }
 
 function getStatusIcon(status: string): string {

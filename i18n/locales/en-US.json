@@ -175,5 +175,20 @@
   "paymentTimeExpired": "Payment time has expired!",
   "paymentCanceled": "Payment canceled!",
   "paymentReceived": "Payment received successfully!",
-  "connectionError": "Connection failed. Please reload the page."
+  "connectionError": "Connection failed. Please reload the page.",
+  "orderNotFound": "Order not found",
+  "orderNotFoundMessage": "We couldn't find an order with this number. Please check if the number is correct and try again.",
+  "searchError": "Search error",
+  "searchErrorMessage": "An error occurred while searching for the order. Please try again in a few moments.",
+  "clearSearch": "Clear search",
+  "orderStatus": {
+    "paid": "Paid",
+    "invoice_created": "Invoice Created",
+    "in_separation": "In Separation",
+    "in_transit": "In Transit",
+    "delivered": "Delivered",
+    "commission_approved": "Commission Approved",
+    "cancelled": "Cancelled",
+    "pending": "Pending"
+  }
 }
