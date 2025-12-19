@@ -1,5 +1,6 @@
 {
   "login": "Login",
+  "menu": "Menu",
   "createAccount": "Create account",
   "cart": "Cart",
   "yourCart": "Your cart",
@@ -90,6 +91,7 @@
   "total": "Total",
   "accessAccountDescription": "Access your account to continue with your purchase",
   "loginWithGoogle": "Login with Google",
+  "createWithGoogle": "Create with Google",
   "noAccount": "Don't have an account?",
   "personalData": "Personal data",
   "fullName": "Full name",
@@ -180,6 +182,7 @@
   "orderNotFoundMessage": "We couldn't find an order with this number. Please check if the number is correct and try again.",
   "searchError": "Search error",
   "searchErrorMessage": "An error occurred while searching for the order. Please try again in a few moments.",
+  "tryAgain": "Try again",
   "clearSearch": "Clear search",
   "orderStatus": {
     "paid": "Paid",
@@ -190,5 +193,21 @@
     "commission_approved": "Commission Approved",
     "cancelled": "Cancelled",
     "pending": "Pending"
-  }
+  },
+  "letsBegin": "Let's get started!",
+  "pleaseProvideDataBelow": "Please provide the information below",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "firstNameRequired": "First name is required",
+  "lastNameRequired": "Last name is required",
+  "haveAnAccount": "Already have an account",
+  "byCreatingAnAccountYouAgreeToOur": "By creating an account, you agree to our",
+  "termsAndConditions": "Terms and Conditions",
+  "dataSharingConsent": "I agree to the sharing of my data necessary for product delivery and invoice issuance.",
+  "acceptPromotionalNotifications": "I agree to receive promotional notifications and communications via email, SMS, and WhatsApp.",
+  "activateYourAccountToContinue": "Activate your account to continue", 
+  "weSentAnEmailTo": "We sent an email to",
+  "withAnActivationLink": "with an activation link.", 
+  "openYourEmailAndClickTheConfirmationLink": "Open your email and click the confirmation link.",
+  "accessEmail": "Access email"
 }

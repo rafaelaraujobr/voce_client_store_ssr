@@ -1,5 +1,6 @@
 {
   "login": "Entrar",
+  "menu": "Menu",
   "createAccount": "Criar conta",
   "cart": "Carrinho",
   "yourCart": "Seu carrinho",
@@ -90,6 +91,7 @@
   "total": "Total",
   "accessAccountDescription": "Acesse sua conta para continuar com sua compra",
   "loginWithGoogle": "Entrar com Google",
+  "createWithGoogle": "Criar com Google",
   "noAccount": "Ainda não tem uma conta?",
   "personalData": "Dados pessoais",
   "fullName": "Nome completo",
@@ -190,5 +192,21 @@
     "commission_approved": "Comissão Aprovada",
     "cancelled": "Cancelado",
     "pending": "Pendente"
-  }
+  },
+  "letsBegin": "Vamos começar!",
+  "pleaseProvideDataBelow": "Por favor, Informe os dados abaixo",
+  "firstName": "Nome",
+  "lastName": "Sobrenome",
+  "firstNameRequired": "Nome é obrigatório",
+  "lastNameRequired": "Sobrenome é obrigatório",
+  "haveAnAccount": "Já tenho uma conta",
+  "byCreatingAnAccountYouAgreeToOur": "Ao criar uma conta, você concorda com nossos",
+  "termsAndConditions": "Termos e Condições",
+  "dataSharingConsent": "Concordo com o compartilhamento dos meus dados necessários para a entrega dos produtos e emissão da Nota Fiscal.",
+  "acceptPromotionalNotifications": "Aceito receber notificações e comunicados promocionais por e-mail, SMS e WhatsAPP.",
+  "activateYourAccountToContinue": "Ative sua conta para continuar",  
+  "weSentAnEmailTo": "Enviamos um e-mail para",
+  "withAnActivationLink": "com um link de ativação.", 
+  "openYourEmailAndClickTheConfirmationLink": "Abra seu e-mail e clique no link de confirmação.",
+  "accessEmail": "Acessar e-mail"
 }

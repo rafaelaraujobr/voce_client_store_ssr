@@ -3,7 +3,14 @@
     <q-header class="text-dark backdrop-blur bg-white" bordered>
       <div class="wrapper">
         <q-toolbar>
-          <q-btn v-if="isMobile" flat dense icon="mdi-menu" size="lg" />
+          <q-btn 
+            v-if="isMobile" 
+            flat 
+            dense 
+            icon="mdi-menu" 
+            size="lg" 
+            @click="menuDrawerOpen = !menuDrawerOpen"
+          />
           <q-toolbar-title :class="{ 'text-center q-ml-xl': isMobile }">
             <q-img
               v-if="shop?.logotipo"
@@ -46,20 +53,22 @@
               </template>
             </q-input>
             <q-btn
+              v-if="!isMobile"
               color="primary"
-              :label="isMobile ? '' : $t('login')"
+              :label="$t('login')"
               icon="mdi-account-outline"
               flat
-              :padding="isMobile ? 'xs sm' : 'sm md'"
+              padding="sm md"
               class="text-weight-medium"
               @click="navigateTo(`${route.path}?modal=signin`)"
             />
             <q-btn
+              v-if="!isMobile"
               color="primary"
-              :label="isMobile ? '' : $t('myOrders')"
+              :label="$t('myOrders')"
               icon="mdi-shopping-outline"
               flat
-              :padding="isMobile ? 'xs sm' : 'sm md'"
+              padding="sm md"
               class="text-weight-medium"
               @click="navigateTo(`/my-orders`)"
             />
@@ -69,10 +78,11 @@
               :label="$t('createAccount')"
               flat
               icon="mdi-account-plus-outline"
-              :padding="isMobile ? 'xs sm' : 'sm md'"
+              padding="sm md"
               class="text-weight-medium"
               :to="`/auth/signup`"
             />
+            
             <q-btn
               color="primary"
               :label="isMobile ? '' : $t('cart')"
@@ -95,6 +105,75 @@
         </q-toolbar>
       </div>
     </q-header>
+    
+    <q-drawer
+      v-model="menuDrawerOpen"
+      side="left"
+      overlay
+      behavior="mobile"
+      bordered
+      :width="280"
+      class="bg-white"
+    >
+      <q-toolbar class="bg-primary text-white q-pa-md">
+        <q-toolbar-title class="text-weight-medium">
+          {{ $t('menu') || 'Menu' }}
+        </q-toolbar-title>
+        <q-btn
+          flat
+          round
+          dense
+          icon="mdi-close"
+          color="white"
+          @click="menuDrawerOpen = false"
+        />
+      </q-toolbar>
+      
+      <q-list class="q-pt-md">
+        <q-item 
+          clickable 
+          v-ripple 
+          @click="handleMenuLogin"
+          class="q-py-md"
+        >
+          <q-item-section avatar>
+            <q-icon name="mdi-account-outline" color="primary" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label class="text-weight-medium">{{ $t('login') }}</q-item-label>
+          </q-item-section>
+        </q-item>
+        
+        <q-item 
+          clickable 
+          v-ripple 
+          @click="handleMenuOrders"
+          class="q-py-md"
+        >
+          <q-item-section avatar>
+            <q-icon name="mdi-shopping-outline" color="primary" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label class="text-weight-medium">{{ $t('myOrders') }}</q-item-label>
+          </q-item-section>
+        </q-item>
+        
+        <q-item 
+          clickable 
+          v-ripple 
+          @click="handleMenuCreateAccount"
+          class="q-py-md"
+        >
+          <q-item-section avatar>
+            <q-icon name="mdi-account-plus-outline" color="primary" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label class="text-weight-medium">{{ $t('createAccount') }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-drawer>
+    
     <q-drawer
       v-model="leftDrawerOpen"
       side="right"
@@ -143,7 +222,6 @@ import ShoppingCart from "~/components/ShoppingCart.vue";
 import SignInModal from "~/components/auth/SignInModal.vue";
 import { useShop } from "~/composables/shop.composable";
 import { useCart } from "~/composables/cart.composable";
-import { is } from "quasar";
 const route = useRoute();
 const { getTotalQuantity, productsInCart } = useCart();
 const {
@@ -171,6 +249,8 @@ const qtdProductsInCart = computed(() => {
 
 const currentSearch = ref<string | null>(search.value);
 const leftDrawerOpen = ref<boolean>(false);
+const menuDrawerOpen = ref<boolean>(false);
+const showMobileSearch = ref<boolean>(false);
 watch(search, (newVal) => {
   currentSearch.value = newVal;
 });
@@ -204,9 +284,31 @@ function navigateToHome() {
 }
 
 function handleEscapeKey(event: KeyboardEvent) {
-  if (event.key === "Escape" && leftDrawerOpen.value) {
-    leftDrawerOpen.value = false;
+  if (event.key === "Escape") {
+    if (leftDrawerOpen.value) {
+      leftDrawerOpen.value = false;
+    } else if (menuDrawerOpen.value) {
+      menuDrawerOpen.value = false;
+    } else if (showMobileSearch.value) {
+      showMobileSearch.value = false;
+    }
   }
+}
+
+
+function handleMenuLogin() {
+  menuDrawerOpen.value = false;
+  navigateTo(`${route.path}?modal=signin`);
+}
+
+function handleMenuOrders() {
+  menuDrawerOpen.value = false;
+  navigateTo('/my-orders');
+}
+
+function handleMenuCreateAccount() {
+  menuDrawerOpen.value = false;
+  navigateTo('/auth/signup');
 }
 
 const currentUrl = computed(() => {

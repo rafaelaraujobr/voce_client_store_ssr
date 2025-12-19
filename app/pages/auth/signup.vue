@@ -17,9 +17,9 @@
             <q-form @submit="step++">
               <q-card flat>
                 <q-card-section class="text-center">
-                  <div class="text-h6">Vamos começar!</div>
+                  <div class="text-h6">{{ $t('letsBegin') }}</div>
                   <div class="text-caption">
-                    Por favor, Informe os dados abaixo:
+                    {{ $t('pleaseProvideDataBelow') }}
                   </div>
                 </q-card-section>
                 <q-form @submit="checkDocuments">
@@ -27,21 +27,21 @@
                     <q-input
                       v-model="form.firstName"
                       type="text"
-                      label="Primeiro nome"
+                      :label="$t('firstName')"
                       :error="errorName"
                       :error-message="erroMessageName"
                       dense
-                      :rules="[(val: any) => !!val || 'Nome obrigatório']"
+                      :rules="[(val: any) => !!val || $t('firstNameRequired')]"
                       @blur="form.firstName = form.firstName.trim()"
                     />
                     <q-input
                       v-model="form.lastName"
                       type="text"
-                      label="Sobrenome"
+                      :label="$t('lastName')"
                       :error="errorName"
                       :error-message="erroMessageName"
                       dense
-                      :rules="[(val: any) => !!val || 'Sobrenome obrigatório']"
+                      :rules="[(val: any) => !!val || $t('lastNameRequired')]"
                       @blur="form.lastName = form.lastName.trim()"
                     />
                     <q-input
@@ -52,14 +52,14 @@
                       dense
                       :error="errorEmail"
                       :error-message="erroMessageEmail"
-                      :rules="[(val: any) => !!val || 'E-mail obrigatório']"
+                      :rules="[(val: any) => !!val || $t('emailRequired')]"
                     />
                   </q-card-section>
                   <q-card-section class="q-gutter-y-md q-mt-sm">
                     <q-btn
                       color="dark"
                       icon-right="sym_r_chevron_right"
-                      label="Continuar"
+                      :label="$t('continue')"
                       class="full-width"
                       unelevated
                       no-caps
@@ -71,7 +71,7 @@
                       <div class="col">
                         <q-separator />
                       </div>
-                      <div class="q-mx-sm text-grey">ou</div>
+                      <div class="q-mx-sm text-grey">{{ $t("or") }}</div>
                       <div class="col">
                         <q-separator />
                       </div>
@@ -90,21 +90,21 @@
                           alt="Google icon"
                           style="width: 20px; height: 20px"
                         />
-                        <span>Criar com Google</span>
+                        <span>{{ $t('createWithGoogle') }}</span>
                       </div>
                     </q-btn>
 
                     <q-btn
                       color="white"
                       text-color="black"
-                      label="Já tenho uma conta"
+                      :label="$t('haveAnAccount')"
                       class="q-mt-lg full-width"
                       outline
                       unelevated
                       no-caps
                       :dense="!$q.screen.lt.sm"
                       icon="sym_r_chevron_left"
-                      @click="navigateTo(`${route.path}?modal=signin`)"
+                      @click="navigateTo(`/?modal=signin`)"
                     />
                   </q-card-section>
                 </q-form>
@@ -115,21 +115,21 @@
             <q-form @submit="onCreateAccount">
               <q-card flat>
                 <q-card-section class="text-center">
-                  <div class="text-h6">Criar senha</div>
+                  <div class="text-h6">{{ $t('createPassword') }}</div>
                   <div class="text-caption">
-                    Defina uma senha para acessar sua conta
+                    {{ $t('definePasswordToAccessAccount') }}
                   </div>
                 </q-card-section>
                 <q-card-section class="q-py-none">
                   <q-input
                     v-model="form.password"
                     :type="showPassword ? 'text' : 'password'"
-                    label="Senha"
+                    :label="$t('password')"
                     color="primary"
                     input-class=""
                     class=""
                     dense
-                    :rules="[(val: any) => !!val || 'Senha obrigatória']"
+                    :rules="[(val: any) => !!val || $t('passwordRequired')]"
                   >
                     <template #prepend>
                       <q-icon name="sym_r_lock" color="primary" />
@@ -152,14 +152,14 @@
                   <q-input
                     v-model="form.confirmPassword"
                     :type="showConfirmPassword ? 'text' : 'password'"
-                    label="Confirmar Senha"
+                    :label="$t('confirmPassword')"
                     color="primary"
                     input-class=""
                     class=""
                     dense
                     :rules="[
-                  (val: any) => !!val || 'Confirmar senha obrigatório',
-                  (val: any) => val === form.password || 'Senhas não conferem'
+                  (val: any) => !!val || $t('confirmPasswordRequired'),
+                  (val: any) => val === form.password || $t('passwordsDoNotMatch')
                 ]"
                   >
                     <template #prepend>
@@ -197,7 +197,7 @@
                           icon="check"
                         />
                       </q-item-section>
-                      <q-item-section>Mínimo de 8 dígitos</q-item-section>
+                      <q-item-section>{{ $t('minLength') }}</q-item-section>
                     </q-item>
                     <q-item>
                       <q-item-section side>
@@ -213,7 +213,7 @@
                           icon="check"
                         />
                       </q-item-section>
-                      <q-item-section>Ao menos 1 número</q-item-section>
+                      <q-item-section>{{ $t('atLeastOneNumber') }}</q-item-section>
                     </q-item>
                     <q-item>
                       <q-item-section side>
@@ -230,7 +230,7 @@
                         />
                       </q-item-section>
                       <q-item-section
-                        >Ao menos 1 letra maiúscula(Aa)</q-item-section
+                        >{{ $t('atLeastOneUppercaseLetter') }}</q-item-section
                       >
                     </q-item>
                     <q-item>
@@ -248,19 +248,19 @@
                         />
                       </q-item-section>
                       <q-item-section
-                        >Ao menos 1 carácter especial (@#)</q-item-section
+                        >{{ $t('atLeastOneSpecialCharacter') }}</q-item-section
                       >
                     </q-item>
                   </q-list>
                 </q-card-section>
                 <div class="text-caption text-justify q-mx-md">
-                  Ao criar uma conta, você estará concordando com nossos
+                  {{ $t('byCreatingAnAccountYouAgreeToOur') }}
                   <span
                     class="text-weight-medium text-primary"
                     style="text-decoration: none; cursor: pointer"
                     @click="openTerms"
                   >
-                    termos e condições
+                    {{ $t('termsAndConditions') }}
                   </span>
                   e nossa
                   <span
@@ -268,7 +268,7 @@
                     style="text-decoration: none; cursor: pointer"
                     @click="openPrivacy"
                   >
-                    Politica de privacidade
+                    {{ $t('privacyPolicy') }}
                   </span>
                 </div>
                 <q-item
@@ -281,8 +281,7 @@
                     <q-checkbox v-model="terms" />
                   </q-item-section>
                   <q-item-section class="text-caption text-left">
-                    Aceito receber notificações e comunicados promocionais por
-                    e-mail, SMS e WhatsAPP.
+                    {{ $t('acceptPromotionalNotifications') }}
                   </q-item-section>
                 </q-item>
                 <q-item
@@ -295,8 +294,7 @@
                     <q-checkbox v-model="dataConsent" />
                   </q-item-section>
                   <q-item-section class="text-caption q-mr-md text-left">
-                    Concordo com o compartilhamento dos meus dados necessários
-                    para a entrega dos produtos e emissão da Nota Fiscal.
+                    {{ $t('dataSharingConsent') }}
                   </q-item-section>
                 </q-item>
                 <q-card-section class="q-pt-none q-gutter-y-sm">
@@ -326,16 +324,15 @@
               <q-card-section class="text-center q-py-lg">
                 <q-img src="@/assets/images/send.svg" width="50px" />
                 <div class="text-h6 q-mt-md" style="font-size: 18px">
-                  Ative sua conta para continuar
+                  {{ $t('activateYourAccountToContinue') }}
                 </div>
                 <div class="text-grey-8">
-                  Enviamos um e-mail para {{ form.email }} com um link de
-                  ativação.Abra seu e-mail e clique no link de confirmação.
+                  {{ $t('weSentAnEmailTo') }} {{ form.email }} {{ $t('withAnActivationLink') }} {{ $t('openYourEmailAndClickTheConfirmationLink') }}
                 </div>
                 <q-btn
                   color="primary"
                   icon="sym_r_email"
-                  label="Acessar e-mail"
+                  :label="$t('accessEmail')"
                   no-caps
                   dense
                   class="q-mt-md"
@@ -393,6 +390,11 @@ const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
 const { shop } = useShop();
+
+definePageMeta({
+  layout: 'empty'
+});
+
 const form = reactive({
   email: "",
   firstName: "",

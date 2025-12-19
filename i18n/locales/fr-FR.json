@@ -1,5 +1,6 @@
 {
   "login": "Connexion",
+  "menu": "Menu",
   "createAccount": "Créer un compte",
   "cart": "Panier",
   "yourCart": "Votre panier",
@@ -90,6 +91,7 @@
   "total": "Total",
   "accessAccountDescription": "Accédez à votre compte pour continuer votre commande",
   "loginWithGoogle": "Se connecter avec Google",
+  "createWithGoogle": "Créer avec Google",
   "noAccount": "Vous n'avez pas de compte ?",
   "personalData": "Données personnelles",
   "fullName": "Nom complet",
@@ -180,6 +182,7 @@
   "orderNotFoundMessage": "Nous n'avons pas pu trouver une commande avec ce numéro. Vérifiez que le numéro est correct et réessayez.",
   "searchError": "Erreur de recherche",
   "searchErrorMessage": "Une erreur s'est produite lors de la recherche de la commande. Veuillez réessayer dans quelques instants.",
+  "tryAgain": "Réessayer",
   "clearSearch": "Effacer la recherche",
   "orderStatus": {
     "paid": "Payé",
@@ -190,5 +193,21 @@
     "commission_approved": "Commission Approuvée",
     "cancelled": "Annulé",
     "pending": "En Attente"
-  }
+  },
+  "letsBegin": "Commençons!",
+  "pleaseProvideDataBelow": "Veuillez fournir les informations ci-dessous:",
+  "firstName": "Prénom",
+  "lastName": "Nom de famille",
+  "firstNameRequired": "Le prénom est obligatoire",
+  "lastNameRequired": "Le nom de famille est obligatoire",
+  "haveAnAccount": "J'ai déjà un compte",
+  "byCreatingAnAccountYouAgreeToOur": "En créant un compte, vous acceptez nos",
+  "termsAndConditions": "Termes et Conditions",
+  "dataSharingConsent": "J'accepte le partage de mes données nécessaires à la livraison des produits et à l'émission de la facture.",
+  "acceptPromotionalNotifications": "J'accepte de recevoir des notifications et des communications promotionnelles par e-mail, SMS et WhatsApp.",
+  "activateYourAccountToContinue": "Activez votre compte pour continuer",
+  "weSentAnEmailTo": "Nous avons envoyé un e-mail à",
+  "withAnActivationLink": "avec un lien d'activation.",
+  "openYourEmailAndClickTheConfirmationLink": "Ouvrez votre e-mail et cliquez sur le lien de confirmation.",
+  "accessEmail": "Accéder à l'e-mail"
 }
