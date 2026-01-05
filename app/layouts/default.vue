@@ -24,6 +24,44 @@
             >
               {{ shop?.name }}
             </div>
+            <q-btn 
+              v-if="!isMobile"
+              flat 
+              dense 
+              round
+              icon="mdi-information-outline" 
+              size="xs"
+            >
+              <q-tooltip>{{ $t('environmentInfo') }}</q-tooltip>
+              <q-menu>
+                <q-list style="min-width: 350px">
+                  <q-item-label header class="text-weight-bold">
+                    {{ $t('environmentVariables') }}
+                  </q-item-label>
+                  <q-separator />
+                  <q-item v-for="(value, key) in computedEnv" :key="key" dense>
+                    <q-item-section>
+                      <q-item-label caption>{{ key }}</q-item-label>
+                      <q-item-label class="text-body2 text-primary">
+                        {{ value || 'N/A' }}
+                      </q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-btn
+                        flat
+                        dense
+                        round
+                        size="sm"
+                        icon="mdi-content-copy"
+                        @click="copyToClipboard(value)"
+                      >
+                        <q-tooltip>{{ $t('copyLink') }}</q-tooltip>
+                      </q-btn>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
           </q-toolbar-title>
           <div class="row items-center q-gutter-x-sm">
             <q-input
@@ -143,8 +181,11 @@ import ShoppingCart from "~/components/ShoppingCart.vue";
 import SignInModal from "~/components/auth/SignInModal.vue";
 import { useShop } from "~/composables/shop.composable";
 import { useCart } from "~/composables/cart.composable";
-import { is } from "quasar";
+
 const route = useRoute();
+const $q = useQuasar();
+const { t: $t } = useI18n();
+
 const { getTotalQuantity, productsInCart } = useCart();
 const {
   getShopBySlug,
@@ -189,6 +230,18 @@ watch(productsInCart, (newVal) => {
   if (newVal.length === 0) leftDrawerOpen.value = false;
 });
 
+const computedEnv = computed(() => {
+  return {
+    apiBase: useRuntimeConfig().public.apiBase,
+    apiGatewayBase: useRuntimeConfig().public.apiGatewayBase,
+    baseDomain: useRuntimeConfig().public.baseDomain,
+  } as {
+    apiBase: string;
+    apiGatewayBase: string;
+    baseDomain: string;
+  };
+});
+
 async function navigateToSearch(value: string) {
   setSearch(value);
   setProductQuery({ ...productQuery.value, search: value, skip: 0 });
@@ -201,6 +254,31 @@ function navigateToHome() {
   setProductQuery({ ...productQuery.value, search: "", skip: 0 });
   currentSearch.value = "";
   navigateTo("/");
+}
+
+function copyToClipboard(text: string) {
+  if (!text) return;
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        $q.notify({
+          type: "positive",
+          message: $t("pixCodeCopied"),
+          position: "top",
+          timeout: 2000,
+        });
+      })
+      .catch(() => {
+        $q.notify({
+          type: "negative",
+          message: $t("copyError"),
+          position: "top",
+          timeout: 2000,
+        });
+      });
+  }
 }
 
 function handleEscapeKey(event: KeyboardEvent) {

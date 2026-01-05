@@ -36,7 +36,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiSecret: process.env.API_SECRET || "",
     public: {
-      baseDomain: process.env.NUXT_BASE_DOMAIN || "vocelab.com.br",
+      baseDomain: process.env.NUXT_BASE_DOMAIN || "voce.com.br",
       reservedSubs: (process.env.RESERVED_SUBS || "www,app,api,static,assets")
         .split(",")
         .map((s) => s.trim()),

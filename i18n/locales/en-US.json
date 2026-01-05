@@ -181,6 +181,8 @@
   "searchError": "Search error",
   "searchErrorMessage": "An error occurred while searching for the order. Please try again in a few moments.",
   "clearSearch": "Clear search",
+  "environmentInfo": "Environment information",
+  "environmentVariables": "Environment variables",
   "orderStatus": {
     "paid": "Paid",
     "invoice_created": "Invoice Created",

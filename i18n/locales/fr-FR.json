@@ -181,6 +181,8 @@
   "searchError": "Erreur de recherche",
   "searchErrorMessage": "Une erreur s'est produite lors de la recherche de la commande. Veuillez réessayer dans quelques instants.",
   "clearSearch": "Effacer la recherche",
+  "environmentInfo": "Informations sur l'environnement",
+  "environmentVariables": "Variables d'environnement",
   "orderStatus": {
     "paid": "Payé",
     "invoice_created": "Facture Créée",

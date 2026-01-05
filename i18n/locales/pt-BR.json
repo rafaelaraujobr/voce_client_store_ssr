@@ -181,6 +181,8 @@
   "searchError": "Erro na busca",
   "searchErrorMessage": "Ocorreu um erro ao buscar o pedido. Tente novamente em alguns instantes.",
   "clearSearch": "Limpar busca",
+  "environmentInfo": "Informações do ambiente",
+  "environmentVariables": "Variáveis de ambiente",
   "orderStatus": {
     "paid": "Pago",
     "invoice_created": "Nota Fiscal Criada",
